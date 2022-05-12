@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.alias.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_rulesDialogFragment"
+            app:destination="@id/rulesDialogFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_configureFragment"
+            app:destination="@id/configureFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/rulesDialogFragment"
+        android:name="com.example.alias.ui.rules.RulesDialogFragment"
+        android:label="fragment_rules_dialog"
+        tools:layout="@layout/fragment_rules_dialog" />
+    <fragment
+        android:id="@+id/configureFragment"
+        android:name="com.example.alias.ui.configure.ConfigureFragment"
+        android:label="configure_fragment"
+        tools:layout="@layout/configure_fragment" >
+        <action
+            android:id="@+id/action_configureFragment_to_arcadeFragment"
+            app:destination="@id/arcadeFragment" />
+        <action
+            android:id="@+id/action_configureFragment_to_classicFragment"
+            app:destination="@id/classicFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/arcadeFragment"
+        android:name="com.example.alias.ui.arcade.ArcadeFragment"
+        android:label="arcade_fragment"
+        tools:layout="@layout/arcade_fragment" >
+        <action
+            android:id="@+id/action_arcadeFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/classicFragment"
+        android:name="com.example.alias.ui.classic.ClassicFragment"
+        android:label="classic_fragment"
+        tools:layout="@layout/classic_fragment" >
+        <action
+            android:id="@+id/action_classicFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.example.alias.ui.result.ResultFragment"
+        android:label="ResultFragment">
+        <action
+            android:id="@+id/action_resultFragment_to_configureFragment"
+            app:destination="@id/configureFragment" />
+    </fragment>
+</navigation>
