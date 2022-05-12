@@ -2,6 +2,7 @@ package com.example.alias.app
 
 import android.app.Application
 import com.example.alias.di.viewModels
+import com.example.alias.di.wordsDao
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -11,8 +12,7 @@ class App : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@App)
-            modules(listOf(viewModels))
+            modules(listOf(viewModels, wordsDao))
         }
     }
-
 }
