@@ -5,7 +5,6 @@ import com.example.alias.ui.base.BaseFragment
 
 class ConfigureFragment : BaseFragment<ConfigureFragmentBinding>(ConfigureFragmentBinding::inflate) {
     override fun init() {
-        TODO("Not yet implemented")
     }
 
 }
