@@ -1,6 +1,6 @@
 <resources>
     <!-- Global -->
-    <string name="app_name">alias</string>
+    <string name="app_name">Alias</string>
 
     <!-- Home Fragment -->
     <string name="rules">rules</string>

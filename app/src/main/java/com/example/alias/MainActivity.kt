@@ -2,9 +2,10 @@ package com.example.alias
 
 import android.content.Context
 import android.content.ContextWrapper
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.alias.app.App
+import androidx.appcompat.app.AppCompatActivity
+import com.example.alias.ui.home.HomeFragment.Companion.PREFERENCE_DEFAULT_VALUE
+import com.example.alias.ui.home.HomeFragment.Companion.PREFERENCE_NAME
 import com.example.alias.util.LocaleUtils
 import java.util.*
 
@@ -20,10 +21,10 @@ class MainActivity : AppCompatActivity() {
                 newBase.setAppLocale(
                     LocaleUtils.getLanguageFromId(
                         newBase.getSharedPreferences(
-                            "languageSharedPreference",
+                            SHARED_PREFERENCE_NAME,
                             Context.MODE_PRIVATE
                         )
-                            .getInt("language", 0)
+                            .getInt(PREFERENCE_NAME, PREFERENCE_DEFAULT_VALUE)
                     )
                 )
             )
@@ -37,5 +38,9 @@ class MainActivity : AppCompatActivity() {
         config.setLocale(locale)
         config.setLayoutDirection(locale)
         return createConfigurationContext(config)
+    }
+
+    companion object {
+        const val SHARED_PREFERENCE_NAME = "languageSharedPreference"
     }
 }
