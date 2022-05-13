@@ -1,14 +1,14 @@
 <resources>
     <!-- Global -->
-    <string name="app_name">alias</string>
+    <string name="app_name">алиас</string>
 
     <!-- Home Fragment -->
-    <string name="rules">rules</string>
-    <string name="configuration">configuration</string>
+    <string name="rules">правила</string>
+    <string name="configuration">конфигурация</string>
     <string-array name="language_array">
-        <item>English</item>
-        <item>Russian</item>
-        <item>Georgian</item>
+        <item>английский</item>
+        <item>русский</item>
+        <item>грузинский</item>
     </string-array>
 
 

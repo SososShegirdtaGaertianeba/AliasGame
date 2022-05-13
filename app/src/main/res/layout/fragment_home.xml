@@ -34,9 +34,9 @@
         android:id="@+id/choose_lang"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
+        android:entries="@array/language_array"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:entries="@array/language_array"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/conf_btn" />
 
