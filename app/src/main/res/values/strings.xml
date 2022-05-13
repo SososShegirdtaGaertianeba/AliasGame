@@ -2,4 +2,8 @@
     <string name="app_name">alias</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="max6Teams">Maximum 6 Teams</string>
+    <string name="min2Teams">Minimum 2 Teams</string>
+    <string name="uniqueConstraint">No Teams With Same Names</string>
+    <string name="fillAllFields">Please Fill Required Fields</string>
 </resources>
