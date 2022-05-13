@@ -19,7 +19,11 @@ class MainActivity : AppCompatActivity() {
             ContextWrapper(
                 newBase.setAppLocale(
                     LocaleUtils.getLanguageFromId(
-                        App.LANGUAGE
+                        newBase.getSharedPreferences(
+                            "languageSharedPreference",
+                            Context.MODE_PRIVATE
+                        )
+                            .getInt("language", 0)
                     )
                 )
             )

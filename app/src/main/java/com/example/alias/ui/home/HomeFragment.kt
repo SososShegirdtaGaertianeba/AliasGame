@@ -1,5 +1,6 @@
 package com.example.alias.ui.home
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -19,7 +20,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private var isSpinnerInitialized = false
 
     override fun init() {
-        binding.chooseLang.setSelection(App.LANGUAGE)
+        binding.chooseLang.setSelection(getSharedPreference().getInt("language", 0))
         navigateToConfigurationFragment()
         navigateToRulesFragment()
         chooseLanguage()
@@ -53,7 +54,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 id: Long
             ) {
                 if (isSpinnerInitialized) {
-                    App.LANGUAGE =
+                    setSharedPreference(
                         LocaleUtils.getIdFromLanguage(
                             toLocaleString(
                                 adapterView.getItemAtPosition(
@@ -61,6 +62,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                                 ).toString()
                             )
                         )
+                    )
                     startActivity(Intent(context, MainActivity::class.java))
                 } else isSpinnerInitialized = true
             }
@@ -71,5 +73,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         }
     }
+
+    private fun getSharedPreference() =
+        requireActivity().getSharedPreferences(
+            "languageSharedPreference",
+            Context.MODE_PRIVATE
+        )
+
+    fun setSharedPreference(language: Int) =
+        getSharedPreference()
+            .edit().putInt("language", language).apply()
+
 
 }
