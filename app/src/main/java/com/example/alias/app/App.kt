@@ -11,7 +11,7 @@ import org.koin.core.context.startKoin
 class App : Application() {
 
     companion object {
-        var LANGUAGE = "English"
+        var LANGUAGE = 0
     }
 
 
