@@ -43,7 +43,7 @@ class ConfigureFragment :
     }
 
     private fun initObservers() {
-        var i = 0
+        var i = ZERO
         viewModel.events.forEach { observer ->
             observer.observe(viewLifecycleOwner) {
                 if (it.isHandled) {
@@ -52,6 +52,10 @@ class ConfigureFragment :
                 }
             }
         }
+    }
+
+    companion object {
+        private const val ZERO = 0
     }
 
 }

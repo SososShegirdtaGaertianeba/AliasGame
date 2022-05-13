@@ -1,6 +1,6 @@
 <resources>
     <!-- Global -->
-    <string name="app_name">ალიასი</string>
+    <string name="app_name">Alias</string>
 
     <!-- Home Fragment -->
     <string name="rules">წესები</string>
@@ -14,8 +14,8 @@
 
     <!-- Other(to be organized later...) -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="max6Teams">Maximum 6 Teams</string>
-    <string name="min2Teams">Minimum 2 Teams</string>
-    <string name="uniqueConstraint">No Teams With Same Names</string>
-    <string name="fillAllFields">Please Fill Required Fields</string>
+    <string name="max6Teams">მაქსიმუმ 6 გუნდი</string>
+    <string name="min2Teams">მინიმუმ 2 გუნდი</string>
+    <string name="uniqueConstraint">გუნდი ერთიდაიგივე სახელებით?</string>
+    <string name="fillAllFields">შეავსეთ ყველა საჭირო ველი</string>
 </resources>

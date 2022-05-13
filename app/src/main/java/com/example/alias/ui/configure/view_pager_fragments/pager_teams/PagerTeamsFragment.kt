@@ -21,14 +21,14 @@ class PagerTeamsFragment :
             recyclerView.adapter = adapter
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             btnAddTeam.setOnClickListener {
-                if (adapter.teams.size < 6)
+                if (adapter.teams.size < MAX_TEAMS)
                     adapter.addTeam()
                 else
                     makeToastMessage(getString(R.string.max6Teams))
             }
 
             btnDeleteLast.setOnClickListener {
-                if (adapter.teams.size > 2) {
+                if (adapter.teams.size > MIN_TEAMS) {
                     adapter.teams.removeLast()
                     adapter.notifyItemRemoved(adapter.teams.size)
                 } else makeToastMessage(getString(R.string.min2Teams))
@@ -41,4 +41,9 @@ class PagerTeamsFragment :
                     viewModel.setTeams(adapter.teams)
             }
         }
+
+    companion object {
+        private const val MAX_TEAMS = 6
+        private const val MIN_TEAMS = 2
+    }
 }

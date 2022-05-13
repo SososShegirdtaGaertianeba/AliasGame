@@ -2,16 +2,12 @@ package com.example.alias.ui.home
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.navigation.fragment.findNavController
 import com.example.alias.MainActivity
+import com.example.alias.MainActivity.Companion.SHARED_PREFERENCE_NAME
 import com.example.alias.R
-import com.example.alias.app.App
 import com.example.alias.databinding.FragmentHomeBinding
 import com.example.alias.ui.base.BaseFragment
 import com.example.alias.util.LocaleUtils
@@ -20,7 +16,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private var isSpinnerInitialized = false
 
     override fun init() {
-        binding.chooseLang.setSelection(getSharedPreference().getInt("language", 0))
+        binding.chooseLang.setSelection(getSharedPreference().getInt(PREFERENCE_NAME, PREFERENCE_DEFAULT_VALUE))
         navigateToConfigurationFragment()
         navigateToRulesFragment()
         chooseLanguage()
@@ -39,10 +35,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     fun toLocaleString(language: String) = when (language) {
-        resources.getStringArray(R.array.language_array)[0] -> "en"
-        resources.getStringArray(R.array.language_array)[1] -> "ru"
-        resources.getStringArray(R.array.language_array)[2] -> "ka"
-        else -> "en"
+        resources.getStringArray(R.array.language_array)[ZERO] -> EN
+        resources.getStringArray(R.array.language_array)[ONE] -> RU
+        resources.getStringArray(R.array.language_array)[TWO] -> KA
+        else -> EN
     }
 
     private fun chooseLanguage() {
@@ -68,7 +64,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>?) {
-                adapterView?.getItemAtPosition(0)
+                adapterView?.getItemAtPosition(ZERO)
             }
 
         }
@@ -76,13 +72,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun getSharedPreference() =
         requireActivity().getSharedPreferences(
-            "languageSharedPreference",
+            SHARED_PREFERENCE_NAME,
             Context.MODE_PRIVATE
         )
 
     fun setSharedPreference(language: Int) =
         getSharedPreference()
-            .edit().putInt("language", language).apply()
+            .edit().putInt(PREFERENCE_NAME, language).apply()
 
+    companion object {
+        const val PREFERENCE_NAME = "language"
+        const val PREFERENCE_DEFAULT_VALUE = 0
+        private const val ZERO = 0
+        private const val ONE = 1
+        private const val TWO = 2
+        private const val EN = "en"
+        private const val RU = "ru"
+        private const val KA = "ka"
+    }
 
 }
