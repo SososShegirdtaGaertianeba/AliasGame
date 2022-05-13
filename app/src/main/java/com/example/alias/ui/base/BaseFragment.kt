@@ -20,7 +20,8 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = inflate.invoke(inflater, container!!, false)
+        _binding = inflate.invoke(inflater, container, false)
+        init()
         return binding.root
     }
 
