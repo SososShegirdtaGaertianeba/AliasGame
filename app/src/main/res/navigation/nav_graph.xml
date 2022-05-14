@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_classicFragment_to_resultFragment"
             app:destination="@id/resultFragment" />
+        <argument
+            android:name="gameMode"
+            app:argType="com.example.alias.util.GameMode" />
     </fragment>
     <fragment
         android:id="@+id/resultFragment"
@@ -60,4 +63,13 @@
             android:id="@+id/action_resultFragment_to_configureFragment"
             app:destination="@id/configureFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/pagerTimeAndPointsFragment2"
+        android:name="com.example.alias.ui.configure.view_pager_fragments.pager_time_and_points.PagerTimeAndPointsFragment"
+        android:label="fragment_pager_time_and_points"
+        tools:layout="@layout/fragment_pager_time_and_points" >
+        <action
+            android:id="@+id/action_pagerTimeAndPointsFragment2_to_classicFragment"
+            app:destination="@id/classicFragment" />
+    </fragment><action android:id="@+id/action_global_classicFragment" app:destination="@id/classicFragment"/>
 </navigation>

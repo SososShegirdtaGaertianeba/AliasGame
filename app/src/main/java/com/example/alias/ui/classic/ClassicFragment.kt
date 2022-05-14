@@ -1,11 +1,132 @@
 package com.example.alias.ui.classic
 
+import android.content.Context
+import android.os.CountDownTimer
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.alias.databinding.ClassicFragmentBinding
 import com.example.alias.ui.base.BaseFragment
+import com.example.alias.ui.classic.adapter.WordsAdapter
+import com.example.alias.ui.classic.vm.ClassicViewModel
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBinding::inflate) {
-    override fun init() {
-        TODO("Not yet implemented")
+    private lateinit var getWords: suspend () -> MutableList<String>
+    private lateinit var countDownTimer: CountDownTimer
+    private lateinit var recyclerView: RecyclerView
+
+    private val safeArgs: ClassicFragmentArgs by navArgs()
+    private val classicViewModel: ClassicViewModel by viewModel()
+
+    private val wordsAdapter by lazy {
+        WordsAdapter(
+            { classicViewModel.incrementScore() },
+            { classicViewModel.decrementScore() }
+        ) {
+            Log.d("MAPMAP", classicViewModel.teams.value.toString())
+        }
     }
+
+    private var timePerRound = 0
+    private var prevCompletionPoints = 0
+
+    private val language = fun(context: Context) =
+        (context.getSharedPreferences("languageSharedPreference", Context.MODE_PRIVATE))
+            .getInt("language", 0)
+
+    override fun init() {
+        initGameMode()
+        initRecycler()
+        initObservers()
+        initWordGetter(requireContext())
+
+        makeRequest()
+
+        initCountDown(timePerRound)
+
+        binding.btnGenerate.setOnClickListener {
+            makeToastMessage("you clicked.")
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        countDownTimer.cancel()
+    }
+
+    private fun initCountDown(timePerRound: Int) {
+        countDownTimer = object : CountDownTimer(timePerRound * 1000L, 1000) {
+            override fun onTick(timeLeft: Long) {
+                val toDisplay = timeLeft / 1000 + 1
+                binding.tvCountDown.text = toDisplay.toString()
+            }
+
+            override fun onFinish() {
+                classicViewModel.startNextTeamRound()
+                prevCompletionPoints = 0
+            }
+        }
+        countDownTimer.start()
+    }
+
+
+    private fun initRecycler() {
+        recyclerView = binding.classicFragmentRecycler
+        recyclerView.adapter = wordsAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun initObservers() {
+        classicViewModel.currentScore.observe {
+            if (
+                it > 0 && (it - (classicViewModel
+                    .teams
+                    .value?.get(classicViewModel.currentTeam.value)
+                    ?: 0)) - 5 == prevCompletionPoints
+            ) {
+                classicViewModel.switchHasCompleted()
+                prevCompletionPoints += 5
+            }
+
+            binding.tvCurrentScore.text = it.toString()
+        }
+
+        classicViewModel.hasCompleted.observe {
+            if (it) {
+                makeRequest()
+                classicViewModel.switchHasCompleted()
+            }
+        }
+
+        classicViewModel.currentTeam.observe {
+            makeRequest()
+            binding.tvCurrentTeam.text = it
+            countDownTimer.cancel()
+            countDownTimer.start()
+        }
+    }
+
+    private fun initWordGetter(context: Context) {
+        getWords = { classicViewModel.getFiveRandomWords(language(context)) }
+    }
+
+    private fun initGameMode() {
+        val gameMode = safeArgs.gameMode
+        val map = (gameMode.teams ?: listOf("Teams1", "Teams2")).associateWith { 0 }.toMutableMap()
+        classicViewModel.setTeamsAndPointsToWin(map, gameMode.pointsToWin ?: 90)
+        timePerRound = gameMode.timePerRound ?: 30
+    }
+
+
+    private fun makeRequest() = viewLifecycleOwner.lifecycleScope.launch {
+        wordsAdapter.setData(getWords())
+    }
+
+    private fun <T> LiveData<T>.observe(f: (T) -> Unit) = this.observe(viewLifecycleOwner) { f(it) }
 
 }

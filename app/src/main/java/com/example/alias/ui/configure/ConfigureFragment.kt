@@ -1,8 +1,11 @@
 package com.example.alias.ui.configure
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
+import com.example.alias.R
 import com.example.alias.databinding.ConfigureFragmentBinding
 import com.example.alias.ui.base.BaseFragment
 import com.example.alias.ui.configure.adapter.ConfigurationViewPagerAdapter
@@ -52,6 +55,18 @@ class ConfigureFragment :
                 }
             }
         }
+
+        viewModel.hasGameModeBeenInitialized.observe(viewLifecycleOwner) {
+            if (it.isHandled) {
+                val action = ConfigureFragmentDirections
+                    .actionConfigureFragmentToClassicFragment(
+                        viewModel.gameMode
+                    )
+                findNavController()
+                    .navigate(R.id.action_global_classicFragment, args = bundleOf(Pair("gameMode", viewModel.gameMode)))
+            }
+        }
+
     }
 
     companion object {
