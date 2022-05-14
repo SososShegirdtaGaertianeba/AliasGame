@@ -2,7 +2,9 @@ package com.example.alias.ui.configure
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
+import com.example.alias.R
 import com.example.alias.databinding.ConfigureFragmentBinding
 import com.example.alias.ui.base.BaseFragment
 import com.example.alias.ui.configure.adapter.ConfigurationViewPagerAdapter
@@ -52,6 +54,15 @@ class ConfigureFragment :
                 }
             }
         }
+
+        viewModel.hasGameModeBeenInitialized.observe(viewLifecycleOwner) {
+            if (it.isHandled) {
+                viewModel.hasGameModeBeenInitialized.value = PagingEvent(it.data, it.position)
+                findNavController()
+                    .navigate(R.id.action_configureFragment_to_classicFragment)
+            }
+        }
+
     }
 
     companion object {
