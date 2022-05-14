@@ -1,5 +1,6 @@
 package com.example.alias.ui.configure
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -57,9 +58,12 @@ class ConfigureFragment :
 
         viewModel.hasGameModeBeenInitialized.observe(viewLifecycleOwner) {
             if (it.isHandled) {
-                viewModel.hasGameModeBeenInitialized.value = PagingEvent(it.data, it.position)
+                val action = ConfigureFragmentDirections
+                    .actionConfigureFragmentToClassicFragment(
+                        viewModel.gameMode
+                    )
                 findNavController()
-                    .navigate(R.id.action_configureFragment_to_classicFragment)
+                    .navigate(R.id.action_global_classicFragment, args = bundleOf(Pair("gameMode", viewModel.gameMode)))
             }
         }
 
