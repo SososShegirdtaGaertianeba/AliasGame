@@ -28,20 +28,14 @@
         android:label="configure_fragment"
         tools:layout="@layout/configure_fragment" >
         <action
+            android:id="@+id/action_configureFragment_to_classicFragment"
+            app:destination="@id/classicFragment" />
+        <action
             android:id="@+id/action_configureFragment_to_arcadeFragment"
             app:destination="@id/arcadeFragment" />
         <action
-            android:id="@+id/action_configureFragment_to_classicFragment"
-            app:destination="@id/classicFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/arcadeFragment"
-        android:name="com.example.alias.ui.arcade.ArcadeFragment"
-        android:label="arcade_fragment"
-        tools:layout="@layout/arcade_fragment" >
-        <action
-            android:id="@+id/action_arcadeFragment_to_resultFragment"
-            app:destination="@id/resultFragment" />
+            android:id="@+id/action_configureFragment_to_rulesDialogFragment"
+            app:destination="@id/rulesDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/classicFragment"
@@ -49,27 +43,57 @@
         android:label="classic_fragment"
         tools:layout="@layout/classic_fragment" >
         <action
-            android:id="@+id/action_classicFragment_to_resultFragment"
-            app:destination="@id/resultFragment" />
+            android:id="@+id/action_classicFragment_to_scoreBreakFragment"
+            app:destination="@id/scoreBreakFragment" />
         <argument
             android:name="gameMode"
             app:argType="com.example.alias.util.GameMode" />
+        <action
+            android:id="@+id/action_classicFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/arcadeFragment"
+        android:name="com.example.alias.ui.arcade.ArcadeFragment"
+        android:label="arcade_fragment"
+        tools:layout="@layout/arcade_fragment" >
+        <action
+            android:id="@+id/action_arcadeFragment_to_scoreBreakFragment"
+            app:destination="@id/scoreBreakFragment" />
+        <argument
+            android:name="gameMode"
+            app:argType="com.example.alias.util.GameMode" />
+        <action
+            android:id="@+id/action_arcadeFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/scoreBreakFragment"
+        android:name="com.example.alias.ui.scoreBreak.ScoreBreakFragment"
+        android:label="fragment_score_break"
+        tools:layout="@layout/fragment_score_break" >
+        <argument
+            android:name="isClassic"
+            app:argType="boolean" />
+    </dialog>
     <fragment
         android:id="@+id/resultFragment"
         android:name="com.example.alias.ui.result.ResultFragment"
-        android:label="ResultFragment">
+        android:label="ResultFragment" >
+        <argument
+            android:name="gameMode"
+            app:argType="com.example.alias.util.GameMode" />
+        <argument
+            android:name="scoreArray"
+            app:argType="integer[]" />
         <action
             android:id="@+id/action_resultFragment_to_configureFragment"
             app:destination="@id/configureFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/pagerTimeAndPointsFragment2"
-        android:name="com.example.alias.ui.configure.view_pager_fragments.pager_time_and_points.PagerTimeAndPointsFragment"
-        android:label="fragment_pager_time_and_points"
-        tools:layout="@layout/fragment_pager_time_and_points" >
         <action
-            android:id="@+id/action_pagerTimeAndPointsFragment2_to_classicFragment"
+            android:id="@+id/action_resultFragment_to_arcadeFragment"
+            app:destination="@id/arcadeFragment" />
+        <action
+            android:id="@+id/action_resultFragment_to_classicFragment"
             app:destination="@id/classicFragment" />
-    </fragment><action android:id="@+id/action_global_classicFragment" app:destination="@id/classicFragment"/>
+    </fragment>
 </navigation>

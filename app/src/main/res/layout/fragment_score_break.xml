@@ -4,24 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.configure.view_pager_fragments.pager_time_and_points.PagerTimeAndPointsFragment">
+    android:layout_margin="64dp"
+    tools:context=".ui.scoreBreak.ScoreBreakFragment">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/timeET"
-        android:layout_width="0dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="TIME"
-        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/btnContinue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/pointET"
-        android:layout_width="0dp"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnContinue"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:hint="POINT"
-        android:inputType="number"
+        android:text="continue"
+        android:layout_marginHorizontal="64dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

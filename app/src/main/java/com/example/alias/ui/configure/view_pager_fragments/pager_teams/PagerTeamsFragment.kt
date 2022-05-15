@@ -10,7 +10,7 @@ import com.example.alias.ui.configure.vm.ConfigureViewModel
 
 class PagerTeamsFragment :
     BaseFragment<FragmentPagerTeamsBinding>(FragmentPagerTeamsBinding::inflate) {
-    private val adapter by lazy { TeamsAdapter() }
+    private val adapter by lazy { TeamsAdapter { viewModel.setTeams(it) } }
 
     private val viewModel: ConfigureViewModel by viewModels(
         ownerProducer = { requireParentFragment() }
@@ -29,8 +29,7 @@ class PagerTeamsFragment :
 
             btnDeleteLast.setOnClickListener {
                 if (adapter.teams.size > MIN_TEAMS) {
-                    adapter.teams.removeLast()
-                    adapter.notifyItemRemoved(adapter.teams.size)
+                    adapter.deleteLast()
                 } else makeToastMessage(getString(R.string.min2Teams))
             }
 
@@ -40,6 +39,7 @@ class PagerTeamsFragment :
                 else
                     viewModel.setTeams(adapter.teams)
             }
+
         }
 
     companion object {

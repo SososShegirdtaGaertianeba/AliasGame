@@ -1,6 +1,5 @@
 package com.example.alias.ui.classic.vm
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,16 +12,24 @@ class ClassicViewModel(
 ) : ViewModel() {
 
     private val wordSet = mutableSetOf<String?>()
-    private val _teams = MutableLiveData<MutableMap<String, Int>>()
+    private var _teams = mutableMapOf<String, Int>()
     private val _currentScore = MutableLiveData(0)
     private val _hasCompleted = MutableLiveData(false)
-    private val _currentTeam = MutableLiveData("Team1")
+    private var _currentTeam = "Team1"
 
+    val teams: Map<String, Int>
+        get() = _teams
 
     private var teamPointer = 0
 
+    private val _isNextTurn =
+        MutableLiveData(false)
+
     private val teamsList: List<String>
-        get() = _teams.value!!.keys.toList()
+        get() = this._teams.keys.toList()
+
+    val isNextTurn: LiveData<Boolean>
+        get() = _isNextTurn
 
     val hasCompleted: LiveData<Boolean>
         get() = _hasCompleted
@@ -30,22 +37,18 @@ class ClassicViewModel(
     val currentScore: LiveData<Int>
         get() = _currentScore
 
-    val currentTeam: LiveData<String>
+    val currentTeam: String
         get() = _currentTeam
-
-    val teams: LiveData<MutableMap<String, Int>>
-        get() = _teams
-
-    private var _pointsToWin = -1
-
 
     private var currentWord = ""
 
+    fun toggleIsNextTurn() {
+        _isNextTurn.value = !_isNextTurn.value!!
+    }
 
     fun startNextTeamRound() {
-        saveCurrentTeamScore()
         teamPointer = (teamPointer + 1) % teamsList.size
-        _currentTeam.value = teamsList[teamPointer]
+        _currentTeam = teamsList[teamPointer]
         getCurrentTeamScore()
     }
 
@@ -57,27 +60,25 @@ class ClassicViewModel(
         _currentScore.value = _currentScore.value!! - 1
     }
 
-    private fun saveCurrentTeamScore() {
-        val score = _teams.value?.get(currentTeam.value)
+    fun saveCurrentTeamScore() {
+        val score = this._teams.get(currentTeam)
         score?.let {
-            _teams.value!![currentTeam.value!!] =
+            this._teams[currentTeam!!] =
                 it + (currentScore.value!! - it)
         }
     }
 
     private fun getCurrentTeamScore() {
-        _currentScore.value = _teams.value?.get(currentTeam.value) ?: 0
+        _currentScore.value = this._teams[currentTeam] ?: 0
     }
 
     fun switchHasCompleted() {
         _hasCompleted.value = !_hasCompleted.value!!
     }
 
-    fun setTeamsAndPointsToWin(teams: MutableMap<String, Int>, pointsToWin: Int) {
-        this._teams.value = teams
-        this._pointsToWin = pointsToWin
-        _currentTeam.value = teamsList[teamPointer]
-        Log.d("TEAMS_AND_POINTS", teams.toString())
+    fun setTeams(teams: MutableMap<String, Int>) {
+        this._teams = teams
+        _currentTeam = teamsList[teamPointer]
     }
 
     private suspend fun getRandomEnglishWord() {
@@ -114,5 +115,4 @@ class ClassicViewModel(
         2 -> getFiveRandomWords { getRandomGeorgianWord() }
         else -> getFiveRandomWords { getRandomEnglishWord() }
     }
-
 }

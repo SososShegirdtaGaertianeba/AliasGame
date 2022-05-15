@@ -1,11 +1,9 @@
 package com.example.alias.ui.configure
 
-import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
-import com.example.alias.R
 import com.example.alias.databinding.ConfigureFragmentBinding
 import com.example.alias.ui.base.BaseFragment
 import com.example.alias.ui.configure.adapter.ConfigurationViewPagerAdapter
@@ -13,7 +11,6 @@ import com.example.alias.ui.configure.view_pager_fragments.pager_game_mode.Pager
 import com.example.alias.ui.configure.view_pager_fragments.pager_teams.PagerTeamsFragment
 import com.example.alias.ui.configure.view_pager_fragments.pager_time_and_points.PagerTimeAndPointsFragment
 import com.example.alias.ui.configure.vm.ConfigureViewModel
-import com.example.alias.util.PagingEvent
 
 class ConfigureFragment :
     BaseFragment<ConfigureFragmentBinding>(ConfigureFragmentBinding::inflate) {
@@ -22,8 +19,6 @@ class ConfigureFragment :
 
     private lateinit var adapter: ConfigurationViewPagerAdapter
 
-    private val viewPager: ViewPager2
-        get() = binding.viewPager
 
     override fun init() {
         initViewPager()
@@ -41,36 +36,35 @@ class ConfigureFragment :
             childFragmentManager,
             viewLifecycleOwner.lifecycle,
         )
-        viewPager.adapter = adapter
+        binding.viewPager.adapter = adapter
 
     }
 
     private fun initObservers() {
-        var i = ZERO
-        viewModel.events.forEach { observer ->
-            observer.observe(viewLifecycleOwner) {
-                if (it.isHandled) {
-                    viewPager.currentItem = it.position
-                    viewModel.events[i++].value = PagingEvent(it.data, it.position)
-                }
+        viewModel.gameMode.observe(viewLifecycleOwner) {
+            it.isClassic?.let { _ ->
+                if (it.teams == null)
+                    binding.viewPager.currentItem = 1
             }
-        }
 
-        viewModel.hasGameModeBeenInitialized.observe(viewLifecycleOwner) {
-            if (it.isHandled) {
-                val action = ConfigureFragmentDirections
-                    .actionConfigureFragmentToClassicFragment(
-                        viewModel.gameMode
+
+
+            if (it.isClassic != null && it.teams != null
+                && it.timePerRound != null && it.pointsToWin != null
+            ) {
+                val action =
+                    if (viewModel.gameMode.value!!.isClassic!!) ConfigureFragmentDirections.actionConfigureFragmentToClassicFragment(
+                        viewModel.gameMode.value!!
                     )
-                findNavController()
-                    .navigate(R.id.action_global_classicFragment, args = bundleOf(Pair("gameMode", viewModel.gameMode)))
-            }
+                    else ConfigureFragmentDirections.actionConfigureFragmentToArcadeFragment(
+                        viewModel.gameMode.value!!
+                    )
+                binding.btnConfigureDone.isVisible = true
+                binding.btnConfigureDone.setOnClickListener {
+                    findNavController().navigate(action)
+                }
+            } else binding.btnConfigureDone.isVisible = false
         }
-
-    }
-
-    companion object {
-        private const val ZERO = 0
     }
 
 }

@@ -10,7 +10,6 @@ import com.example.alias.databinding.ClassicModeWordItemBinding
 class WordsAdapter(
     val onMark: () -> Unit,
     val onUnMark: () -> Unit,
-    val log: () -> Unit
 ) : RecyclerView.Adapter<WordsAdapter.ViewHolder>() {
 
     private val items = mutableListOf<String>()
@@ -32,7 +31,6 @@ class WordsAdapter(
                     onMark()
                     it.background = (it.resources.getColor(R.color.purple_200)).toDrawable()
                 }
-                log()
                 markedItems[position] = !markedItems[position]
             }
         }

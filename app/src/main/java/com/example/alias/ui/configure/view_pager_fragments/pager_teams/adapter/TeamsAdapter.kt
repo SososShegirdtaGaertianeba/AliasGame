@@ -7,20 +7,22 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alias.databinding.TeamsAdapterItemBinding
 
-class TeamsAdapter : RecyclerView.Adapter<TeamsAdapter.ViewHolder>() {
+class TeamsAdapter(
+    val onTextChangedListener: (MutableList<String>) -> Unit
+) : RecyclerView.Adapter<TeamsAdapter.ViewHolder>() {
     val teams = mutableListOf(TEAM_1, TEAM_2)
 
     inner class ViewHolder(private val binding: TeamsAdapterItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        fun onBind() {
-            binding.btnDelete.visibility = View.INVISIBLE
+        fun onBind(teams: MutableList<String>, position: Int) {
+            binding.etTeam.setText(teams[position])
         }
 
         fun setEditedListener(position: Int) {
             binding.etTeam.addTextChangedListener {
                 if (position < itemCount)
                     teams[position] = it.toString()
+                onTextChangedListener(teams)
             }
         }
     }
@@ -34,16 +36,21 @@ class TeamsAdapter : RecyclerView.Adapter<TeamsAdapter.ViewHolder>() {
     )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind()
         holder.setEditedListener(position)
+        holder.onBind(teams, position)
     }
 
     override fun getItemCount(): Int =
         teams.size
 
     fun addTeam() {
-        teams.add("$TEAM_DEFAULT_NAME${itemCount}")
+        teams.add("$TEAM_DEFAULT_NAME${itemCount + 1}")
         notifyItemInserted(itemCount)
+    }
+
+    fun deleteLast() {
+        teams.removeLast()
+        notifyItemRemoved(teams.size)
     }
 
     companion object {

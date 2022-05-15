@@ -1,49 +1,88 @@
 package com.example.alias.ui.configure.vm
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.alias.util.GameMode
-import com.example.alias.util.PagingEvent
-import kotlinx.coroutines.flow.MutableStateFlow
 
 class ConfigureViewModel : ViewModel() {
 
-    val gameMode: GameMode = GameMode()
+    private val _gameMode = MutableLiveData(GameMode())
+    val gameMode: LiveData<GameMode>
+        get() = _gameMode
 
-    private val isClassic =
-        MutableLiveData(PagingEvent(true, ONE))
+    private val _gameModeComponents =
+        MutableLiveData(Array(4) { false })
 
-    val hasGameModeBeenInitialized =
-        MutableLiveData(PagingEvent(false, ZERO))
+    val gameModeComponenets: LiveData<Array<Boolean>>
+        get() = _gameModeComponents
 
-    private val teams =
-        MutableLiveData(PagingEvent(mutableListOf<String>(), TWO))
-
-    private val timePerRoundAndPointsToWin =
-        MutableLiveData(PagingEvent(intArrayOf(DEFAULT_SCORE, DEFAULT_TIME), THREE))
-
-    val events = arrayOf(isClassic, teams, timePerRoundAndPointsToWin)
+    private fun changedGameComponents(pos: Int): Array<Boolean> {
+        val res = gameModeComponenets.value
+        res!![pos] = true
+        return res
+    }
 
     fun setIsClassic(isClassic: Boolean) {
-        this.isClassic.value = PagingEvent(isClassic, ONE, true)
+        _gameMode.value?.let {
+            _gameMode.value = GameMode(
+                isClassic = isClassic,
+                teams = it.teams,
+                timePerRound = it.timePerRound,
+                pointsToWin = it.pointsToWin
+            )
+        }
+
+        _gameModeComponents.value = changedGameComponents(ZERO)
+        Log.d("GAMEMODE", gameMode.value!!.isClassic.toString())
+        Log.d("GAMEMODE", gameModeComponenets.value!!.toList().toString())
     }
 
     fun setTeams(teams: MutableList<String>) {
-        this.teams.value = PagingEvent(teams, TWO, true)
+        _gameMode.value?.let {
+            _gameMode.value = GameMode(
+                isClassic = it.isClassic,
+                teams = teams,
+                timePerRound = it.timePerRound,
+                pointsToWin = it.pointsToWin
+            )
+            _gameModeComponents.value = changedGameComponents(ONE)
+        }
+
+        Log.d("GAMEMODE", gameMode.value!!.teams.toString())
+        Log.d("GAMEMODE", gameModeComponenets.value!!.toList().toString())
+
     }
 
-    fun setTimePerRoundAndPointsToWin(timePerRound: Int, pointsToWin: Int) {
-        this.timePerRoundAndPointsToWin.value =
-            PagingEvent(intArrayOf(timePerRound, pointsToWin), THREE, true)
+    fun setTimePerRound(timePerRound: Int?) {
+        _gameMode.value?.let {
+            _gameMode.value = GameMode(
+                isClassic = it.isClassic,
+                teams = it.teams,
+                timePerRound = timePerRound,
+                pointsToWin = it.pointsToWin
+            )
+        }
+        _gameModeComponents.value = changedGameComponents(TWO)
+        Log.d("GAMEMODE", gameModeComponenets.value!!.toList().toString())
+
     }
 
-    fun initGameMode() {
-        gameMode.isClassic = isClassic.value?.data ?: true
-        gameMode.teams = teams.value?.data ?: listOf("Team1", "Team2")
-        gameMode.timePerRound = timePerRoundAndPointsToWin.value?.data?.get(ZERO) ?: 60
-        gameMode.pointsToWin = timePerRoundAndPointsToWin.value?.data?.get(ONE) ?: 100
-        hasGameModeBeenInitialized.value = PagingEvent(true, ZERO, true)
+    fun setPointsToWin(pointsToWin: Int?) {
+        _gameMode.value?.let {
+            _gameMode.value = GameMode(
+                isClassic = it.isClassic,
+                teams = it.teams,
+                timePerRound = it.timePerRound,
+                pointsToWin = pointsToWin
+            )
+        }
+        _gameModeComponents.value = changedGameComponents(THREE)
+        Log.d("GAMEMODE", gameModeComponenets.value!!.toList().toString())
+
     }
+
 
     companion object {
         private const val ZERO = 0
