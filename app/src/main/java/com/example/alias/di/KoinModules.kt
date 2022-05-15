@@ -8,8 +8,8 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModels = module {
-    viewModel { ArcadeViewModel(get()) }
-    viewModel { ClassicViewModel(get()) }
+    single { ArcadeViewModel(get()) }
+    single { ClassicViewModel(get()) }
 }
 
 val wordsDao = module {

@@ -10,7 +10,7 @@
         android:id="@+id/classic_fragment_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/btnGenerate"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvCurrentScore"
         tools:layout_editor_absoluteX="-16dp"
         tools:layout_editor_absoluteY="0dp" />
@@ -32,16 +32,6 @@
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-    <Button
-        android:id="@+id/btnGenerate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="click me"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvCurrentTeam"
