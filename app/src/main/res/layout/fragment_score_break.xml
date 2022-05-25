@@ -20,7 +20,7 @@
         android:id="@+id/btnContinue"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="continue"
+        android:text="@string/continue_game"
         android:layout_marginHorizontal="64dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

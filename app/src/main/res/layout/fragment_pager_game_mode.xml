@@ -11,7 +11,7 @@
         android:id="@+id/classic"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="classic"
+        android:text="@string/classic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,7 +20,7 @@
         android:id="@+id/arcade"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="arcade"
+        android:text="@string/arcade"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

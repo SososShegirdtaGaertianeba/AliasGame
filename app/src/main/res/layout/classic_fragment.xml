@@ -19,7 +19,6 @@
         android:id="@+id/tvCurrentScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
         android:textSize="50sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,7 +27,6 @@
         android:id="@+id/tvCountDown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +35,6 @@
         android:id="@+id/tvCurrentTeam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TEAM"
         android:textSize="50sp"
         app:layout_constraintEnd_toStartOf="@id/tvCountDown"
         app:layout_constraintStart_toEndOf="@id/tvCurrentScore"
