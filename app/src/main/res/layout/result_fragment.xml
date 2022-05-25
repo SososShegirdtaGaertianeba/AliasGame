@@ -18,7 +18,7 @@
         android:id="@+id/btnRematch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="rematch"
+        android:text="@string/rematch"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -26,7 +26,7 @@
         android:id="@+id/btnConfigureGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Game"
+        android:text="@string/new_game"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

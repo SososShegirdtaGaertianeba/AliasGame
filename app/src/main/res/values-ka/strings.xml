@@ -4,7 +4,7 @@
 
     <!-- Home Fragment -->
     <string name="rules">წესები</string>
-    <string name="configuration">კონფიგურაცია</string>
+    <string name="configuration">თამაში</string>
     <string-array name="language_array">
         <item>ინგლისური</item>
         <item>რუსული</item>
@@ -16,6 +16,16 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="max6Teams">მაქსიმუმ 6 გუნდი</string>
     <string name="min2Teams">მინიმუმ 2 გუნდი</string>
-    <string name="uniqueConstraint">გუნდი ერთიდაიგივე სახელებით?</string>
-    <string name="fillAllFields">შეავსეთ ყველა საჭირო ველი</string>
+    <string name="uniqueConstraint">გუნდები ერთიდაიგივე სახელებით</string>
+    <string name="fillAllFields">შეავსეთ ყველა ველი</string>
+    <string name="start">დაწყება</string>
+    <string name="classic">კლასიკური</string>
+    <string name="arcade">არკადა</string>
+    <string name="add">დამატება</string>
+    <string name="delete_last">წაშლა</string>
+    <string name="time">დრო</string>
+    <string name="point">ქულები</string>
+    <string name="continue_game">გაგრძელება</string>
+    <string name="rematch">რევანში</string>
+    <string name="new_game">ახალი თამაში</string>
 </resources>

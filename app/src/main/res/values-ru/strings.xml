@@ -4,7 +4,7 @@
 
     <!-- Home Fragment -->
     <string name="rules">правила</string>
-    <string name="configuration">конфигурация</string>
+    <string name="configuration">играть</string>
     <string-array name="language_array">
         <item>английский</item>
         <item>русский</item>
@@ -14,8 +14,18 @@
 
     <!-- Other(to be organized later...) -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="max6Teams">Maximum 6 Teams</string>
-    <string name="min2Teams">Minimum 2 Teams</string>
-    <string name="uniqueConstraint">No Teams With Same Names</string>
-    <string name="fillAllFields">Please Fill Required Fields</string>
+    <string name="max6Teams">Максимум 6 команд</string>
+    <string name="min2Teams">Минимум 2 команды</string>
+    <string name="uniqueConstraint">Команды с одинаковыми именами</string>
+    <string name="fillAllFields">Заполните все поля</string>
+    <string name="start">начать</string>
+    <string name="classic">класический</string>
+    <string name="arcade">аркада</string>
+    <string name="add">добавить</string>
+    <string name="delete_last">удалить</string>
+    <string name="time">ВРЕМЯ</string>
+    <string name="point">ОЧКИ</string>
+    <string name="continue_game">продолжить</string>
+    <string name="rematch">реванш</string>
+    <string name="new_game">новая игра</string>
 </resources>

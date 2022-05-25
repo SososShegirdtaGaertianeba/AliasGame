@@ -32,14 +32,6 @@ class PagerTeamsFragment :
                     adapter.deleteLast()
                 } else makeToastMessage(getString(R.string.min2Teams))
             }
-
-            btnDone.setOnClickListener {
-                if (adapter.teams.toSet().size != adapter.teams.size)
-                    makeToastMessage(getString(R.string.uniqueConstraint))
-                else
-                    viewModel.setTeams(adapter.teams)
-            }
-
         }
 
     companion object {
