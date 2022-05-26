@@ -11,27 +11,27 @@ import com.example.alias.di.viewModels
 import com.example.alias.safeNavigate
 import com.example.alias.ui.arcade.vm.ArcadeViewModel
 import com.example.alias.ui.base.BaseFragment
-import com.example.alias.ui.classic.ClassicFragmentDirections
 import com.example.alias.ui.home.HomeFragment.Companion.PREFERENCE_NAME
 import com.example.alias.util.GameMode
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.unloadKoinModules
-import kotlin.properties.Delegates
 
 class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding::inflate) {
-    private val safeArgs: ArcadeFragmentArgs by navArgs()
-
-    private val viewModel: ArcadeViewModel by viewModel()
-
-    private lateinit var countDownTimer: CountDownTimer
 
     private lateinit var getWord: suspend () -> String
-
-    private var isGameFinished = false
-
+    private lateinit var countDownTimer: CountDownTimer
     private lateinit var gameMode: GameMode
+
+    // Game Logic Handler Variables
+    private var isGameFinished = false
+    private var gotToWinningPoints = false
+    private var isBonusRound = false
+    private var pointer = 0
+
+    private val safeArgs: ArcadeFragmentArgs by navArgs()
+    private val arcadeViewModel: ArcadeViewModel by viewModel()
 
 
     private var timePerRound = 0
@@ -40,37 +40,72 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
         loadKoinModules(viewModels)
         initListener()
         initGameMode()
+        initObservers()
         initWordGetter(requireContext())
         initCountDownTimer(timePerRound)
-        makeRequest()
-        binding.currentTeamTV.text = viewModel.currentTeam
-        initObserver()
+        startNextTeamRound()
     }
 
-    private fun initObserver() {
-        viewModel.currentScore.observe(viewLifecycleOwner) {
-            isGameFinished = it >= gameMode.pointsToWin!!
+    private fun initObservers() {
+        arcadeViewModel.currentScore.observe(viewLifecycleOwner) {
+            if (it >= gameMode.pointsToWin!!)
+                gotToWinningPoints = true
+
             binding.currentScoreTV.text = it.toString()
         }
 
-        viewModel.isNextTurn.observe(viewLifecycleOwner) {
+        arcadeViewModel.isNextTurn.observe(viewLifecycleOwner) {
             if (it) {
                 startNextTeamRound()
-                viewModel.toggleIsNextTurn()
+                arcadeViewModel.toggleIsNextTurn()
+            }
+        }
+    }
+
+    private fun handleIsGameFinished() {
+        isGameFinished =
+            gotToWinningPoints &&
+                    pointer == arcadeViewModel.currentTeams.size - 1
+        pointer = (pointer + 1) % arcadeViewModel.currentTeams.size
+    }
+
+    private fun handleGameContinuation() = when {
+        !isGameFinished -> navigateToScoreBreak()
+        !isBonusRound -> {
+            isBonusRound = true
+            val leftForBonus =
+                arcadeViewModel.currentTeams.filter { it.value >= gameMode.pointsToWin!! }
+
+            if (leftForBonus.size <= 1)
+                navigateToResultFragment()
+            else {
+                arcadeViewModel.setTeams(leftForBonus, isBonusRound)
+                navigateToScoreBreak()
+            }
+        }
+        else -> {
+            val leftForBonus =
+                arcadeViewModel.currentTeams.filter { it.value == arcadeViewModel.currentTeams.values.maxOrNull() }
+
+            if (leftForBonus.size <= 1)
+                navigateToResultFragment()
+            else {
+                arcadeViewModel.setTeams(leftForBonus, isBonusRound)
+                navigateToScoreBreak()
             }
         }
     }
 
     private fun startNextTeamRound() {
-        viewModel.startNextTeamRound()
+        arcadeViewModel.startNextTeamRound()
         makeRequest()
-        binding.currentTeamTV.text = viewModel.currentTeam
+        binding.currentTeamTV.text = arcadeViewModel.currentTeam
         countDownTimer.cancel()
         countDownTimer.start()
     }
 
     private fun initWordGetter(context: Context) {
-        getWord = { viewModel.getRandomWord(language(context)) }
+        getWord = { arcadeViewModel.getRandomWord(language(context)) }
     }
 
     private fun makeRequest() = viewLifecycleOwner.lifecycleScope.launch {
@@ -81,7 +116,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
         gameMode = safeArgs.gameMode
         gameMode.pointsToWin = gameMode.pointsToWin ?: 90
         val map = (gameMode.teams ?: listOf("Teams1", "Teams2")).associateWith { 0 }.toMutableMap()
-        viewModel.setTeamsAndPointsToWin(map)
+        arcadeViewModel.setTeams(map)
         timePerRound = gameMode.timePerRound ?: 30
     }
 
@@ -93,12 +128,12 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
     private fun initListener() {
         binding.plusBtn.setOnClickListener {
             makeRequest()
-            viewModel.incrementScore()
+            arcadeViewModel.incrementScore()
         }
 
         binding.minusBtn.setOnClickListener {
             makeRequest()
-            viewModel.decrementScore()
+            arcadeViewModel.decrementScore()
         }
     }
 
@@ -109,11 +144,9 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
             }
 
             override fun onFinish() {
-                viewModel.saveCurrentTeamScore()
-                if (!isGameFinished)
-                    navigateToScoreBreak()
-                else
-                    navigateToResultFragment()
+                handleIsGameFinished()
+                arcadeViewModel.saveCurrentTeamScore()
+                handleGameContinuation()
             }
         }.start()
     }
@@ -121,7 +154,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
     private fun navigateToResultFragment() {
         val action = ArcadeFragmentDirections.actionArcadeFragmentToResultFragment(
             gameMode,
-            viewModel.teams.values.toIntArray()
+            arcadeViewModel.teamsTotal.values.toIntArray()
         )
         findNavController().navigate(action)
     }

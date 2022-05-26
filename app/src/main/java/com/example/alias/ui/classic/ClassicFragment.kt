@@ -2,7 +2,6 @@ package com.example.alias.ui.classic
 
 import android.content.Context
 import android.os.CountDownTimer
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -22,6 +21,7 @@ import org.koin.core.context.loadKoinModules
 import org.koin.core.context.unloadKoinModules
 
 class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBinding::inflate) {
+
     private lateinit var getWords: suspend () -> MutableList<String>
     private lateinit var countDownTimer: CountDownTimer
     private lateinit var recyclerView: RecyclerView
@@ -89,39 +89,37 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
         pointer = (pointer + 1) % classicViewModel.currentTeams.size
     }
 
-    private fun handleGameContinuation() {
-        when {
-            !isGameFinished -> navigateToScoreBreak()
-            !isBonusRound -> {
-                isBonusRound = true
-                val leftForBonus =
-                    classicViewModel.currentTeams.filter { it.value >= gameMode.pointsToWin!! }
+    private fun handleGameContinuation() = when {
+        !isGameFinished -> navigateToScoreBreak()
+        !isBonusRound -> {
+            isBonusRound = true
+            val leftForBonus =
+                classicViewModel.currentTeams.filter { it.value >= gameMode.pointsToWin!! }
 
-                if (leftForBonus.size <= 1)
-                    navigateToResultFragment()
-                else {
-                    classicViewModel.setTeams(leftForBonus, isBonusRound)
-                    navigateToScoreBreak()
-                }
-            }
-            else -> {
-                val leftForBonus =
-                    classicViewModel.currentTeams.filter { it.value == classicViewModel.currentTeams.values.maxOrNull() }
-                if (leftForBonus.size <= 1)
-                    navigateToResultFragment()
-                else {
-                    classicViewModel.setTeams(leftForBonus, isBonusRound)
-                    navigateToScoreBreak()
-                }
+            if (leftForBonus.size <= 1)
+                navigateToResultFragment()
+            else {
+                classicViewModel.setTeams(leftForBonus, isBonusRound)
+                navigateToScoreBreak()
             }
         }
-
+        else -> {
+            val leftForBonus =
+                classicViewModel.currentTeams.filter { it.value == classicViewModel.currentTeams.values.maxOrNull() }
+            if (leftForBonus.size <= 1)
+                navigateToResultFragment()
+            else {
+                classicViewModel.setTeams(leftForBonus, isBonusRound)
+                navigateToScoreBreak()
+            }
+        }
     }
+
 
     private fun navigateToResultFragment() {
         val action = ClassicFragmentDirections.actionClassicFragmentToResultFragment(
             gameMode,
-            classicViewModel.teams.values.toIntArray()
+            classicViewModel.teamsTotal.values.toIntArray()
         )
         findNavController().navigate(action)
     }

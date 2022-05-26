@@ -12,7 +12,7 @@ class ClassicViewModel(
 ) : ViewModel() {
 
     private val wordSet = mutableSetOf<String?>()
-    private var _teams = mutableMapOf<String, Int>()
+    private var _teamsTotal = mutableMapOf<String, Int>()
     private var _currentTeams = mutableMapOf<String, Int>()
     private val _currentScore = MutableLiveData(0)
     private val _hasCompleted = MutableLiveData(false)
@@ -21,8 +21,8 @@ class ClassicViewModel(
     val currentTeams: Map<String, Int>
         get() = _currentTeams
 
-    val teams: Map<String, Int>
-        get() = _teams
+    val teamsTotal: Map<String, Int>
+        get() = _teamsTotal
 
     private var teamPointer = 0
 
@@ -50,11 +50,10 @@ class ClassicViewModel(
         _isNextTurn.value = !_isNextTurn.value!!
     }
 
-    fun startNextTeamRound(): Int {
+    fun startNextTeamRound() {
         teamPointer = (teamPointer + 1) % teamsList.size
         _currentTeam = teamsList[teamPointer]
         getCurrentTeamScore()
-        return teamPointer
     }
 
     fun incrementScore() {
@@ -70,7 +69,7 @@ class ClassicViewModel(
         score?.let {
             this._currentTeams[currentTeam] =
                 it + (currentScore.value!! - it)
-            _teams[currentTeam] = currentTeams[currentTeam]!!
+            _teamsTotal[currentTeam] = currentTeams[currentTeam]!!
         }
     }
 
@@ -84,10 +83,9 @@ class ClassicViewModel(
 
     fun setTeams(teams: Map<String, Int>, isBonusRound: Boolean = false) {
         if (!isBonusRound)
-            this._teams = teams.toMutableMap()
+            this._teamsTotal = teams.toMutableMap()
         teamPointer = -1
         this._currentTeams = teams.toMutableMap()
-//        _currentTeam = teamsList[teamPointer]
     }
 
     private suspend fun getRandomEnglishWord() {
