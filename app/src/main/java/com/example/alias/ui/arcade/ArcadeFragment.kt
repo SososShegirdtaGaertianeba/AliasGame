@@ -8,17 +8,15 @@ import androidx.navigation.fragment.navArgs
 import com.example.alias.MainActivity.Companion.SHARED_PREFERENCE_NAME
 import com.example.alias.databinding.ArcadeFragmentBinding
 import com.example.alias.di.viewModels
-import com.example.alias.safeNavigate
+import com.example.alias.extensions.safeNavigate
 import com.example.alias.ui.arcade.vm.ArcadeViewModel
 import com.example.alias.ui.base.BaseFragment
-import com.example.alias.ui.classic.ClassicFragmentDirections
 import com.example.alias.ui.home.HomeFragment.Companion.PREFERENCE_NAME
 import com.example.alias.util.GameMode
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.unloadKoinModules
-import kotlin.properties.Delegates
 
 class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding::inflate) {
     private val safeArgs: ArcadeFragmentArgs by navArgs()
@@ -42,9 +40,9 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
         initGameMode()
         initWordGetter(requireContext())
         initCountDownTimer(timePerRound)
-        makeRequest()
         binding.currentTeamTV.text = viewModel.currentTeam
         initObserver()
+        makeRequest()
     }
 
     private fun initObserver() {
