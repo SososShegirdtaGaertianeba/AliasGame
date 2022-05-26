@@ -46,10 +46,11 @@ class ClassicViewModel(
         _isNextTurn.value = !_isNextTurn.value!!
     }
 
-    fun startNextTeamRound() {
+    fun startNextTeamRound(): Int {
         teamPointer = (teamPointer + 1) % teamsList.size
         _currentTeam = teamsList[teamPointer]
         getCurrentTeamScore()
+        return teamPointer
     }
 
     fun incrementScore() {
@@ -61,9 +62,9 @@ class ClassicViewModel(
     }
 
     fun saveCurrentTeamScore() {
-        val score = this._teams.get(currentTeam)
+        val score = this._teams[currentTeam]
         score?.let {
-            this._teams[currentTeam!!] =
+            this._teams[currentTeam] =
                 it + (currentScore.value!! - it)
         }
     }
@@ -96,11 +97,11 @@ class ClassicViewModel(
             wordsDao.getRandomRussianWord().name
     }
 
-    private suspend fun getFiveRandomWords(getter: suspend () -> Unit): MutableList<String> =
+    private suspend fun getFiveRandomWords(getWord: suspend () -> Unit): MutableList<String> =
         withContext(viewModelScope.coroutineContext) {
             val res = mutableListOf<String>()
             while (res.size < 5) {
-                getter()
+                getWord()
                 currentWord.let {
                     if (wordSet.add(it)) {
                         res.add(it)

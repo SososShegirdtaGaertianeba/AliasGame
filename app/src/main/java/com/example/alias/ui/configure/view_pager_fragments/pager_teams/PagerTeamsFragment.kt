@@ -15,7 +15,6 @@ class PagerTeamsFragment :
     private val adapter by lazy {
         TeamsAdapter {
             viewModel.setTeams(it)
-            constraintMessageShown = false
         }
     }
     private var constraintMessageShown = false

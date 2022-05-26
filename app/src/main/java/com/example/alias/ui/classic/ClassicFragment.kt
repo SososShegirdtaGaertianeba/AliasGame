@@ -26,6 +26,8 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
     private lateinit var recyclerView: RecyclerView
     private lateinit var gameMode: GameMode
     private var isGameFinished = false
+    private var gotToWinningPoints = false
+    private var teamPointer = 0
 
     private val safeArgs: ClassicFragmentArgs by navArgs()
     private val classicViewModel: ClassicViewModel by viewModel()
@@ -88,7 +90,7 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
     }
 
     private fun startNextTeamRound() {
-        classicViewModel.startNextTeamRound()
+        teamPointer = classicViewModel.startNextTeamRound()
         prevCompletionPoints = 0
         makeRequest()
         binding.tvCurrentTeam.text = classicViewModel.currentTeam
@@ -113,7 +115,10 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
 
     private fun initObservers() {
         classicViewModel.currentScore.observe {
-            isGameFinished = it >= gameMode.pointsToWin!!
+            if (it >= gameMode.pointsToWin!!)
+                gotToWinningPoints = true
+
+            isGameFinished = gotToWinningPoints && teamPointer == gameMode.teams!!.size - 1
             if (
                 it > 0 && (it - (classicViewModel
                     .teams[classicViewModel.currentTeam]

@@ -1,6 +1,5 @@
 package com.example.alias.ui.configure.vm
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -41,8 +40,6 @@ class ConfigureViewModel : ViewModel() {
         }
 
         _gameModeComponents.value = changedGameComponents(ZERO)
-        Log.d("GAMEMODE", gameMode.value!!.isClassic.toString())
-        Log.d("GAMEMODE", gameModeComponenets.value!!.toList().toString())
     }
 
     fun setTeams(teams: MutableList<String>) {
@@ -61,9 +58,6 @@ class ConfigureViewModel : ViewModel() {
             }
         }
 
-        Log.d("GAMEMODE", gameMode.value!!.teams.toString())
-        Log.d("GAMEMODE", gameModeComponenets.value!!.toList().toString())
-
     }
 
     fun setTimePerRound(timePerRound: Int?) {
@@ -76,7 +70,6 @@ class ConfigureViewModel : ViewModel() {
             )
         }
         _gameModeComponents.value = changedGameComponents(TWO)
-        Log.d("GAMEMODE", gameModeComponenets.value!!.toList().toString())
 
     }
 
@@ -90,7 +83,6 @@ class ConfigureViewModel : ViewModel() {
             )
         }
         _gameModeComponents.value = changedGameComponents(THREE)
-        Log.d("GAMEMODE", gameModeComponenets.value!!.toList().toString())
 
     }
 
