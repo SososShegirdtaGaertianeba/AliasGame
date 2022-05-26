@@ -18,6 +18,12 @@ class ConfigureViewModel : ViewModel() {
     val gameModeComponenets: LiveData<Array<Boolean>>
         get() = _gameModeComponents
 
+    private val _isTeamsInputValid = MutableLiveData(true)
+    val isTeamsInputValid: LiveData<Boolean>
+        get() = _isTeamsInputValid
+    val handleIsTeamsInputValid: (Boolean) -> Unit = { _isTeamsInputValid.value = it }
+
+
     private fun changedGameComponents(pos: Int): Array<Boolean> {
         val res = gameModeComponenets.value
         res!![pos] = true
@@ -40,14 +46,19 @@ class ConfigureViewModel : ViewModel() {
     }
 
     fun setTeams(teams: MutableList<String>) {
-        _gameMode.value?.let {
-            _gameMode.value = GameMode(
-                isClassic = it.isClassic,
-                teams = teams,
-                timePerRound = it.timePerRound,
-                pointsToWin = it.pointsToWin
-            )
-            _gameModeComponents.value = changedGameComponents(ONE)
+        if (teams.size != teams.toSet().size)
+            handleIsTeamsInputValid(false)
+        else {
+            handleIsTeamsInputValid(true)
+            _gameMode.value?.let {
+                _gameMode.value = GameMode(
+                    isClassic = it.isClassic,
+                    teams = teams,
+                    timePerRound = it.timePerRound,
+                    pointsToWin = it.pointsToWin
+                )
+                _gameModeComponents.value = changedGameComponents(ONE)
+            }
         }
 
         Log.d("GAMEMODE", gameMode.value!!.teams.toString())

@@ -22,7 +22,6 @@
     <string name="classic">класический</string>
     <string name="arcade">аркада</string>
     <string name="add">добавить</string>
-    <string name="delete_last">удалить</string>
     <string name="time">ВРЕМЯ</string>
     <string name="point">ОЧКИ</string>
     <string name="continue_game">продолжить</string>

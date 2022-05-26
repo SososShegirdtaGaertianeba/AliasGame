@@ -49,8 +49,10 @@ class ConfigureFragment :
 
 
 
-            if (it.isClassic != null && it.teams != null
-                && it.timePerRound != null && it.pointsToWin != null
+            if (
+                it.isClassic != null && it.teams != null &&
+                viewModel.isTeamsInputValid.value!! &&
+                it.timePerRound != null && it.pointsToWin != null
             ) {
                 val action =
                     if (viewModel.gameMode.value!!.isClassic!!) ConfigureFragmentDirections.actionConfigureFragmentToClassicFragment(
