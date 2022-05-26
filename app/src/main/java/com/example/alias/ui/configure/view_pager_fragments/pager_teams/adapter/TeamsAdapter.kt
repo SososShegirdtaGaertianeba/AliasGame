@@ -44,7 +44,7 @@ class TeamsAdapter(
         teams.size
 
     fun addTeam() {
-        teams.add("$TEAM_DEFAULT_NAME${itemCount + 1}")
+        teams.add("$TEAM_DEFAULT_NAME${TEAM_COUNTER++}")
         notifyItemInserted(itemCount)
     }
 
@@ -53,7 +53,13 @@ class TeamsAdapter(
         notifyItemRemoved(teams.size)
     }
 
+    fun deleteTeam(position: Int) {
+        teams.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
     companion object {
+        private var TEAM_COUNTER = 3
         private const val TEAM_DEFAULT_NAME = "Team"
         private const val TEAM_1 = "${TEAM_DEFAULT_NAME}1"
         private const val TEAM_2 = "${TEAM_DEFAULT_NAME}2"

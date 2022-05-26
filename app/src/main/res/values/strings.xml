@@ -22,7 +22,6 @@
     <string name="classic">classic</string>
     <string name="arcade">arcade</string>
     <string name="add">add</string>
-    <string name="delete_last">delete last</string>
     <string name="time">TIME</string>
     <string name="point">POINT</string>
     <string name="continue_game">continue</string>

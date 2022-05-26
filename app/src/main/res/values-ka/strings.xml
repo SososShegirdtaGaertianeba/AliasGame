@@ -22,7 +22,6 @@
     <string name="classic">კლასიკური</string>
     <string name="arcade">არკადა</string>
     <string name="add">დამატება</string>
-    <string name="delete_last">წაშლა</string>
     <string name="time">დრო</string>
     <string name="point">ქულები</string>
     <string name="continue_game">გაგრძელება</string>
