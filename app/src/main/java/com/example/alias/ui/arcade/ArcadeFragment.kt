@@ -8,7 +8,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.alias.MainActivity.Companion.SHARED_PREFERENCE_NAME
 import com.example.alias.databinding.ArcadeFragmentBinding
 import com.example.alias.di.viewModels
-import com.example.alias.safeNavigate
+import com.example.alias.extensions.safeNavigate
 import com.example.alias.ui.arcade.vm.ArcadeViewModel
 import com.example.alias.ui.base.BaseFragment
 import com.example.alias.ui.home.HomeFragment.Companion.PREFERENCE_NAME

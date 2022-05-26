@@ -5,9 +5,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alias.R
 import com.example.alias.databinding.ResultFragmentBinding
-import com.example.alias.safeNavigate
+import com.example.alias.extensions.safeNavigate
 import com.example.alias.ui.base.BaseFragment
-import com.example.alias.ui.configure.ConfigureFragmentDirections
 import com.example.alias.ui.scoreBreak.adapter.TeamScoreBreakAdapter
 import com.example.alias.util.GameMode
 
