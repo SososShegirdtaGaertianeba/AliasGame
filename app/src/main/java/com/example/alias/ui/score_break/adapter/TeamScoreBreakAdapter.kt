@@ -1,4 +1,4 @@
-package com.example.alias.ui.scoreBreak.adapter
+package com.example.alias.ui.score_break.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

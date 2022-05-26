@@ -1,4 +1,4 @@
-package com.example.alias.ui.scoreBreak
+package com.example.alias.ui.score_break
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -12,10 +12,9 @@ import com.example.alias.databinding.FragmentScoreBreakBinding
 import com.example.alias.di.viewModels
 import com.example.alias.ui.arcade.vm.ArcadeViewModel
 import com.example.alias.ui.classic.vm.ClassicViewModel
-import com.example.alias.ui.scoreBreak.adapter.TeamScoreBreakAdapter
+import com.example.alias.ui.score_break.adapter.TeamScoreBreakAdapter
 import org.koin.android.ext.android.inject
 import org.koin.core.context.loadKoinModules
-
 
 class ScoreBreakFragment : DialogFragment() {
     private var _binding: FragmentScoreBreakBinding? = null

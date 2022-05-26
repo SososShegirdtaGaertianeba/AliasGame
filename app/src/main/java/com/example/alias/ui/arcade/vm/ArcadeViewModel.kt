@@ -12,10 +12,20 @@ class ArcadeViewModel(private val wordsDao: WordsDao) : ViewModel() {
     private val wordSet = mutableSetOf<String?>()
     private var _teamsTotal = mutableMapOf<String, Int>()
     private var _currentTeams = mutableMapOf<String, Int>()
+    private val _hasBackPressed = MutableLiveData(0)
     private val _currentScore = MutableLiveData(0)
     private var _currentTeam = "Team1"
 
-    private var teamPointer = 0
+    var dismissDuration = 150L
+
+    private var _teamPointer = 0
+    val teamPointer: Int
+        get() = _teamPointer
+
+    val hasBackPressed: LiveData<Int>
+        get() = _hasBackPressed
+
+    val handleBackPress: (Int) -> Unit = { _hasBackPressed.value = it }
 
     private val teamsList: List<String>
         get() = _currentTeams.keys.toList()
@@ -45,8 +55,8 @@ class ArcadeViewModel(private val wordsDao: WordsDao) : ViewModel() {
     }
 
     fun startNextTeamRound() {
-        teamPointer = (teamPointer + 1) % teamsList.size
-        _currentTeam = teamsList[teamPointer]
+        _teamPointer = (_teamPointer + 1) % teamsList.size
+        _currentTeam = teamsList[_teamPointer]
         getCurrentTeamScore()
     }
 
@@ -70,7 +80,7 @@ class ArcadeViewModel(private val wordsDao: WordsDao) : ViewModel() {
     fun setTeams(teams: Map<String, Int>, isBonusRound: Boolean = false) {
         if (!isBonusRound)
             _teamsTotal = teams.toMutableMap()
-        teamPointer = -1
+        _teamPointer = -1
         this._currentTeams = teams.toMutableMap()
     }
 

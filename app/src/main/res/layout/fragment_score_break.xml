@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="64dp"
-    tools:context=".ui.scoreBreak.ScoreBreakFragment">
+    tools:context=".ui.score_break.ScoreBreakFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
