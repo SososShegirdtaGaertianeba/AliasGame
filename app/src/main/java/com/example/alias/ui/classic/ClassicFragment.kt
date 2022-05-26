@@ -21,11 +21,17 @@ import org.koin.core.context.loadKoinModules
 import org.koin.core.context.unloadKoinModules
 
 class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBinding::inflate) {
+
     private lateinit var getWords: suspend () -> MutableList<String>
     private lateinit var countDownTimer: CountDownTimer
     private lateinit var recyclerView: RecyclerView
     private lateinit var gameMode: GameMode
+
+    // Game Logic Handler Variables
     private var isGameFinished = false
+    private var gotToWinningPoints = false
+    private var isBonusRound = false
+    private var pointer = 0
 
     private val safeArgs: ClassicFragmentArgs by navArgs()
     private val classicViewModel: ClassicViewModel by viewModel()
@@ -50,9 +56,8 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
         initRecycler()
         initObservers()
         initWordGetter(requireContext())
-        makeRequest()
-        binding.tvCurrentTeam.text = classicViewModel.currentTeam
         initCountDown(timePerRound)
+        startNextTeamRound()
     }
 
     override fun onDestroyView() {
@@ -69,20 +74,52 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
             }
 
             override fun onFinish() {
+                handleIsGameFinished()
                 classicViewModel.saveCurrentTeamScore()
-                if (!isGameFinished)
-                    navigateToScoreBreak()
-                else
-                    navigateToResultFragment()
+                handleGameContinuation()
             }
         }
         countDownTimer.start()
     }
 
+    private fun handleIsGameFinished() {
+        isGameFinished =
+            gotToWinningPoints &&
+                    pointer == classicViewModel.currentTeams.size - 1
+        pointer = (pointer + 1) % classicViewModel.currentTeams.size
+    }
+
+    private fun handleGameContinuation() = when {
+        !isGameFinished -> navigateToScoreBreak()
+        !isBonusRound -> {
+            isBonusRound = true
+            val leftForBonus =
+                classicViewModel.currentTeams.filter { it.value >= gameMode.pointsToWin!! }
+
+            if (leftForBonus.size <= 1)
+                navigateToResultFragment()
+            else {
+                classicViewModel.setTeams(leftForBonus, isBonusRound)
+                navigateToScoreBreak()
+            }
+        }
+        else -> {
+            val leftForBonus =
+                classicViewModel.currentTeams.filter { it.value == classicViewModel.currentTeams.values.maxOrNull() }
+            if (leftForBonus.size <= 1)
+                navigateToResultFragment()
+            else {
+                classicViewModel.setTeams(leftForBonus, isBonusRound)
+                navigateToScoreBreak()
+            }
+        }
+    }
+
+
     private fun navigateToResultFragment() {
         val action = ClassicFragmentDirections.actionClassicFragmentToResultFragment(
             gameMode,
-            classicViewModel.teams.values.toIntArray()
+            classicViewModel.teamsTotal.values.toIntArray()
         )
         findNavController().navigate(action)
     }
@@ -113,10 +150,12 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
 
     private fun initObservers() {
         classicViewModel.currentScore.observe {
-            isGameFinished = it >= gameMode.pointsToWin!!
+            if (it >= gameMode.pointsToWin!!)
+                gotToWinningPoints = true
+
             if (
                 it > 0 && (it - (classicViewModel
-                    .teams[classicViewModel.currentTeam]
+                    .currentTeams[classicViewModel.currentTeam]
                     ?: 0)) - 5 == prevCompletionPoints
             ) {
                 classicViewModel.switchHasCompleted()
@@ -159,6 +198,5 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
     }
 
     private fun <T> LiveData<T>.observe(f: (T) -> Unit) = this.observe(viewLifecycleOwner) { f(it) }
-
 
 }

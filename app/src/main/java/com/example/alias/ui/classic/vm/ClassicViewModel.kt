@@ -12,13 +12,17 @@ class ClassicViewModel(
 ) : ViewModel() {
 
     private val wordSet = mutableSetOf<String?>()
-    private var _teams = mutableMapOf<String, Int>()
+    private var _teamsTotal = mutableMapOf<String, Int>()
+    private var _currentTeams = mutableMapOf<String, Int>()
     private val _currentScore = MutableLiveData(0)
     private val _hasCompleted = MutableLiveData(false)
     private var _currentTeam = "Team1"
 
-    val teams: Map<String, Int>
-        get() = _teams
+    val currentTeams: Map<String, Int>
+        get() = _currentTeams
+
+    val teamsTotal: Map<String, Int>
+        get() = _teamsTotal
 
     private var teamPointer = 0
 
@@ -26,7 +30,7 @@ class ClassicViewModel(
         MutableLiveData(false)
 
     private val teamsList: List<String>
-        get() = this._teams.keys.toList()
+        get() = this._currentTeams.keys.toList()
 
     val isNextTurn: LiveData<Boolean>
         get() = _isNextTurn
@@ -61,24 +65,27 @@ class ClassicViewModel(
     }
 
     fun saveCurrentTeamScore() {
-        val score = this._teams.get(currentTeam)
+        val score = this._currentTeams[currentTeam]
         score?.let {
-            this._teams[currentTeam!!] =
+            this._currentTeams[currentTeam] =
                 it + (currentScore.value!! - it)
+            _teamsTotal[currentTeam] = currentTeams[currentTeam]!!
         }
     }
 
     private fun getCurrentTeamScore() {
-        _currentScore.value = this._teams[currentTeam] ?: 0
+        _currentScore.value = this._currentTeams[currentTeam] ?: 0
     }
 
     fun switchHasCompleted() {
         _hasCompleted.value = !_hasCompleted.value!!
     }
 
-    fun setTeams(teams: MutableMap<String, Int>) {
-        this._teams = teams
-        _currentTeam = teamsList[teamPointer]
+    fun setTeams(teams: Map<String, Int>, isBonusRound: Boolean = false) {
+        if (!isBonusRound)
+            this._teamsTotal = teams.toMutableMap()
+        teamPointer = -1
+        this._currentTeams = teams.toMutableMap()
     }
 
     private suspend fun getRandomEnglishWord() {
@@ -96,11 +103,11 @@ class ClassicViewModel(
             wordsDao.getRandomRussianWord().name
     }
 
-    private suspend fun getFiveRandomWords(getter: suspend () -> Unit): MutableList<String> =
+    private suspend fun getFiveRandomWords(getWord: suspend () -> Unit): MutableList<String> =
         withContext(viewModelScope.coroutineContext) {
             val res = mutableListOf<String>()
             while (res.size < 5) {
-                getter()
+                getWord()
                 currentWord.let {
                     if (wordSet.add(it)) {
                         res.add(it)

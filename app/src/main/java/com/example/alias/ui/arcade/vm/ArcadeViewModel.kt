@@ -10,17 +10,21 @@ import kotlinx.coroutines.withContext
 class ArcadeViewModel(private val wordsDao: WordsDao) : ViewModel() {
 
     private val wordSet = mutableSetOf<String?>()
-    private var _teams = mutableMapOf<String, Int>()
+    private var _teamsTotal = mutableMapOf<String, Int>()
+    private var _currentTeams = mutableMapOf<String, Int>()
     private val _currentScore = MutableLiveData(0)
     private var _currentTeam = "Team1"
 
     private var teamPointer = 0
 
     private val teamsList: List<String>
-        get() = _teams.keys.toList()
+        get() = _currentTeams.keys.toList()
 
     val currentScore: LiveData<Int>
         get() = _currentScore
+
+    val teamsTotal: Map<String, Int>
+        get() = _teamsTotal
 
     val currentTeam: String
         get() = _currentTeam
@@ -31,8 +35,8 @@ class ArcadeViewModel(private val wordsDao: WordsDao) : ViewModel() {
     val isNextTurn: LiveData<Boolean>
         get() = _isNextTurn
 
-    val teams: MutableMap<String, Int>
-        get() = _teams
+    val currentTeams: MutableMap<String, Int>
+        get() = _currentTeams
 
     private var currentWord = ""
 
@@ -55,20 +59,23 @@ class ArcadeViewModel(private val wordsDao: WordsDao) : ViewModel() {
     }
 
     fun saveCurrentTeamScore() {
-        val score = _teams[currentTeam]
+        val score = _currentTeams[currentTeam]
         score?.let {
-            _teams[currentTeam] =
+            _currentTeams[currentTeam] =
                 it + (currentScore.value!! - it)
+            _teamsTotal[currentTeam] = currentTeams[currentTeam]!!
         }
     }
 
-    fun setTeamsAndPointsToWin(teams: MutableMap<String, Int>) {
-        this._teams = teams
-        _currentTeam = teamsList[teamPointer]
+    fun setTeams(teams: Map<String, Int>, isBonusRound: Boolean = false) {
+        if (!isBonusRound)
+            _teamsTotal = teams.toMutableMap()
+        teamPointer = -1
+        this._currentTeams = teams.toMutableMap()
     }
 
     private fun getCurrentTeamScore() {
-        _currentScore.value = _teams[currentTeam] ?: 0
+        _currentScore.value = _currentTeams[currentTeam] ?: 0
     }
 
     private suspend fun getRandomEnglishWord() {

@@ -1,7 +1,6 @@
 package com.example.alias.ui.configure.view_pager_fragments.pager_teams.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
@@ -20,24 +19,29 @@ class TeamsAdapter(
 
         fun setEditedListener(position: Int) {
             binding.etTeam.addTextChangedListener {
-                if (position < itemCount)
-                    teams[position] = it.toString()
-                onTextChangedListener(teams)
+                if (position < itemCount) {
+                    teams[absoluteAdapterPosition] = it.toString()
+                    onTextChangedListener(teams)
+                }
             }
         }
+
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
-        TeamsAdapterItemBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        onTextChangedListener(teams)
+        return ViewHolder(
+            TeamsAdapterItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         )
-    )
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.setEditedListener(position)
         holder.onBind(teams, position)
+        holder.setEditedListener(position)
     }
 
     override fun getItemCount(): Int =
@@ -45,12 +49,8 @@ class TeamsAdapter(
 
     fun addTeam() {
         teams.add("$TEAM_DEFAULT_NAME${TEAM_COUNTER++}")
+        onTextChangedListener(teams)
         notifyItemInserted(itemCount)
-    }
-
-    fun deleteLast() {
-        teams.removeLast()
-        notifyItemRemoved(teams.size)
     }
 
     fun deleteTeam(position: Int) {

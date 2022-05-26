@@ -53,9 +53,9 @@ class ScoreBreakFragment : DialogFragment() {
         initRecyclerView()
         initListener()
         if (safeArgs.isClassic)
-            adapter.setData(classicViewModel.teams)
+            adapter.setData(classicViewModel.teamsTotal)
         else
-            adapter.setData(arcadeViewModel.teams)
+            adapter.setData(arcadeViewModel.teamsTotal)
     }
 
     private fun initListener() {
