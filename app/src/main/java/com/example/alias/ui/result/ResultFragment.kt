@@ -7,7 +7,7 @@ import com.example.alias.R
 import com.example.alias.databinding.ResultFragmentBinding
 import com.example.alias.extensions.safeNavigate
 import com.example.alias.ui.base.BaseFragment
-import com.example.alias.ui.scoreBreak.adapter.TeamScoreBreakAdapter
+import com.example.alias.ui.score_break.adapter.TeamScoreBreakAdapter
 import com.example.alias.util.GameMode
 
 class ResultFragment : BaseFragment<ResultFragmentBinding>(ResultFragmentBinding::inflate) {

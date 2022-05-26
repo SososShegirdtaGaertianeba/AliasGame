@@ -2,6 +2,7 @@ package com.example.alias.ui.classic
 
 import android.content.Context
 import android.os.CountDownTimer
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -15,6 +16,7 @@ import com.example.alias.ui.base.BaseFragment
 import com.example.alias.ui.classic.adapter.WordsAdapter
 import com.example.alias.ui.classic.vm.ClassicViewModel
 import com.example.alias.util.GameMode
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
@@ -31,7 +33,6 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
     private var isGameFinished = false
     private var gotToWinningPoints = false
     private var isBonusRound = false
-    private var pointer = 0
 
     private val safeArgs: ClassicFragmentArgs by navArgs()
     private val classicViewModel: ClassicViewModel by viewModel()
@@ -58,6 +59,24 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
         initWordGetter(requireContext())
         initCountDown(timePerRound)
         startNextTeamRound()
+        onBackPressed()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (binding.tvCountDown.text == "0") {
+            handleIsGameFinished()
+            classicViewModel.saveCurrentTeamScore()
+            handleGameContinuation()
+        }
+    }
+
+    private fun onBackPressed() {
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                navigateToEnsureDialogFragment()
+            }
+        })
     }
 
     override fun onDestroyView() {
@@ -69,24 +88,29 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
     private fun initCountDown(timePerRound: Int) {
         countDownTimer = object : CountDownTimer(timePerRound * 1000L, 1000) {
             override fun onTick(timeLeft: Long) {
-                val toDisplay = timeLeft / 1000 + 1
+                val toDisplay = timeLeft / 1000
                 binding.tvCountDown.text = toDisplay.toString()
             }
 
             override fun onFinish() {
-                handleIsGameFinished()
-                classicViewModel.saveCurrentTeamScore()
-                handleGameContinuation()
+                handleGameResumption()
             }
         }
         countDownTimer.start()
     }
 
+    private fun handleGameResumption() {
+        if (classicViewModel.hasBackPressed.value!! != 1) {
+            handleIsGameFinished()
+            classicViewModel.saveCurrentTeamScore()
+            handleGameContinuation()
+        }
+    }
+
     private fun handleIsGameFinished() {
         isGameFinished =
             gotToWinningPoints &&
-                    pointer == classicViewModel.currentTeams.size - 1
-        pointer = (pointer + 1) % classicViewModel.currentTeams.size
+                    classicViewModel.teamPointer == classicViewModel.currentTeams.size - 1
     }
 
     private fun handleGameContinuation() = when {
@@ -121,7 +145,7 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
             gameMode,
             classicViewModel.teamsTotal.values.toIntArray()
         )
-        findNavController().navigate(action)
+        findNavController().safeNavigate(action)
     }
 
     private fun startNextTeamRound() {
@@ -149,6 +173,17 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
     }
 
     private fun initObservers() {
+        classicViewModel.hasBackPressed.observe {
+            if (it  >= 2) {
+                lifecycleScope.launch {
+                    delay(classicViewModel.dismissDuration + 40)
+                    if (binding.tvCountDown.text == "0" && it == 2 || it == 3)
+                        handleGameResumption()
+                    classicViewModel.handleBackPress(0)
+                }
+            }
+        }
+
         classicViewModel.currentScore.observe {
             if (it >= gameMode.pointsToWin!!)
                 gotToWinningPoints = true
@@ -198,5 +233,14 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
     }
 
     private fun <T> LiveData<T>.observe(f: (T) -> Unit) = this.observe(viewLifecycleOwner) { f(it) }
+
+    private fun navigateToEnsureDialogFragment() {
+        classicViewModel.handleBackPress(1)
+        findNavController().safeNavigate(
+            ClassicFragmentDirections.actionClassicFragmentToEnsureInExitDialogFragment(
+                true
+            )
+        )
+    }
 
 }

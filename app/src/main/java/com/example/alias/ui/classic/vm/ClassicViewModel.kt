@@ -16,7 +16,15 @@ class ClassicViewModel(
     private var _currentTeams = mutableMapOf<String, Int>()
     private val _currentScore = MutableLiveData(0)
     private val _hasCompleted = MutableLiveData(false)
+    private val _hasBackPressed = MutableLiveData(0)
     private var _currentTeam = "Team1"
+
+    var dismissDuration = 150L
+
+    val hasBackPressed: LiveData<Int>
+        get() = _hasBackPressed
+
+    val handleBackPress: (Int) -> Unit = { _hasBackPressed.value = it }
 
     val currentTeams: Map<String, Int>
         get() = _currentTeams
@@ -24,7 +32,9 @@ class ClassicViewModel(
     val teamsTotal: Map<String, Int>
         get() = _teamsTotal
 
-    private var teamPointer = 0
+    private var _teamPointer = 0
+    val teamPointer: Int
+        get() = _teamPointer
 
     private val _isNextTurn =
         MutableLiveData(false)
@@ -51,8 +61,8 @@ class ClassicViewModel(
     }
 
     fun startNextTeamRound() {
-        teamPointer = (teamPointer + 1) % teamsList.size
-        _currentTeam = teamsList[teamPointer]
+        _teamPointer = (_teamPointer + 1) % teamsList.size
+        _currentTeam = teamsList[_teamPointer]
         getCurrentTeamScore()
     }
 
@@ -84,7 +94,7 @@ class ClassicViewModel(
     fun setTeams(teams: Map<String, Int>, isBonusRound: Boolean = false) {
         if (!isBonusRound)
             this._teamsTotal = teams.toMutableMap()
-        teamPointer = -1
+        _teamPointer = -1
         this._currentTeams = teams.toMutableMap()
     }
 

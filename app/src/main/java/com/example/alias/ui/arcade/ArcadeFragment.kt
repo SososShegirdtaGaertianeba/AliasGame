@@ -2,6 +2,8 @@ package com.example.alias.ui.arcade
 
 import android.content.Context
 import android.os.CountDownTimer
+import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -13,6 +15,7 @@ import com.example.alias.ui.arcade.vm.ArcadeViewModel
 import com.example.alias.ui.base.BaseFragment
 import com.example.alias.ui.home.HomeFragment.Companion.PREFERENCE_NAME
 import com.example.alias.util.GameMode
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
@@ -28,7 +31,6 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
     private var isGameFinished = false
     private var gotToWinningPoints = false
     private var isBonusRound = false
-    private var pointer = 0
 
     private val safeArgs: ArcadeFragmentArgs by navArgs()
     private val arcadeViewModel: ArcadeViewModel by viewModel()
@@ -44,20 +46,41 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
         initWordGetter(requireContext())
         initCountDownTimer(timePerRound)
         startNextTeamRound()
+        onBackPressed()
+    }
+
+    private fun onBackPressed() {
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                navigateToEnsureDialogFragment()
+            }
+        })
     }
 
     private fun initObservers() {
-        arcadeViewModel.currentScore.observe(viewLifecycleOwner) {
+        arcadeViewModel.currentScore.observe {
             if (it >= gameMode.pointsToWin!!)
                 gotToWinningPoints = true
 
             binding.currentScoreTV.text = it.toString()
         }
 
-        arcadeViewModel.isNextTurn.observe(viewLifecycleOwner) {
+        arcadeViewModel.isNextTurn.observe {
             if (it) {
                 startNextTeamRound()
                 arcadeViewModel.toggleIsNextTurn()
+            }
+        }
+
+        arcadeViewModel.hasBackPressed.observe {
+            if (it >= 2) {
+                lifecycleScope.launch {
+                    delay(arcadeViewModel.dismissDuration + 40)
+                    if (binding.timeLeftTV.text == ZERO && it == 2 || it == 3)
+                        handleGameResumption()
+                    arcadeViewModel.handleBackPress(0)
+
+                }
             }
         }
     }
@@ -65,33 +88,40 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
     private fun handleIsGameFinished() {
         isGameFinished =
             gotToWinningPoints &&
-                    pointer == arcadeViewModel.currentTeams.size - 1
-        pointer = (pointer + 1) % arcadeViewModel.currentTeams.size
+                    arcadeViewModel.teamPointer == arcadeViewModel.currentTeams.size - 1
     }
 
-    private fun handleGameContinuation() = when {
-        !isGameFinished -> navigateToScoreBreak()
-        !isBonusRound -> {
-            isBonusRound = true
-            val leftForBonus =
-                arcadeViewModel.currentTeams.filter { it.value >= gameMode.pointsToWin!! }
-
-            if (leftForBonus.size <= 1)
-                navigateToResultFragment()
-            else {
-                arcadeViewModel.setTeams(leftForBonus, isBonusRound)
+    private fun handleGameContinuation() {
+        when {
+            !isGameFinished -> {
                 navigateToScoreBreak()
             }
-        }
-        else -> {
-            val leftForBonus =
-                arcadeViewModel.currentTeams.filter { it.value == arcadeViewModel.currentTeams.values.maxOrNull() }
+            !isBonusRound -> {
+                isBonusRound = true
+                val leftForBonus =
+                    arcadeViewModel.currentTeams.filter { it.value >= gameMode.pointsToWin!! }
 
-            if (leftForBonus.size <= 1)
-                navigateToResultFragment()
-            else {
-                arcadeViewModel.setTeams(leftForBonus, isBonusRound)
-                navigateToScoreBreak()
+                if (leftForBonus.size <= 1)
+                    navigateToResultFragment()
+                else {
+                    lifecycleScope.launch {
+//                        delay(measureTimeMillis {
+                            arcadeViewModel.setTeams(leftForBonus, isBonusRound)
+//                        })
+                        navigateToScoreBreak()
+                    }
+                }
+            }
+            else -> {
+                val leftForBonus =
+                    arcadeViewModel.currentTeams.filter { it.value == arcadeViewModel.currentTeams.values.maxOrNull() }
+
+                if (leftForBonus.size <= 1)
+                    navigateToResultFragment()
+                else {
+                    arcadeViewModel.setTeams(leftForBonus, isBonusRound)
+                    navigateToScoreBreak()
+                }
             }
         }
     }
@@ -115,7 +145,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
     private fun initGameMode() {
         gameMode = safeArgs.gameMode
         gameMode.pointsToWin = gameMode.pointsToWin ?: 90
-        val map = (gameMode.teams ?: listOf("Teams1", "Teams2")).associateWith { 0 }.toMutableMap()
+        val map = (gameMode.teams ?: listOf(TEAMS_1, TEAMS_2)).associateWith { 0 }.toMutableMap()
         arcadeViewModel.setTeams(map)
         timePerRound = gameMode.timePerRound ?: 30
     }
@@ -144,11 +174,17 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
             }
 
             override fun onFinish() {
-                handleIsGameFinished()
-                arcadeViewModel.saveCurrentTeamScore()
-                handleGameContinuation()
+                handleGameResumption()
             }
         }.start()
+    }
+
+    private fun handleGameResumption() {
+        if (arcadeViewModel.hasBackPressed.value!! != 1) {
+            handleIsGameFinished()
+            arcadeViewModel.saveCurrentTeamScore()
+            handleGameContinuation()
+        }
     }
 
     private fun navigateToResultFragment() {
@@ -156,7 +192,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
             gameMode,
             arcadeViewModel.teamsTotal.values.toIntArray()
         )
-        findNavController().navigate(action)
+        findNavController().safeNavigate(action)
     }
 
     private fun navigateToScoreBreak() {
@@ -167,9 +203,25 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
         )
     }
 
+    private fun navigateToEnsureDialogFragment() {
+        arcadeViewModel.handleBackPress(1)
+        findNavController().safeNavigate(
+            ArcadeFragmentDirections.actionArcadeFragmentToEnsureInExitDialogFragment(false)
+        )
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         countDownTimer.cancel()
         unloadKoinModules(viewModels)
+    }
+
+    private fun <T> LiveData<T>.observe(f: (T) -> Unit) = this.observe(viewLifecycleOwner) { f(it) }
+
+    companion object {
+        private const val ZERO = "0"
+        private const val TEAMS_1 = "Teams 1"
+        private const val TEAMS_2 = "Teams 2"
+
     }
 }
