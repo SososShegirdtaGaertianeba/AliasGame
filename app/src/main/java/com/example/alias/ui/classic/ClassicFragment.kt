@@ -2,6 +2,7 @@ package com.example.alias.ui.classic
 
 import android.content.Context
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -25,9 +26,12 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
     private lateinit var countDownTimer: CountDownTimer
     private lateinit var recyclerView: RecyclerView
     private lateinit var gameMode: GameMode
+
+    // Game Logic Handler Variables
     private var isGameFinished = false
     private var gotToWinningPoints = false
-    private var teamPointer = 0
+    private var isBonusRound = false
+    private var pointer = 0
 
     private val safeArgs: ClassicFragmentArgs by navArgs()
     private val classicViewModel: ClassicViewModel by viewModel()
@@ -52,9 +56,8 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
         initRecycler()
         initObservers()
         initWordGetter(requireContext())
-        makeRequest()
-        binding.tvCurrentTeam.text = classicViewModel.currentTeam
         initCountDown(timePerRound)
+        startNextTeamRound()
     }
 
     override fun onDestroyView() {
@@ -71,14 +74,48 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
             }
 
             override fun onFinish() {
+                handleIsGameFinished()
                 classicViewModel.saveCurrentTeamScore()
-                if (!isGameFinished)
-                    navigateToScoreBreak()
-                else
-                    navigateToResultFragment()
+                handleGameContinuation()
             }
         }
         countDownTimer.start()
+    }
+
+    private fun handleIsGameFinished() {
+        isGameFinished =
+            gotToWinningPoints &&
+                    pointer == classicViewModel.currentTeams.size - 1
+        pointer = (pointer + 1) % classicViewModel.currentTeams.size
+    }
+
+    private fun handleGameContinuation() {
+        when {
+            !isGameFinished -> navigateToScoreBreak()
+            !isBonusRound -> {
+                isBonusRound = true
+                val leftForBonus =
+                    classicViewModel.currentTeams.filter { it.value >= gameMode.pointsToWin!! }
+
+                if (leftForBonus.size <= 1)
+                    navigateToResultFragment()
+                else {
+                    classicViewModel.setTeams(leftForBonus, isBonusRound)
+                    navigateToScoreBreak()
+                }
+            }
+            else -> {
+                val leftForBonus =
+                    classicViewModel.currentTeams.filter { it.value == classicViewModel.currentTeams.values.maxOrNull() }
+                if (leftForBonus.size <= 1)
+                    navigateToResultFragment()
+                else {
+                    classicViewModel.setTeams(leftForBonus, isBonusRound)
+                    navigateToScoreBreak()
+                }
+            }
+        }
+
     }
 
     private fun navigateToResultFragment() {
@@ -90,7 +127,7 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
     }
 
     private fun startNextTeamRound() {
-        teamPointer = classicViewModel.startNextTeamRound()
+        classicViewModel.startNextTeamRound()
         prevCompletionPoints = 0
         makeRequest()
         binding.tvCurrentTeam.text = classicViewModel.currentTeam
@@ -118,10 +155,9 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
             if (it >= gameMode.pointsToWin!!)
                 gotToWinningPoints = true
 
-            isGameFinished = gotToWinningPoints && teamPointer == gameMode.teams!!.size - 1
             if (
                 it > 0 && (it - (classicViewModel
-                    .teams[classicViewModel.currentTeam]
+                    .currentTeams[classicViewModel.currentTeam]
                     ?: 0)) - 5 == prevCompletionPoints
             ) {
                 classicViewModel.switchHasCompleted()
@@ -164,6 +200,5 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
     }
 
     private fun <T> LiveData<T>.observe(f: (T) -> Unit) = this.observe(viewLifecycleOwner) { f(it) }
-
 
 }
