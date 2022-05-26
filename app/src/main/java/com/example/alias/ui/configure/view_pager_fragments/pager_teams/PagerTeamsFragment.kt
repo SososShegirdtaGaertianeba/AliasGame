@@ -12,7 +12,13 @@ import com.example.alias.ui.configure.vm.ConfigureViewModel
 
 class PagerTeamsFragment :
     BaseFragment<FragmentPagerTeamsBinding>(FragmentPagerTeamsBinding::inflate) {
-    private val adapter by lazy { TeamsAdapter { viewModel.setTeams(it) } }
+    private val adapter by lazy {
+        TeamsAdapter {
+            viewModel.setTeams(it)
+            constraintMessageShown = false
+        }
+    }
+    private var constraintMessageShown = false
 
     private val viewModel: ConfigureViewModel by viewModels(
         ownerProducer = { requireParentFragment() }
@@ -27,6 +33,8 @@ class PagerTeamsFragment :
 
             // Set Delete On Swipe
             initSwipeListener()
+
+            initObservers()
 
             // Set Add On Click
             btnAddTeam.setOnClickListener {
@@ -67,6 +75,15 @@ class PagerTeamsFragment :
                 else makeToastMessage(getString(R.string.min2Teams))
             }
         }).attachToRecyclerView(binding.recyclerView)
+    }
+
+    private fun initObservers() {
+        viewModel.isTeamsInputValid.observe(viewLifecycleOwner) {
+            if (!it && !constraintMessageShown) {
+                makeToastMessage(getString(R.string.uniqueConstraint))
+                constraintMessageShown = true
+            }
+        }
     }
 
     companion object {
