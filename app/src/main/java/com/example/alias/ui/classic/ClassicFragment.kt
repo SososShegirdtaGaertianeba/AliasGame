@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alias.databinding.ClassicFragmentBinding
 import com.example.alias.di.viewModels
-import com.example.alias.safeNavigate
+import com.example.alias.extensions.safeNavigate
 import com.example.alias.ui.base.BaseFragment
 import com.example.alias.ui.classic.adapter.WordsAdapter
 import com.example.alias.ui.classic.vm.ClassicViewModel

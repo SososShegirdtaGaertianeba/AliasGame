@@ -2,8 +2,10 @@ package com.example.alias.ui.home
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.example.alias.MainActivity
 import com.example.alias.MainActivity.Companion.SHARED_PREFERENCE_NAME
@@ -60,6 +62,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         )
                     )
                     startActivity(Intent(context, MainActivity::class.java))
+                    requireActivity().finish()
                 } else isSpinnerInitialized = true
             }
 
