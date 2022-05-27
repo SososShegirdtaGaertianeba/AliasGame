@@ -66,7 +66,6 @@ class PagerTimeAndPointsFragment :
         btnIncreaseTime.setOnClickListener {
             val time = tvTime.text.toString().toInt()
             val increased = time + 5
-//            viewModel.setTimePerRound(increased)
             tvTime.text = increased.toString()
         }
 
@@ -74,7 +73,6 @@ class PagerTimeAndPointsFragment :
             val time = tvTime.text.toString().toInt()
             if (time > 5) {
                 val decreased = time - 5
-//                viewModel.setTimePerRound(decreased)
                 tvTime.text = decreased.toString()
             } else
                 makeToastMessage(TIME_NON_POSITIVE_MESSAGE)
@@ -82,7 +80,6 @@ class PagerTimeAndPointsFragment :
 
         btnIncreasePoints.setOnClickListener {
             val points = tvPoints.text.toString().toInt()
-//            viewModel.setPointsToWin(points + 5)
             val increased = points + 5
             tvPoints.text = increased.toString()
         }
@@ -91,7 +88,6 @@ class PagerTimeAndPointsFragment :
             val points = tvPoints.text.toString().toInt()
             if (points > 5) {
                 val decreased = points - 5
-//                viewModel.setPointsToWin(points - 5)
                 tvPoints.text = decreased.toString()
             } else
                 makeToastMessage(POINTS_NON_POSITIVE_MESSAGE)
