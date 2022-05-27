@@ -42,7 +42,15 @@ class PagerTimeAndPointsFragment :
                 }
             }
 
-//            initTextViews()
+            it.isClassic?.let { isClassic ->
+                if (isClassic) {
+                    binding.btnClassic.setBackgroundResource(R.drawable.game_mode_chosen_btn_shape_inversed)
+                    binding.btnArcade.setBackgroundResource(R.drawable.game_mode_btn_shape_inversed)
+                } else {
+                    binding.btnClassic.setBackgroundResource(R.drawable.game_mode_btn_shape_inversed)
+                    binding.btnArcade.setBackgroundResource(R.drawable.game_mode_chosen_btn_shape_inversed)
+                }
+            }
         }
     }
 
@@ -52,6 +60,9 @@ class PagerTimeAndPointsFragment :
     }
 
     private fun initOnClickListeners() = with(binding) {
+        btnClassic.setOnClickListener { viewModel.setIsClassic(true) }
+        btnArcade.setOnClickListener { viewModel.setIsClassic(false) }
+
         btnIncreaseTime.setOnClickListener {
             val time = tvTime.text.toString().toInt()
             val increased = time + 5
@@ -65,8 +76,7 @@ class PagerTimeAndPointsFragment :
                 val decreased = time - 5
 //                viewModel.setTimePerRound(decreased)
                 tvTime.text = decreased.toString()
-            }
-            else
+            } else
                 makeToastMessage(TIME_NON_POSITIVE_MESSAGE)
         }
 
@@ -83,8 +93,7 @@ class PagerTimeAndPointsFragment :
                 val decreased = points - 5
 //                viewModel.setPointsToWin(points - 5)
                 tvPoints.text = decreased.toString()
-            }
-            else
+            } else
                 makeToastMessage(POINTS_NON_POSITIVE_MESSAGE)
         }
     }

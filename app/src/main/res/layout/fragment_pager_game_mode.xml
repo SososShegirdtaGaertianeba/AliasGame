@@ -11,8 +11,8 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/classic"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/classic_btn_shape"
+        android:layout_height="56dp"
+        android:background="@drawable/game_mode_btn_shape"
         android:padding="8dp"
         android:paddingStart="36dp"
         android:text="@string/classic"
@@ -20,14 +20,14 @@
         android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineTop"/>
+        app:layout_constraintTop_toBottomOf="@id/gameModeButtonsGuideline"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/arcade"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/arcade_btn_shape"
+        android:background="@drawable/game_mode_btn_shape"
         android:padding="8dp"
         android:paddingStart="72dp"
         android:text="@string/arcade"
@@ -37,10 +37,10 @@
         app:layout_constraintTop_toBottomOf="@+id/classic" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontalGuidelineTop"
+        android:id="@+id/gameModeButtonsGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6" />
+        app:layout_constraintGuide_percent="0.7" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

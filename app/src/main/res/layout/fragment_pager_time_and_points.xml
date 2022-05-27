@@ -39,10 +39,10 @@
         android:layout_marginHorizontal="32dp"
         android:background="@drawable/time_points_tv_shape"
         android:gravity="center"
-        android:textSize="20sp"
         android:inputType="number"
         android:textColor="@color/white"
         android:textColorHint="@color/subtle_white"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/btnIncreaseTime"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnDecreaseTime"
@@ -102,11 +102,11 @@
         android:layout_height="50dp"
         android:layout_marginHorizontal="32dp"
         android:background="@drawable/time_points_tv_shape"
-        android:inputType="number"
         android:gravity="center"
-        android:textSize="20sp"
+        android:inputType="number"
         android:textColor="@color/white"
         android:textColorHint="@color/subtle_white"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/btnIncreasePoints"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnDecreasePoints"
@@ -166,5 +166,41 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.3" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnClassic"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:background="@drawable/game_mode_btn_shape_inversed"
+        android:padding="8dp"
+        android:paddingEnd="36dp"
+        android:text="@string/classic"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guidelineBottom" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnArcade"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/game_mode_btn_shape_inversed"
+        android:padding="8dp"
+        android:paddingEnd="72dp"
+        android:text="@string/arcade"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnClassic" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
