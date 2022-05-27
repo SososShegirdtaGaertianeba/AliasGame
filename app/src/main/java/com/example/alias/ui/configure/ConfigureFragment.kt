@@ -6,8 +6,10 @@ import androidx.core.animation.addListener
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
+import com.example.alias.R
 import com.example.alias.databinding.ConfigureFragmentBinding
 import com.example.alias.ui.base.BaseFragment
 import com.example.alias.ui.configure.adapter.ConfigurationViewPagerAdapter
@@ -47,9 +49,8 @@ class ConfigureFragment :
     private fun initObservers() {
         viewModel.gameMode.observe(viewLifecycleOwner) {
             it.isClassic?.let { _ ->
-                if (it.teams == null) {
+                if (it.teams == null)
                     binding.viewPager.animatePagerTransition(400)
-                }
             }
 
             if (
@@ -67,12 +68,21 @@ class ConfigureFragment :
                             viewModel.gameMode.value!!
                         )
 
-                binding.btnConfigureDone.isVisible = true
-                binding.btnConfigureDone.setOnClickListener {
-                    findNavController().navigate(action)
-                }
+                initBtnConfigureDone(action)
             } else binding.btnConfigureDone.isVisible = false
         }
+    }
+
+    private fun initBtnConfigureDone(action: NavDirections) = with(binding) {
+        btnConfigureDone.alpha = 0f
+        btnConfigureDone.isVisible = true
+        btnConfigureDone.setText(getString(R.string.start))
+        btnConfigureDone.setDrawable(R.drawable.ic_arrow_right)
+        btnConfigureDone.animate().alpha(1f)
+        btnConfigureDone.setOnClickListener {
+            findNavController().navigate(action)
+        }
+
     }
 
     // ViewPager Transition With Custom Duration

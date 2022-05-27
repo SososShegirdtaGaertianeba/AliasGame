@@ -61,7 +61,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
 
     private fun initArrowBtn() {
         binding.btnShowScore.setText("Score")
-        binding.btnShowScore.setDrawable(R.drawable.ic_baseline_arrow_upward_24)
+        binding.btnShowScore.setDrawable(R.drawable.ic_arrow_up)
         binding.btnShowScore.setOnClickListener {
             navigateToScoreBreak()
         }

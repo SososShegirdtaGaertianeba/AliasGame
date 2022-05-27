@@ -104,8 +104,8 @@
 
     <com.example.alias.ui.view.ArrowBtn
         android:id="@+id/btnShowScore"
-        android:layout_width="110dp"
-        android:layout_height="45dp"
+        android:layout_width="146.6dp"
+        android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

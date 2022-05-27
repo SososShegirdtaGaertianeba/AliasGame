@@ -24,11 +24,20 @@
         android:layout_height="60dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/circle_button_shape"
-        android:text="+"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+    <View
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_plus"
+        app:layout_constraintBottom_toBottomOf="@id/btnAddTeam"
+        app:layout_constraintEnd_toEndOf="@id/btnAddTeam"
+        android:elevation="100dp"
+        app:layout_constraintStart_toStartOf="@id/btnAddTeam"
+        app:layout_constraintTop_toTopOf="@id/btnAddTeam" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalGuidelineTop"
