@@ -1,9 +1,13 @@
 package com.example.alias.ui.configure
 
+import android.animation.ValueAnimator
+import android.view.animation.AccelerateInterpolator
+import androidx.core.animation.addListener
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.example.alias.databinding.ConfigureFragmentBinding
 import com.example.alias.ui.base.BaseFragment
 import com.example.alias.ui.configure.adapter.ConfigurationViewPagerAdapter
@@ -37,17 +41,16 @@ class ConfigureFragment :
             viewLifecycleOwner.lifecycle,
         )
         binding.viewPager.adapter = adapter
-
+        binding.viewPager
     }
 
     private fun initObservers() {
         viewModel.gameMode.observe(viewLifecycleOwner) {
             it.isClassic?.let { _ ->
-                if (it.teams == null)
-                    binding.viewPager.currentItem = 1
+                if (it.teams == null) {
+                    binding.viewPager.animatePagerTransition(400)
+                }
             }
-
-
 
             if (
                 it.isClassic != null && it.teams != null &&
@@ -55,12 +58,15 @@ class ConfigureFragment :
                 it.timePerRound != null && it.pointsToWin != null
             ) {
                 val action =
-                    if (viewModel.gameMode.value!!.isClassic!!) ConfigureFragmentDirections.actionConfigureFragmentToClassicFragment(
-                        viewModel.gameMode.value!!
-                    )
-                    else ConfigureFragmentDirections.actionConfigureFragmentToArcadeFragment(
-                        viewModel.gameMode.value!!
-                    )
+                    if (viewModel.gameMode.value!!.isClassic!!)
+                        ConfigureFragmentDirections.actionConfigureFragmentToClassicFragment(
+                            viewModel.gameMode.value!!
+                        )
+                    else
+                        ConfigureFragmentDirections.actionConfigureFragmentToArcadeFragment(
+                            viewModel.gameMode.value!!
+                        )
+
                 binding.btnConfigureDone.isVisible = true
                 binding.btnConfigureDone.setOnClickListener {
                     findNavController().navigate(action)
@@ -69,4 +75,29 @@ class ConfigureFragment :
         }
     }
 
+    // ViewPager Transition With Custom Duration
+    private fun ViewPager2.animatePagerTransition(transitionDuration: Long) {
+        val animator = ValueAnimator.ofInt(0, width)
+
+        animator.addListener(
+            onStart = {},
+            onEnd = { endFakeDrag() },
+            onCancel = { endFakeDrag() },
+            onRepeat = {}
+        )
+
+        animator.interpolator = AccelerateInterpolator()
+
+        var oldDragPosition = 0f
+        animator.addUpdateListener {
+            val dragPosition = (it.animatedValue as Int).toFloat()
+            val dragOffset = dragPosition - oldDragPosition
+            oldDragPosition = dragPosition
+            fakeDragBy(-dragOffset)
+        }
+
+        animator.duration = transitionDuration
+        if (beginFakeDrag())
+            animator.start()
+    }
 }
