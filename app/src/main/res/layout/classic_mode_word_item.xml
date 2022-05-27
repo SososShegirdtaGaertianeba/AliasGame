@@ -7,7 +7,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/classic_word_tv"
-        android:fontFamily="@font/second"
+        android:fontFamily="@font/first"
         tools:text="hello"
         android:textSize="28sp"
         android:layout_width="0dp"
