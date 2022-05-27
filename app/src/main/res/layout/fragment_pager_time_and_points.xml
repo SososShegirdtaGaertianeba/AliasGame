@@ -4,26 +4,127 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/nord_dark"
     tools:context=".ui.configure.view_pager_fragments.pager_time_and_points.PagerTimeAndPointsFragment">
+
+    <TextView
+        android:id="@+id/tvTimeTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/time"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineTop" />
+    <TextView
+        android:id="@+id/tvPointsTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/point"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/timeET" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/timeET"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="32dp"
+        android:background="@drawable/time_points_tv_shape"
         android:hint="@string/time"
         android:inputType="number"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/subtle_white"
+        app:layout_constraintEnd_toStartOf="@+id/btnIncreaseTime"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnDecreaseTime"
+        app:layout_constraintTop_toBottomOf="@+id/tvTimeTitle" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnIncreaseTime"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="8dp"
+        android:background="@drawable/circle_button_shape"
+        android:text="+"
+        android:textColor="@color/white"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/timeET"
+        app:layout_constraintTop_toBottomOf="@+id/tvTimeTitle" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDecreaseTime"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="8dp"
+        android:background="@drawable/circle_button_shape"
+        android:text="-"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toStartOf="@+id/timeET"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTimeTitle" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/pointET"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="32dp"
+        android:background="@drawable/time_points_tv_shape"
         android:hint="@string/point"
         android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/subtle_white"
+        app:layout_constraintEnd_toStartOf="@+id/btnIncreasePoints"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnDecreasePoints"
+        app:layout_constraintTop_toBottomOf="@id/tvPointsTitle" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnIncreasePoints"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="8dp"
+        android:background="@drawable/circle_button_shape"
+        android:text="+"
+        android:textColor="@color/white"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pointET"
+        app:layout_constraintTop_toBottomOf="@id/tvPointsTitle" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDecreasePoints"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="8dp"
+        android:background="@drawable/circle_button_shape"
+        android:text="-"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toStartOf="@+id/pointET"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPointsTitle" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontalGuidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

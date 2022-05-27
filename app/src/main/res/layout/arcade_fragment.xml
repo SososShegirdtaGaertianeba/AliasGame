@@ -4,37 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="12dp"
+    android:background="@color/nord_dark"
     tools:context=".ui.arcade.ArcadeFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/currentWordTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="64dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/arcade_current_word_shape"
+        android:textColor="@color/nord_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/timeLeftTV" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/currentTeamTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/currentWordTV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/timeLeftTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/currentTeamTV"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:background="@drawable/timer_shape"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineTop" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/currentScoreTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/timeLeftTV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -42,17 +58,40 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/plusBtn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/arcade_plus_btn_shape"
         android:text="+"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/currentWordTV"
+        app:layout_constraintTop_toBottomOf="@+id/currentWordTV" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/minusBtn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/arcade_minus_btn_shape"
         android:text="-"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/currentWordTV"
+        app:layout_constraintTop_toBottomOf="@+id/currentWordTV" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnShowScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="score"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontalGuidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

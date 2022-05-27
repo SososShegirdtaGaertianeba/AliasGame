@@ -5,6 +5,7 @@ import android.content.ContextWrapper
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.alias.ui.home.HomeFragment.Companion.PREFERENCE_DEFAULT_VALUE
 import com.example.alias.ui.home.HomeFragment.Companion.PREFERENCE_NAME
 import com.example.alias.util.LocaleUtils
@@ -12,8 +13,10 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        supportActionBar?.hide()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
