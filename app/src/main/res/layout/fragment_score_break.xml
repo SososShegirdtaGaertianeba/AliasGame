@@ -7,12 +7,13 @@
     android:layout_margin="12dp"
     android:background="@color/nord_dark"
     android:padding="64dp"
-    tools:context=".ui.scoreBreak.ScoreBreakFragment">
+    tools:context=".ui.score_break.ScoreBreakFragment">
 
 
     <TextView
         android:id="@+id/tvScoreTitle"
         android:layout_width="wrap_content"
+        android:fontFamily="@font/bold"
         android:layout_height="wrap_content"
         android:text="Score"
         android:textColor="@color/white"

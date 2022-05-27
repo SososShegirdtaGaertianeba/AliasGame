@@ -27,6 +27,7 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="50sp"
+        tools:text="59"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/gameModeButtonsGuideline" />
@@ -42,7 +43,7 @@
         tools:text="0"
         app:layout_constraintCircle="@id/tvCountDown"
         app:layout_constraintCircleAngle="45"
-        app:layout_constraintCircleRadius="45dp"
+        app:layout_constraintCircleRadius="48dp"
         app:layout_constraintStart_toEndOf="@id/tvCountDown"
         app:layout_constraintTop_toTopOf="@id/tvCountDown" />
 

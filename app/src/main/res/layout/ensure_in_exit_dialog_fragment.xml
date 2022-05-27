@@ -8,6 +8,7 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/second"
         android:gravity="center"
         android:text="Do you want forfeit round?"
         android:textColor="@color/black"
@@ -19,6 +20,7 @@
         android:id="@+id/noBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/second"
         android:text="No"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView" />
@@ -27,6 +29,7 @@
         android:id="@+id/yesBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/second"
         android:text="yes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView" />
@@ -35,6 +38,7 @@
         android:id="@+id/forfeitGameBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/second"
         android:text="forfeit game"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
