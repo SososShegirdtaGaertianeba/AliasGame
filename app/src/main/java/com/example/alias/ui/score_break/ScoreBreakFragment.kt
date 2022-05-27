@@ -42,10 +42,12 @@ class ScoreBreakFragment : DialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        if (safeArgs.isClassic)
-            classicViewModel.toggleIsNextTurn()
-        else
-            arcadeViewModel.toggleIsNextTurn()
+        if (safeArgs.isStartNextTeamRoundRequired) {
+            if (safeArgs.isClassic)
+                classicViewModel.toggleIsNextTurn()
+            else
+                arcadeViewModel.toggleIsNextTurn()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

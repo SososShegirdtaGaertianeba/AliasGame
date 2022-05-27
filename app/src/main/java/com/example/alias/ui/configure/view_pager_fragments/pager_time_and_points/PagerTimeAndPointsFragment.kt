@@ -1,5 +1,6 @@
 package com.example.alias.ui.configure.view_pager_fragments.pager_time_and_points
 
+import android.util.Log
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import com.example.alias.R
@@ -20,22 +21,13 @@ class PagerTimeAndPointsFragment :
         initTextViews()
         initOnClickListeners()
         initObservers()
-        binding.tvTime.addTextChangedListener {
-            if (!it.isNullOrEmpty())
-                viewModel.setTimePerRound(it.toString().toInt())
-            else viewModel.setTimePerRound(null)
-        }
-        binding.tvPoints.addTextChangedListener {
-            if (!it.isNullOrEmpty())
-                viewModel.setPointsToWin(it.toString().toInt())
-            else viewModel.setPointsToWin(null)
-        }
-
     }
 
     private fun initObservers() {
         viewModel.gameMode.observe(viewLifecycleOwner) {
-            if (it.timePerRound!! > 0 && it.pointsToWin!! > 0 && !isToastHandled) {
+//            Log.d("TIME_POINTS", "${it.timePerRound}   ${it.pointsToWin}")
+
+            if (it.timePerRound != null && it.pointsToWin != null && !isToastHandled) {
                 if (it.isClassic == null) {
                     makeToastMessage(IS_CLASSIC_IS_NULL_MESSAGE)
                     isToastHandled = true
@@ -57,6 +49,9 @@ class PagerTimeAndPointsFragment :
     private fun initTextViews() = with(binding) {
         tvTime.text = (viewModel.gameMode.value!!.timePerRound ?: DEFAULT_TIME_PER_ROUND).toString()
         tvPoints.text = (viewModel.gameMode.value!!.pointsToWin ?: DEFAULT_POINTS_TO_WIN).toString()
+
+        viewModel.setTimePerRound(tvTime.text.toString().toInt())
+        viewModel.setPointsToWin(tvPoints.text.toString().toInt())
     }
 
     private fun initOnClickListeners() = with(binding) {
@@ -67,6 +62,7 @@ class PagerTimeAndPointsFragment :
             val time = tvTime.text.toString().toInt()
             val increased = time + 5
             tvTime.text = increased.toString()
+            viewModel.setTimePerRound(increased)
         }
 
         btnDecreaseTime.setOnClickListener {
@@ -74,6 +70,7 @@ class PagerTimeAndPointsFragment :
             if (time > 5) {
                 val decreased = time - 5
                 tvTime.text = decreased.toString()
+                viewModel.setTimePerRound(decreased)
             } else
                 makeToastMessage(TIME_NON_POSITIVE_MESSAGE)
         }
@@ -82,6 +79,7 @@ class PagerTimeAndPointsFragment :
             val points = tvPoints.text.toString().toInt()
             val increased = points + 5
             tvPoints.text = increased.toString()
+            viewModel.setPointsToWin(increased)
         }
 
         btnDecreasePoints.setOnClickListener {
@@ -89,6 +87,7 @@ class PagerTimeAndPointsFragment :
             if (points > 5) {
                 val decreased = points - 5
                 tvPoints.text = decreased.toString()
+                viewModel.setPointsToWin(decreased)
             } else
                 makeToastMessage(POINTS_NON_POSITIVE_MESSAGE)
         }

@@ -91,7 +91,7 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
         binding.btnShowScore.setText("Score")
         binding.btnShowScore.setDrawable(R.drawable.ic_arrow_up)
         binding.btnShowScore.setOnClickListener {
-            navigateToScoreBreak()
+            navigateToScoreBreak(false)
         }
     }
 
@@ -167,10 +167,11 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
         countDownTimer.start()
     }
 
-    private fun navigateToScoreBreak() {
+    private fun navigateToScoreBreak(isStartNextTeamRequired: Boolean = true) {
         findNavController().safeNavigate(
             ClassicFragmentDirections.actionClassicFragmentToScoreBreakFragment(
-                true
+                true,
+                isStartNextTeamRequired
             )
         )
     }
@@ -184,7 +185,7 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
 
     private fun initObservers() {
         classicViewModel.hasBackPressed.observe {
-            if (it  >= 2) {
+            if (it >= 2) {
                 lifecycleScope.launch {
                     delay(classicViewModel.dismissDuration + 40)
                     if (binding.tvCountDown.text == "0" && it == 2 || it == 3)

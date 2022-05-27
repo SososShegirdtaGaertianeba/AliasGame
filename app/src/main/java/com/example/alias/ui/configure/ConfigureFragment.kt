@@ -6,7 +6,6 @@ import androidx.core.animation.addListener
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.alias.R
@@ -68,21 +67,23 @@ class ConfigureFragment :
                             viewModel.gameMode.value!!
                         )
                 if (!binding.btnConfigureDone.isVisible)
-                    initBtnConfigureDone(action)
+                    initBtnConfigureDone()
+
+                binding.btnConfigureDone.setOnClickListener {
+                    binding.btnConfigureDone.animate().alpha(0f)
+                    findNavController().navigate(action)
+                }
             } else binding.btnConfigureDone.isVisible = false
         }
     }
 
-    private fun initBtnConfigureDone(action: NavDirections) = with(binding) {
+    private fun initBtnConfigureDone() = with(binding) {
         btnConfigureDone.alpha = 0f
         btnConfigureDone.isVisible = true
         btnConfigureDone.setText(getString(R.string.start))
         btnConfigureDone.setDrawable(R.drawable.ic_arrow_right)
         btnConfigureDone.animate().alpha(1f)
-        btnConfigureDone.setOnClickListener {
-            btnConfigureDone.animate().alpha(0f)
-            findNavController().navigate(action)
-        }
+
 
     }
 

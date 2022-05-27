@@ -63,7 +63,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
         binding.btnShowScore.setText("Score")
         binding.btnShowScore.setDrawable(R.drawable.ic_arrow_up)
         binding.btnShowScore.setOnClickListener {
-            navigateToScoreBreak()
+            navigateToScoreBreak(false)
         }
     }
 
@@ -114,12 +114,8 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
                 if (leftForBonus.size <= 1)
                     navigateToResultFragment()
                 else {
-                    lifecycleScope.launch {
-//                        delay(measureTimeMillis {
-                            arcadeViewModel.setTeams(leftForBonus, isBonusRound)
-//                        })
-                        navigateToScoreBreak()
-                    }
+                    arcadeViewModel.setTeams(leftForBonus, isBonusRound)
+                    navigateToScoreBreak()
                 }
             }
             else -> {
@@ -205,10 +201,11 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
         findNavController().safeNavigate(action)
     }
 
-    private fun navigateToScoreBreak() {
+    private fun navigateToScoreBreak(isStartNextTeamRoundRequired: Boolean = true) {
         findNavController().safeNavigate(
             ArcadeFragmentDirections.actionArcadeFragmentToScoreBreakFragment(
-                false
+                false,
+                isStartNextTeamRoundRequired
             )
         )
     }
