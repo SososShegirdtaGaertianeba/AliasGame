@@ -67,8 +67,8 @@ class ConfigureFragment :
                         ConfigureFragmentDirections.actionConfigureFragmentToArcadeFragment(
                             viewModel.gameMode.value!!
                         )
-
-                initBtnConfigureDone(action)
+                if (!binding.btnConfigureDone.isVisible)
+                    initBtnConfigureDone(action)
             } else binding.btnConfigureDone.isVisible = false
         }
     }
@@ -80,6 +80,7 @@ class ConfigureFragment :
         btnConfigureDone.setDrawable(R.drawable.ic_arrow_right)
         btnConfigureDone.animate().alpha(1f)
         btnConfigureDone.setOnClickListener {
+            btnConfigureDone.animate().alpha(0f)
             findNavController().navigate(action)
         }
 

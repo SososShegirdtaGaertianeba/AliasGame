@@ -25,6 +25,6 @@
     <string name="time">Time</string>
     <string name="point">Points</string>
     <string name="continue_game">continue</string>
-    <string name="rematch">rematch</string>
+    <string name="rematch">Rematch</string>
     <string name="new_game">New Game</string>
 </resources>

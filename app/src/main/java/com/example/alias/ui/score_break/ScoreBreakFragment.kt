@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.alias.R
 import com.example.alias.databinding.FragmentScoreBreakBinding
 import com.example.alias.di.viewModels
 import com.example.alias.ui.arcade.vm.ArcadeViewModel
@@ -50,14 +51,16 @@ class ScoreBreakFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
-        initListener()
+        initBtnContinue()
         if (safeArgs.isClassic)
             adapter.setData(classicViewModel.teamsTotal)
         else
             adapter.setData(arcadeViewModel.teamsTotal)
     }
 
-    private fun initListener() {
+    private fun initBtnContinue() {
+        binding.btnContinue.setText(getString(R.string.continue_game))
+        binding.btnContinue.setDrawable(R.drawable.ic_arrow_right)
         binding.btnContinue.setOnClickListener {
             this.dismiss()
         }

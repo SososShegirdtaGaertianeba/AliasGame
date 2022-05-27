@@ -5,39 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="12dp"
-    android:padding="64dp"
     android:background="@color/nord_dark"
+    android:padding="64dp"
     tools:context=".ui.scoreBreak.ScoreBreakFragment">
 
 
     <TextView
         android:id="@+id/tvScoreTitle"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Score"
         android:textColor="@color/white"
         android:textSize="30sp"
-        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:paddingVertical="24dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/dark_blue"
         android:layout_marginTop="16dp"
+        android:background="@color/dark_blue"
+        android:paddingVertical="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvScoreTitle" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.example.alias.ui.view.ArrowBtn
         android:id="@+id/btnContinue"
-        android:layout_width="100dp"
+        android:layout_width="173dp"
+        android:layout_height="70dp"
         android:layout_marginTop="8dp"
-        android:layout_height="wrap_content"
-        android:text="@string/continue_game"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

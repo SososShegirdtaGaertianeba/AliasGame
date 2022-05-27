@@ -24,11 +24,19 @@ class ResultFragment : BaseFragment<ResultFragmentBinding>(ResultFragmentBinding
         initTeamMap()
         initRecycler()
         populateRecycler()
-        initListeners()
+        initButtons()
     }
 
-    private fun initListeners() {
-        binding.btnRematch.setOnClickListener {
+    private fun initButtons() = with(binding) {
+
+        btnRematch.setText(getString(R.string.rematch))
+        btnRematch.setDrawable(R.drawable.ic_arrow_up)
+
+        btnNewGame.setText(getString(R.string.new_game))
+        btnNewGame.setDrawable(R.drawable.ic_arrow_up)
+
+
+        btnRematch.setOnClickListener {
             val action = when (gameMode.isClassic) {
                 true -> ResultFragmentDirections.actionResultFragmentToClassicFragment(gameMode)
                 else -> ResultFragmentDirections.actionResultFragmentToArcadeFragment(gameMode)
@@ -36,7 +44,7 @@ class ResultFragment : BaseFragment<ResultFragmentBinding>(ResultFragmentBinding
             findNavController().safeNavigate(action)
         }
 
-        binding.btnConfigureGame.setOnClickListener {
+        btnNewGame.setOnClickListener {
             findNavController().navigate(R.id.action_resultFragment_to_configureFragment)
         }
     }
