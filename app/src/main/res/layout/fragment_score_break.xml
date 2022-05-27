@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="64dp"
+    android:background="@color/nord_dark"
     tools:context=".ui.scoreBreak.ScoreBreakFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -20,8 +21,9 @@
         android:id="@+id/btnContinue"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="@string/continue_game"
         android:layout_marginHorizontal="64dp"
+        android:text="@string/continue_game"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

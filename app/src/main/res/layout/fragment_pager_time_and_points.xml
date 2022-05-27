@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/nord_dark"
     tools:context=".ui.configure.view_pager_fragments.pager_time_and_points.PagerTimeAndPointsFragment">
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -12,6 +13,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/time"
         android:inputType="number"
+        android:textColor="@color/white"
+        android:textColorHint="@color/subtle_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,6 +25,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/point"
         android:inputType="number"
+        android:textColor="@color/white"
+        android:textColorHint="@color/subtle_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
