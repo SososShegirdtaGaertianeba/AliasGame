@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
     android:background="@drawable/score_break_dialog_shape"
+    android:padding="24dp"
     tools:context=".ui.score_break.ScoreBreakFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -21,12 +21,12 @@
 
     <com.example.alias.ui.view.ArrowBtn
         android:id="@+id/btnContinue"
-        android:layout_width="173dp"
-        android:visibility="gone"
-        android:layout_height="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textColor="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/recyclerView" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

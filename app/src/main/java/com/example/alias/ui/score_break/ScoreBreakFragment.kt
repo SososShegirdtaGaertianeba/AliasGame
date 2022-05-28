@@ -63,7 +63,8 @@ class ScoreBreakFragment : BottomSheetDialogFragment() {
     private fun initBtnContinue() {
         if (safeArgs.isStartNextTeamRoundRequired) {
             binding.btnContinue.visibility = View.VISIBLE
-            binding.btnContinue.setText(getString(R.string.continue_game))
+            binding.btnContinue.setBtnColor(R.drawable.green_circle_btn_shape)
+            binding.btnContinue.setText(getString(R.string.start_next_round))
             binding.btnContinue.setDrawable(R.drawable.ic_arrow_right)
             binding.btnContinue.setOnClickListener {
                 this.dismiss()
