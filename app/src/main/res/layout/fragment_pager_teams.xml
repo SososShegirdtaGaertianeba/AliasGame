@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/nord_dark"
-    android:padding="16dp"
     tools:context=".ui.configure.view_pager_fragments.pager_teams.PagerTeamsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -13,6 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="32dp"
+        android:layout_marginVertical="8dp"
         app:layout_constraintBottom_toTopOf="@id/horizontalGuidelineBottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,26 +22,55 @@
         android:id="@+id/btnAddTeam"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginTop="32dp"
         android:background="@drawable/circle_button_shape"
-        android:text="+"
         android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/btnArcade" />
+
+    <View
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_plus"
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="@id/btnAddTeam"
+        app:layout_constraintEnd_toEndOf="@id/btnAddTeam"
+        app:layout_constraintStart_toStartOf="@id/btnAddTeam"
+        app:layout_constraintTop_toTopOf="@id/btnAddTeam" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalGuidelineTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.1" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalGuidelineBottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7" />
+        app:layout_constraintGuide_percent="0.6" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnClassic"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="@color/dark_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineBottom" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnArcade"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/dark_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnClassic" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

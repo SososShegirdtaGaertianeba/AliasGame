@@ -11,120 +11,216 @@
         android:id="@+id/tvTimeTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/bold"
         android:text="@string/time"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvTime"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineTop" />
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/tvPointsTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/bold"
         android:text="@string/point"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvPoints"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timeET" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/timeET"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTime"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/time_points_tv_shape"
-        android:hint="@string/time"
+        android:fontFamily="@font/bold"
+        android:gravity="center"
         android:inputType="number"
-        android:textAlignment="center"
+        android:maxWidth="150dp"
         android:textColor="@color/white"
         android:textColorHint="@color/subtle_white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvPoints"
         app:layout_constraintEnd_toStartOf="@+id/btnIncreaseTime"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnDecreaseTime"
-        app:layout_constraintTop_toBottomOf="@+id/tvTimeTitle" />
+        app:layout_constraintTop_toTopOf="@+id/horizontalGuidelineTop" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnIncreaseTime"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/circle_button_shape"
-        android:text="+"
         android:textColor="@color/white"
         android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnIncreasePoints"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/timeET"
-        app:layout_constraintTop_toBottomOf="@+id/tvTimeTitle" />
+        app:layout_constraintStart_toEndOf="@+id/tvTime"
+        app:layout_constraintTop_toTopOf="@+id/horizontalGuidelineTop" />
+
+    <View
+        android:id="@+id/drawableBtnIncreaseTime"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/ic_plus"
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="@id/btnIncreaseTime"
+        app:layout_constraintEnd_toEndOf="@id/btnIncreaseTime"
+        app:layout_constraintStart_toStartOf="@id/btnIncreaseTime"
+        app:layout_constraintTop_toTopOf="@id/btnIncreaseTime" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnDecreaseTime"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/circle_button_shape"
-        android:text="-"
         android:textColor="@color/white"
         android:textSize="40sp"
-        app:layout_constraintEnd_toStartOf="@+id/timeET"
+        app:layout_constraintBottom_toTopOf="@+id/btnDecreasePoints"
+        app:layout_constraintEnd_toStartOf="@+id/tvTime"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTimeTitle" />
+        app:layout_constraintTop_toTopOf="@+id/horizontalGuidelineTop" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/pointET"
+    <View
+        android:id="@+id/drawableBtnDecreaseTime"
+        android:layout_width="25dp"
+        android:layout_height="3dp"
+        android:background="@drawable/ic_minus"
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="@id/btnDecreaseTime"
+        app:layout_constraintEnd_toEndOf="@id/btnDecreaseTime"
+        app:layout_constraintStart_toStartOf="@id/btnDecreaseTime"
+        app:layout_constraintTop_toTopOf="@id/btnDecreaseTime" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPoints"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/time_points_tv_shape"
-        android:hint="@string/point"
+        android:fontFamily="@font/bold"
+        android:gravity="center"
         android:inputType="number"
-        android:textAlignment="center"
+        android:maxWidth="150dp"
         android:textColor="@color/white"
         android:textColorHint="@color/subtle_white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnClassic"
         app:layout_constraintEnd_toStartOf="@+id/btnIncreasePoints"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnDecreasePoints"
-        app:layout_constraintTop_toBottomOf="@id/tvPointsTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTime" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnIncreasePoints"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/circle_button_shape"
-        android:text="+"
         android:textColor="@color/white"
         android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/pointET"
-        app:layout_constraintTop_toBottomOf="@id/tvPointsTitle" />
+        app:layout_constraintStart_toEndOf="@+id/tvPoints"
+        app:layout_constraintTop_toBottomOf="@+id/btnIncreaseTime" />
+
+    <View
+        android:id="@+id/drawableBtnIncreasePoints"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/ic_plus"
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="@id/btnIncreasePoints"
+        app:layout_constraintEnd_toEndOf="@id/btnIncreasePoints"
+        app:layout_constraintStart_toStartOf="@id/btnIncreasePoints"
+        app:layout_constraintTop_toTopOf="@id/btnIncreasePoints" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnDecreasePoints"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/circle_button_shape"
-        android:text="-"
         android:textColor="@color/white"
         android:textSize="40sp"
-        app:layout_constraintEnd_toStartOf="@+id/pointET"
+        app:layout_constraintBottom_toTopOf="@+id/btnClassic"
+        app:layout_constraintEnd_toStartOf="@+id/tvPoints"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPointsTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/btnDecreaseTime" />
 
+    <View
+        android:id="@+id/drawableBtnDecreasePoints"
+        android:layout_width="25dp"
+        android:layout_height="3dp"
+        android:background="@drawable/ic_minus"
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="@id/btnDecreasePoints"
+        app:layout_constraintEnd_toEndOf="@id/btnDecreasePoints"
+        app:layout_constraintStart_toStartOf="@id/btnDecreasePoints"
+        app:layout_constraintTop_toTopOf="@id/btnDecreasePoints" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalGuidelineTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnClassic"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:background="@drawable/game_mode_btn_shape_inversed"
+        android:fontFamily="@font/bold"
+        android:padding="8dp"
+        android:paddingEnd="36dp"
+        android:text="@string/classic"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guidelineBottom" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnArcade"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/game_mode_btn_shape_inversed"
+        android:fontFamily="@font/bold"
+        android:padding="8dp"
+        android:paddingEnd="72dp"
+        android:text="@string/arcade"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnClassic" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

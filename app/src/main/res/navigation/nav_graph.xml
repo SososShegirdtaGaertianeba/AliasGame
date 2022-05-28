@@ -84,6 +84,9 @@
         <argument
             android:name="isClassic"
             app:argType="boolean" />
+        <argument
+            android:name="isStartNextTeamRoundRequired"
+            app:argType="boolean" />
     </dialog>
     <fragment
         android:id="@+id/resultFragment"

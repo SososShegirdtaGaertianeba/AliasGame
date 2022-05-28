@@ -18,7 +18,7 @@
     <string name="min2Teams">Минимум 2 команды</string>
     <string name="uniqueConstraint">Команды с одинаковыми именами</string>
     <string name="fillAllFields">Заполните все поля</string>
-    <string name="start">начать</string>
+    <string name="start">Начать</string>
     <string name="classic">класический</string>
     <string name="arcade">аркада</string>
     <string name="add">добавить</string>

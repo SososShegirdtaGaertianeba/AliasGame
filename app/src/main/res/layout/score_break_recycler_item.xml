@@ -3,36 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/dark_blue"
+    android:layout_height="45dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginVertical="8dp"
+    android:background="@drawable/single_word_shape"
+    android:minWidth="250dp"
     android:padding="8dp">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/teamNameTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="4dp"
-        android:gravity="end"
-        android:textColor="@color/white"
-        android:textSize="20sp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/bold"
+        android:textColor="@color/nord_dark"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/teamScoreTV"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@id/teamScoreTV"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="team1" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/teamScoreTV"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="4dp"
-        android:textColor="@color/white"
-        android:textSize="20sp"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/bold"
+        android:textAlignment="textEnd"
+        android:textColor="@color/nord_dark"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/teamNameTV"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="23" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

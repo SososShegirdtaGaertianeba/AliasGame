@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.alias.R
 import com.example.alias.databinding.ClassicFragmentBinding
 import com.example.alias.di.viewModels
 import com.example.alias.extensions.safeNavigate
@@ -53,6 +54,7 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
 
     override fun init() {
         loadKoinModules(viewModels)
+        initArrowBtn()
         initGameMode()
         initRecycler()
         initObservers()
@@ -83,6 +85,14 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
         super.onDestroyView()
         countDownTimer.cancel()
         unloadKoinModules(viewModels)
+    }
+
+    private fun initArrowBtn() {
+        binding.btnShowScore.setText("Score")
+        binding.btnShowScore.setDrawable(R.drawable.ic_arrow_up)
+        binding.btnShowScore.setOnClickListener {
+            navigateToScoreBreak(false)
+        }
     }
 
     private fun initCountDown(timePerRound: Int) {
@@ -157,10 +167,11 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
         countDownTimer.start()
     }
 
-    private fun navigateToScoreBreak() {
+    private fun navigateToScoreBreak(isStartNextTeamRequired: Boolean = true) {
         findNavController().safeNavigate(
             ClassicFragmentDirections.actionClassicFragmentToScoreBreakFragment(
-                true
+                true,
+                isStartNextTeamRequired
             )
         )
     }
@@ -174,7 +185,7 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
 
     private fun initObservers() {
         classicViewModel.hasBackPressed.observe {
-            if (it  >= 2) {
+            if (it >= 2) {
                 lifecycleScope.launch {
                     delay(classicViewModel.dismissDuration + 40)
                     if (binding.tvCountDown.text == "0" && it == 2 || it == 3)

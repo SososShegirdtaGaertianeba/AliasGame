@@ -1,43 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="200dp"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ensure_in_exit_dialog_shape"
+    android:padding="8dp">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/second"
         android:gravity="center"
+        android:textSize="24sp"
         android:text="Do you want forfeit round?"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/noBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/red_circle_btn_shape"
+        android:fontFamily="@font/second"
+        app:layout_constraintEnd_toStartOf="@+id/yesBtn"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView" />
+
+    <View
+        android:id="@+id/drawableNoBtn"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/ic_wrong"
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="@id/noBtn"
+        app:layout_constraintEnd_toEndOf="@id/noBtn"
+        app:layout_constraintStart_toStartOf="@id/noBtn"
+        app:layout_constraintTop_toTopOf="@id/noBtn" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/yesBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="yes"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/green_circle_btn_shape"
+        android:fontFamily="@font/second"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/noBtn"
         app:layout_constraintTop_toBottomOf="@id/textView" />
+
+    <View
+        android:id="@+id/drawableYesBtn"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/ic_correct"
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="@id/yesBtn"
+        app:layout_constraintEnd_toEndOf="@id/yesBtn"
+        app:layout_constraintStart_toStartOf="@id/yesBtn"
+        app:layout_constraintTop_toTopOf="@id/yesBtn" />
+
+    <View
+        android:id="@+id/drawableHome"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/noBtn"
+        app:layout_constraintEnd_toStartOf="@id/yesBtn"
+        app:layout_constraintBottom_toTopOf="@id/forfeitGameBtn"
+        android:background="@drawable/ic_home"
+        />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/forfeitGameBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="forfeit game"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/nord_dark_btn_shape"
+        android:fontFamily="@font/bold"
+        android:text="Forfeit Game"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/yesBtn"
+        app:layout_constraintStart_toStartOf="@+id/noBtn"
         app:layout_constraintTop_toBottomOf="@id/noBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

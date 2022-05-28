@@ -18,13 +18,13 @@
     <string name="min2Teams">Minimum 2 Teams</string>
     <string name="uniqueConstraint">No Teams With Same Names</string>
     <string name="fillAllFields">Please Fill Required Fields</string>
-    <string name="start">start</string>
+    <string name="start">Start</string>
     <string name="classic">classic</string>
     <string name="arcade">arcade</string>
     <string name="add">add</string>
-    <string name="time">TIME</string>
-    <string name="point">POINT</string>
+    <string name="time">Time</string>
+    <string name="point">Points</string>
     <string name="continue_game">continue</string>
-    <string name="rematch">rematch</string>
+    <string name="rematch">Rematch</string>
     <string name="new_game">New Game</string>
 </resources>

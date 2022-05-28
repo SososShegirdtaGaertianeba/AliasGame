@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.alias.R
 import com.example.alias.databinding.EnsureInExitDialogFragmentBinding
 import com.example.alias.extensions.safeNavigate
 import com.example.alias.ui.arcade.vm.ArcadeViewModel
@@ -69,6 +70,8 @@ class EnsureInExitDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
+    override fun getTheme(): Int =
+        R.style.BottomSheetDialogStyle
 
     override fun onDestroyView() {
         super.onDestroyView()

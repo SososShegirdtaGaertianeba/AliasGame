@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.alias.MainActivity.Companion.SHARED_PREFERENCE_NAME
+import com.example.alias.R
 import com.example.alias.databinding.ArcadeFragmentBinding
 import com.example.alias.di.viewModels
 import com.example.alias.extensions.safeNavigate
@@ -40,6 +41,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
 
     override fun init() {
         loadKoinModules(viewModels)
+        initArrowBtn()
         initListener()
         initGameMode()
         initObservers()
@@ -55,6 +57,14 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
                 navigateToEnsureDialogFragment()
             }
         })
+    }
+
+    private fun initArrowBtn() {
+        binding.btnShowScore.setText("Score")
+        binding.btnShowScore.setDrawable(R.drawable.ic_arrow_up)
+        binding.btnShowScore.setOnClickListener {
+            navigateToScoreBreak(false)
+        }
     }
 
     private fun initObservers() {
@@ -104,12 +114,8 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
                 if (leftForBonus.size <= 1)
                     navigateToResultFragment()
                 else {
-                    lifecycleScope.launch {
-//                        delay(measureTimeMillis {
-                            arcadeViewModel.setTeams(leftForBonus, isBonusRound)
-//                        })
-                        navigateToScoreBreak()
-                    }
+                    arcadeViewModel.setTeams(leftForBonus, isBonusRound)
+                    navigateToScoreBreak()
                 }
             }
             else -> {
@@ -195,10 +201,11 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
         findNavController().safeNavigate(action)
     }
 
-    private fun navigateToScoreBreak() {
+    private fun navigateToScoreBreak(isStartNextTeamRoundRequired: Boolean = true) {
         findNavController().safeNavigate(
             ArcadeFragmentDirections.actionArcadeFragmentToScoreBreakFragment(
-                false
+                false,
+                isStartNextTeamRoundRequired
             )
         )
     }

@@ -27,8 +27,10 @@ class PagerTeamsFragment :
         with(binding) {
 
             // Init Recycler
+            val layoutManager = LinearLayoutManager(requireContext())
+            layoutManager.stackFromEnd = true
             recyclerView.adapter = adapter
-            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            recyclerView.layoutManager = layoutManager
 
             // Set Delete On Swipe
             initSwipeListener()
@@ -43,6 +45,9 @@ class PagerTeamsFragment :
                     makeToastMessage(getString(R.string.max6Teams))
             }
 
+
+            btnClassic.setOnClickListener { viewModel.setIsClassic(true) }
+            btnArcade.setOnClickListener { viewModel.setIsClassic(false) }
         }
 
     private fun initSwipeListener() {
@@ -81,6 +86,18 @@ class PagerTeamsFragment :
             if (!it && !constraintMessageShown) {
                 makeToastMessage(getString(R.string.uniqueConstraint))
                 constraintMessageShown = true
+            }
+        }
+
+        viewModel.gameMode.observe(viewLifecycleOwner) { gm ->
+            gm.isClassic?.let {
+                if (it) {
+                    binding.btnClassic.setBackgroundResource(R.color.subtle_green)
+                    binding.btnArcade.setBackgroundResource(R.color.dark_blue)
+                } else {
+                    binding.btnClassic.setBackgroundResource(R.color.dark_blue)
+                    binding.btnArcade.setBackgroundResource(R.color.subtle_green)
+                }
             }
         }
     }

@@ -37,6 +37,7 @@
         android:id="@+id/choose_lang"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:entries="@array/language_array"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

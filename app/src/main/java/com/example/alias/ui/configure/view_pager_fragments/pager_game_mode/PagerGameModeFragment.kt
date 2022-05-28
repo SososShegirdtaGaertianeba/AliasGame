@@ -1,6 +1,7 @@
 package com.example.alias.ui.configure.view_pager_fragments.pager_game_mode
 
 import androidx.fragment.app.viewModels
+import com.example.alias.R
 import com.example.alias.databinding.FragmentPagerGameModeBinding
 import com.example.alias.ui.configure.view_pager_fragments.base.BaseFragment
 import com.example.alias.ui.configure.vm.ConfigureViewModel
@@ -13,12 +14,26 @@ class PagerGameModeFragment :
     )
 
     override fun init() {
-        binding.classic.setOnClickListener {
-            viewModel.setIsClassic(true)
-        }
+        initObservers()
+        initListeners()
+    }
 
-        binding.arcade.setOnClickListener {
-            viewModel.setIsClassic(false)
+    private fun initListeners() = with(binding) {
+        binding.classic.setOnClickListener { viewModel.setIsClassic(true) }
+        binding.arcade.setOnClickListener { viewModel.setIsClassic(false) }
+    }
+
+    private fun initObservers() {
+        viewModel.gameMode.observe(viewLifecycleOwner) { gm ->
+            gm.isClassic?.let {
+                if (it) {
+                    binding.classic.setBackgroundResource(R.drawable.game_mode_chosen_btn_shape)
+                    binding.arcade.setBackgroundResource(R.drawable.game_mode_btn_shape)
+                } else {
+                    binding.arcade.setBackgroundResource(R.drawable.game_mode_chosen_btn_shape)
+                    binding.classic.setBackgroundResource(R.drawable.game_mode_btn_shape)
+                }
+            }
         }
     }
 
