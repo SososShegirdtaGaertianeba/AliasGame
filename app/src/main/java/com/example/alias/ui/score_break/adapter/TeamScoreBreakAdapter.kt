@@ -22,7 +22,7 @@ class TeamScoreBreakAdapter : RecyclerView.Adapter<TeamScoreBreakAdapter.ViewHol
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
-        ScoreBreakRecyclerItemBinding.inflate(LayoutInflater.from(parent.context))
+        ScoreBreakRecyclerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

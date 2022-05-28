@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.alias.R
@@ -14,10 +13,11 @@ import com.example.alias.di.viewModels
 import com.example.alias.ui.arcade.vm.ArcadeViewModel
 import com.example.alias.ui.classic.vm.ClassicViewModel
 import com.example.alias.ui.score_break.adapter.TeamScoreBreakAdapter
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.android.ext.android.inject
 import org.koin.core.context.loadKoinModules
 
-class ScoreBreakFragment : DialogFragment() {
+class ScoreBreakFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentScoreBreakBinding? = null
     val binding get() = _binding!!
     private val safeArgs: ScoreBreakFragmentArgs by navArgs()
@@ -61,17 +61,23 @@ class ScoreBreakFragment : DialogFragment() {
     }
 
     private fun initBtnContinue() {
-        binding.btnContinue.setText(getString(R.string.continue_game))
-        binding.btnContinue.setDrawable(R.drawable.ic_arrow_right)
-        binding.btnContinue.setOnClickListener {
-            this.dismiss()
-        }
+        if (safeArgs.isStartNextTeamRoundRequired) {
+            binding.btnContinue.visibility = View.VISIBLE
+            binding.btnContinue.setText(getString(R.string.continue_game))
+            binding.btnContinue.setDrawable(R.drawable.ic_arrow_right)
+            binding.btnContinue.setOnClickListener {
+                this.dismiss()
+            }
+        } else binding.btnContinue.visibility = View.GONE
     }
 
     private fun initRecyclerView() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
     }
+
+    override fun getTheme(): Int =
+        R.style.BottomSheetDialogStyle
 
     override fun onDestroyView() {
         super.onDestroyView()

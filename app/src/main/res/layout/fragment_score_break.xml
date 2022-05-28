@@ -4,43 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="12dp"
-    android:background="@color/nord_dark"
-    android:padding="64dp"
+    android:padding="24dp"
+    android:background="@drawable/score_break_dialog_shape"
     tools:context=".ui.score_break.ScoreBreakFragment">
-
-
-    <TextView
-        android:id="@+id/tvScoreTitle"
-        android:layout_width="wrap_content"
-        android:fontFamily="@font/bold"
-        android:layout_height="wrap_content"
-        android:text="Score"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:background="@color/dark_blue"
         android:paddingVertical="24dp"
+        app:layout_constraintBottom_toTopOf="@id/btnContinue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvScoreTitle" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.example.alias.ui.view.ArrowBtn
         android:id="@+id/btnContinue"
         android:layout_width="173dp"
+        android:visibility="gone"
         android:layout_height="70dp"
-        android:layout_marginTop="8dp"
         android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

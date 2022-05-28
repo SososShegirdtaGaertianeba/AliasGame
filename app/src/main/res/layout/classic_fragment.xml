@@ -43,7 +43,7 @@
         tools:text="0"
         app:layout_constraintCircle="@id/tvCountDown"
         app:layout_constraintCircleAngle="45"
-        app:layout_constraintCircleRadius="48dp"
+        app:layout_constraintCircleRadius="50dp"
         app:layout_constraintStart_toEndOf="@id/tvCountDown"
         app:layout_constraintTop_toTopOf="@id/tvCountDown" />
 

@@ -27,8 +27,10 @@ class PagerTeamsFragment :
         with(binding) {
 
             // Init Recycler
+            val layoutManager = LinearLayoutManager(requireContext())
+            layoutManager.stackFromEnd = true
             recyclerView.adapter = adapter
-            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            recyclerView.layoutManager = layoutManager
 
             // Set Delete On Swipe
             initSwipeListener()
