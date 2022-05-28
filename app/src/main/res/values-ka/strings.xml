@@ -31,14 +31,14 @@
     <string name="rules_second">აუხსენი სიტყვები თანაგუნდელს</string>
     <string name="rules_third">ახსნისას ნუ გამოიყენებ თანაჟღერად სიტყვებს</string>
     <string name="rules_fourth">კლასიკური რეჟიმი</string>
-    <string name="rules_fifth">5 სიტყვა ჯერზე. დააჭირე ქულის გასანახლებლად</string>
-    <string name="rules_sixth">"ყველას გამოცნობისას, გეძლევა ახალი 5 სიტყვა "</string>
+    <string name="rules_fifth">5 სიტყვა ჯერზე. დააჭირე ქულის გასაახლებლად</string>
+    <string name="rules_sixth">"ყველას გამოცნობისას, გეძლევა 5 ახალი სიტყვა "</string>
     <string name="rules_seventh">არკადის რეჟიმი</string>
     <string name="rules_eighth">2 ღილაკი და 1 სიტყვა ჯერზე</string>
     <string name="rules_ninth">დააჭირე ღილაკს ქულის მოსამატებლად/მოსაკლებად</string>
     <string name="rules_tenth">ბონუს რაუნდი</string>
-    <string name="rules_eleventh">თუ რამდენიმე გუნდი ცდება მოგების ზღვარს, ინიშნება რაუნდი მად შორის</string>
+    <string name="rules_eleventh">თუ რამდენიმე გუნდი ცდება მოგების ზღვარს, ინიშნება რაუნდი მათ შორის</string>
     <string name="rules_twelveth">თამაში გრძელდება გამარჯვებულის გამოვლენამდე</string>
     <string name="rules_thirteenth">გაიჭედე ბაბუუ?</string>
-    <string name="rules_fourteenth">შეგიძლია რაუნდის ნაადრევად დასრულება, ქულები გენახება.</string>
+    <string name="rules_fourteenth">შეგიძლია რაუნდის ნაადრევად დასრულება, ქულები გენახება</string>
 </resources>
