@@ -27,4 +27,18 @@
     <string name="start_next_round">Следующий Раунд</string>
     <string name="rematch">реванш</string>
     <string name="new_game">новая игра</string>
+    <string name="rules_divide_by_teams">Разделитесь на Команды</string>
+    <string name="rules_second">Обьясни Слова Своей Команде</string>
+    <string name="rules_third">Не Используй Созвучные Слова для Объяснения</string>
+    <string name="rules_fourth">Классический режим</string>
+    <string name="rules_fifth">5 Слов за раз. Нажми на Угаданное для Обновления Очков</string>
+    <string name="rules_sixth">Если все Слова Угаданы, Появляются Новые</string>
+    <string name="rules_seventh">Режим Аркада</string>
+    <string name="rules_eighth">2 Кнопки и 1 Слово за раз</string>
+    <string name="rules_ninth">"Нажми на Кнопку для Увеличения/Уменьшения Очков "</string>
+    <string name="rules_tenth">Бонус Раунд</string>
+    <string name="rules_eleventh">Если Несколько Команд Наберут Достаточно Очков, Проведется Раунд Между Лидерами</string>
+    <string name="rules_twelveth">Игра Продолжается до Проявления Победителя</string>
+    <string name="rules_thirteenth">Застрял?</string>
+    <string name="rules_fourteenth">Раунд Можно Закончить Преждевременно. Очки Сохраняются</string>
 </resources>
