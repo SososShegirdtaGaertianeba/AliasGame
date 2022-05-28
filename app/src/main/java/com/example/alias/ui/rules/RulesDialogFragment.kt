@@ -1,6 +1,10 @@
 package com.example.alias.ui.rules
 
 import android.os.Bundle
+import android.text.method.ArrowKeyMovementMethod
+import android.text.method.BaseMovementMethod
+import android.text.method.LinkMovementMethod
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +23,7 @@ class RulesDialogFragment : BottomSheetDialogFragment() {
     ): View {
 
         _binding = FragmentRulesDialogBinding.inflate(inflater, container, false)
+//        binding.rulesTv.movementMethod = ScrollingMovementMethod()
         return binding.root
 
     }

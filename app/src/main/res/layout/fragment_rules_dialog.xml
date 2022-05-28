@@ -1,23 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/nord_dark"
+    android:background="@drawable/rules_dialog_shape"
     tools:context=".ui.rules.RulesDialogFragment">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/rules_tv"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fontFamily="@font/first"
-        android:paddingStart="4dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="4dp"
-        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="30sp" />
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="48dp"
+            android:layout_marginTop="128dp"
+            android:fontFamily="@font/bold"
+            android:text="@string/rules_divide_by_teams"
+            android:textAlignment="center"
+            android:textColor="@color/white_2"
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/second"
+            android:text="@string/rules_second"
+            android:textAlignment="center"
+            android:textColor="@color/white_2"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="@id/tv1"
+            app:layout_constraintStart_toStartOf="@id/tv1"
+            app:layout_constraintTop_toBottomOf="@id/tv1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/second"
+            android:text="@string/rules_third"
+            android:textAlignment="center"
+            android:textColor="@color/white_2"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="@id/tv1"
+            app:layout_constraintStart_toStartOf="@id/tv1"
+            app:layout_constraintTop_toBottomOf="@id/tv2" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="48dp"
+            android:layout_marginTop="64dp"
+            android:fontFamily="@font/bold"
+            android:text="@string/rules_fourth"
+            android:textAlignment="center"
+            android:textColor="@color/white_2"
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv3" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/second"
+            android:text="@string/rules_fifth"
+            android:textAlignment="center"
+            android:textColor="@color/white_2"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="@id/tv4"
+            app:layout_constraintStart_toStartOf="@id/tv4"
+            app:layout_constraintTop_toBottomOf="@id/tv4" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/second"
+            android:text="@string/rules_sixth"
+            android:textAlignment="center"
+            android:textColor="@color/white_2"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="@id/tv5"
+            app:layout_constraintStart_toStartOf="@id/tv4"
+            app:layout_constraintTop_toBottomOf="@id/tv5" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="48dp"
+            android:layout_marginTop="64dp"
+            android:fontFamily="@font/bold"
+            android:text="@string/rules_seventh"
+            android:textAlignment="center"
+            android:textColor="@color/white_2"
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv6" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/second"
+            android:text="@string/rules_eighth"
+            android:textAlignment="center"
+            android:textColor="@color/white_2"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="@id/tv7"
+            app:layout_constraintStart_toStartOf="@id/tv7"
+            app:layout_constraintTop_toBottomOf="@id/tv7" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/second"
+            android:text="@string/rules_ninth"
+            android:textAlignment="center"
+            android:textColor="@color/white_2"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="@id/tv7"
+            app:layout_constraintStart_toStartOf="@id/tv7"
+            app:layout_constraintTop_toBottomOf="@id/tv8" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="48dp"
+            android:layout_marginTop="64dp"
+            android:fontFamily="@font/bold"
+            android:text="@string/rules_tenth"
+            android:textAlignment="center"
+            android:textColor="@color/white_2"
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv9" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/second"
+            android:text="@string/rules_eleventh"
+            android:textAlignment="center"
+            android:textColor="@color/white_2"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="@id/tv10"
+            app:layout_constraintStart_toStartOf="@id/tv10"
+            app:layout_constraintTop_toBottomOf="@id/tv10" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/second"
+            android:text="@string/rules_twelveth"
+            android:textAlignment="center"
+            android:textColor="@color/white_2"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="@id/tv10"
+            app:layout_constraintStart_toStartOf="@id/tv10"
+            app:layout_constraintTop_toBottomOf="@id/tv11" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv13"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="48dp"
+            android:layout_marginTop="64dp"
+            android:fontFamily="@font/bold"
+            android:text="@string/rules_thirteenth"
+            android:textAlignment="center"
+            android:textColor="@color/white_2"
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv12" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/second"
+            android:text="@string/rules_fourteenth"
+            android:textAlignment="center"
+            android:textColor="@color/white_2"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="@id/tv13"
+            app:layout_constraintStart_toStartOf="@id/tv13"
+            app:layout_constraintTop_toBottomOf="@id/tv13" />
+
+        <Space
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/tv14"
+            android:layout_height="64dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -27,4 +27,18 @@
     <string name="start_next_round">Start Next Round</string>
     <string name="rematch">Rematch</string>
     <string name="new_game">New Game</string>
+    <string name="rules_divide_by_teams">Divide by Teams</string>
+    <string name="rules_second">Explain the Words to Your Teammate</string>
+    <string name="rules_third">Don’t use Similarly Sounding Words as Hints</string>
+    <string name="rules_fourth">Classic Mode</string>
+    <string name="rules_fifth">5 Words at a Time. Click on The Word To Update Score</string>
+    <string name="rules_sixth">If All 5 Words Guessed, New Words Will be Generated</string>
+    <string name="rules_seventh">Arcade Mode</string>
+    <string name="rules_eighth">2 Buttons and 1 Word at a Time</string>
+    <string name="rules_ninth">Click on Respective Button to Increase/Decrease Score</string>
+    <string name="rules_tenth">Bonus Round</string>
+    <string name="rules_eleventh">If Several Teams Pass the Mark of Winning Points, Bonus Round Will be Held Among Those.</string>
+    <string name="rules_twelveth">Bonus Rounds held until the winner by total points appears</string>
+    <string name="rules_thirteenth">Stuck?</string>
+    <string name="rules_fourteenth">If Stuck, Round can be Skipped. Points are Saved</string>
 </resources>
