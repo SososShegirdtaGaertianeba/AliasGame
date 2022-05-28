@@ -24,7 +24,7 @@
     <string name="add">დამატება</string>
     <string name="time">დრო</string>
     <string name="point">ქულები</string>
-    <string name="continue_game">გაგრძელება</string>
+    <string name="start_next_round">შემდეგი რაუნდი</string>
     <string name="rematch">რევანში</string>
     <string name="new_game">ახალი თამაში</string>
 </resources>

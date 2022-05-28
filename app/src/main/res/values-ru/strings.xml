@@ -24,7 +24,7 @@
     <string name="add">добавить</string>
     <string name="time">ВРЕМЯ</string>
     <string name="point">ОЧКИ</string>
-    <string name="continue_game">продолжить</string>
+    <string name="start_next_round">Следующий Раунд</string>
     <string name="rematch">реванш</string>
     <string name="new_game">новая игра</string>
 </resources>

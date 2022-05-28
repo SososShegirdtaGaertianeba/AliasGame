@@ -24,7 +24,7 @@
     <string name="add">add</string>
     <string name="time">Time</string>
     <string name="point">Points</string>
-    <string name="continue_game">continue</string>
+    <string name="start_next_round">Start Next Round</string>
     <string name="rematch">Rematch</string>
     <string name="new_game">New Game</string>
 </resources>

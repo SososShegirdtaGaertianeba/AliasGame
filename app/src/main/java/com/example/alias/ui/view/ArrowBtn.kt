@@ -18,9 +18,11 @@ class ArrowBtn @JvmOverloads constructor(
         binding.textView.text = text
     }
 
-    fun setDrawable(id: Int) {
+    fun setBtnColor(id: Int) =
+        binding.btn.setBackgroundResource(id)
+
+    fun setDrawable(id: Int) =
         binding.drawableView.setBackgroundResource(id)
-    }
 
     override fun setOnClickListener(l: OnClickListener?) {
         binding.btn.setOnClickListener(l)
