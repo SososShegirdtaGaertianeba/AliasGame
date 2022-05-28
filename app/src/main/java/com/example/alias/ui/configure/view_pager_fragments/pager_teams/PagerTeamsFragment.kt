@@ -90,6 +90,14 @@ class PagerTeamsFragment :
         }
 
         viewModel.gameMode.observe(viewLifecycleOwner) { gm ->
+            gm.teams?.let {
+                if (it.size > 3)
+                    binding.drawable.animate().alpha(0f)
+                else
+                    binding.drawable.animate().alpha(1f)
+
+            }
+
             gm.isClassic?.let {
                 if (it) {
                     binding.btnClassic.setBackgroundResource(R.color.subtle_green)

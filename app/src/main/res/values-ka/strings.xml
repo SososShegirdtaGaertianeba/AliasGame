@@ -41,4 +41,5 @@
     <string name="rules_twelveth">თამაში გრძელდება გამარჯვებულის გამოვლენამდე</string>
     <string name="rules_thirteenth">გაიჭედე ბაბუუ?</string>
     <string name="rules_fourteenth">შეგიძლია რაუნდის ნაადრევად დასრულება, ქულები გენახება</string>
+    <string name="choose_game_mode">აირჩიე თამაშის რეჟიმი</string>
 </resources>

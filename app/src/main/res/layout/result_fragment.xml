@@ -64,4 +64,15 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.7" />
 
+    <View
+        android:id="@+id/drawable"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_result_scene"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnRematch"
+        app:layout_constraintDimensionRatio=".486486"
+        app:layout_constraintStart_toEndOf="@id/btnNewGame"
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineBottom" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
