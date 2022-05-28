@@ -32,6 +32,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
     private var isGameFinished = false
     private var gotToWinningPoints = false
     private var isBonusRound = false
+    private var isStartNextTeamRequired = false
 
     private val safeArgs: ArcadeFragmentArgs by navArgs()
     private val arcadeViewModel: ArcadeViewModel by viewModel()
@@ -44,8 +45,9 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
         initArrowBtn()
         initListener()
         initGameMode()
-        initObservers()
         initWordGetter(requireContext())
+        makeRequest()
+        initObservers()
         initCountDownTimer(timePerRound)
         startNextTeamRound()
         onBackPressed()
@@ -63,7 +65,12 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
         binding.btnShowScore.setText("Score")
         binding.btnShowScore.setDrawable(R.drawable.ic_arrow_up)
         binding.btnShowScore.setOnClickListener {
-            navigateToScoreBreak(false)
+            binding.btnShowScore.setOnClickListener {
+                if (isStartNextTeamRequired)
+                    arcadeViewModel.toggleIsNextTurn()
+                else
+                    navigateToScoreBreak(isStartNextTeamRequired)
+            }
         }
     }
 
@@ -86,11 +93,36 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
             if (it >= 2) {
                 lifecycleScope.launch {
                     delay(arcadeViewModel.dismissDuration + 40)
-                    if (binding.timeLeftTV.text == ZERO && it == 2 || it == 3)
+                    if (binding.timeLeftTV.text == ZERO && it == 2 || it == 3) {
+                        isStartNextTeamRequired = true
+                        startNextTeamRequired()
+                        countDownTimer.cancel()
                         handleGameResumption()
+                    }
                     arcadeViewModel.handleBackPress(0)
 
                 }
+            }
+        }
+    }
+
+    private fun startNextTeamRequired() {
+        if (isStartNextTeamRequired) {
+            with(binding) {
+                btnShowScore.setText("Continue")
+                btnShowScore.setDrawable(R.drawable.ic_arrow_right)
+                btnShowScore.setBtnColor(R.drawable.green_circle_btn_shape)
+                plusBtn.isClickable = false
+                minusBtn.isClickable = false
+            }
+
+        } else {
+            with(binding) {
+                btnShowScore.setText("Score")
+                btnShowScore.setDrawable(R.drawable.ic_arrow_up)
+                btnShowScore.setBtnColor(R.drawable.circle_button_shape)
+                plusBtn.isClickable = true
+                minusBtn.isClickable = true
             }
         }
     }
@@ -104,7 +136,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
     private fun handleGameContinuation() {
         when {
             !isGameFinished -> {
-                navigateToScoreBreak()
+                navigateToScoreBreak(isStartNextTeamRequired)
             }
             !isBonusRound -> {
                 isBonusRound = true
@@ -115,7 +147,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
                     navigateToResultFragment()
                 else {
                     arcadeViewModel.setTeams(leftForBonus, isBonusRound)
-                    navigateToScoreBreak()
+                    navigateToScoreBreak(isStartNextTeamRequired)
                 }
             }
             else -> {
@@ -126,7 +158,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
                     navigateToResultFragment()
                 else {
                     arcadeViewModel.setTeams(leftForBonus, isBonusRound)
-                    navigateToScoreBreak()
+                    navigateToScoreBreak(isStartNextTeamRequired)
                 }
             }
         }
@@ -134,6 +166,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
 
     private fun startNextTeamRound() {
         arcadeViewModel.startNextTeamRound()
+        isStartNextTeamRequired = false
         makeRequest()
         binding.currentTeamTV.text = arcadeViewModel.currentTeam
         countDownTimer.cancel()
@@ -180,6 +213,8 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
             }
 
             override fun onFinish() {
+                isStartNextTeamRequired = true
+                startNextTeamRequired()
                 handleGameResumption()
             }
         }.start()
@@ -201,7 +236,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
         findNavController().safeNavigate(action)
     }
 
-    private fun navigateToScoreBreak(isStartNextTeamRoundRequired: Boolean = true) {
+    private fun navigateToScoreBreak(isStartNextTeamRoundRequired: Boolean) {
         findNavController().safeNavigate(
             ArcadeFragmentDirections.actionArcadeFragmentToScoreBreakFragment(
                 false,

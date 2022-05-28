@@ -2,6 +2,7 @@ package com.example.alias.ui.score_break.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alias.databinding.ScoreBreakRecyclerItemBinding
 
@@ -17,6 +18,9 @@ class TeamScoreBreakAdapter : RecyclerView.Adapter<TeamScoreBreakAdapter.ViewHol
             with(binding) {
                 teamNameTV.text = model.first
                 teamScoreTV.text = model.second.toString()
+                if (position == 0) {
+                    medal.isVisible = true
+                }
             }
         }
     }

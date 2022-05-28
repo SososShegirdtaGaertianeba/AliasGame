@@ -40,16 +40,6 @@ class ScoreBreakFragment : BottomSheetDialogFragment() {
         return binding.root
     }
 
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-        if (safeArgs.isStartNextTeamRoundRequired) {
-            if (safeArgs.isClassic)
-                classicViewModel.toggleIsNextTurn()
-            else
-                arcadeViewModel.toggleIsNextTurn()
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
@@ -67,7 +57,13 @@ class ScoreBreakFragment : BottomSheetDialogFragment() {
             binding.btnContinue.setText(getString(R.string.start_next_round))
             binding.btnContinue.setDrawable(R.drawable.ic_arrow_right)
             binding.btnContinue.setOnClickListener {
-                this.dismiss()
+                if (safeArgs.isStartNextTeamRoundRequired) {
+                    if (safeArgs.isClassic)
+                        classicViewModel.toggleIsNextTurn()
+                    else
+                        arcadeViewModel.toggleIsNextTurn()
+                }
+                dismiss()
             }
         } else binding.btnContinue.visibility = View.GONE
     }
