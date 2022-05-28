@@ -14,6 +14,7 @@ class WordsAdapter(
 
     private val items = mutableListOf<String>()
     private val markedItems = mutableListOf<Boolean>()
+    private var isClickable = true
 
     inner class ViewHolder(
         private val binding: ClassicModeWordItemBinding,
@@ -34,16 +35,18 @@ class WordsAdapter(
             setResource(position)
             binding.classicWordTv.text = model
             itemView.setOnClickListener {
-                if (markedItems[position]) {
-                    onUnMark()
-                    binding.classicWordTv.setTextColor(Color.parseColor("#2E3440"))
-                } else {
-                    onMark()
-                    binding.classicWordTv.setTextColor(Color.parseColor("#E1ECF0"))
-                }
+                if (isClickable) {
+                    if (markedItems[position]) {
+                        onUnMark()
+                        binding.classicWordTv.setTextColor(Color.parseColor("#2E3440"))
+                    } else {
+                        onMark()
+                        binding.classicWordTv.setTextColor(Color.parseColor("#E1ECF0"))
+                    }
 
-                markedItems[position] = !markedItems[position]
-                setResource(position)
+                    markedItems[position] = !markedItems[position]
+                    setResource(position)
+                }
             }
         }
     }
@@ -72,5 +75,9 @@ class WordsAdapter(
         this.markedItems.clear()
         this.markedItems.addAll(items.map { false })
         notifyDataSetChanged()
+    }
+
+    fun setIsClickable(b: Boolean) {
+        isClickable = b
     }
 }

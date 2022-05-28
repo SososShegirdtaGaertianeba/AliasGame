@@ -7,7 +7,7 @@ import com.example.alias.R
 import com.example.alias.databinding.ResultFragmentBinding
 import com.example.alias.extensions.safeNavigate
 import com.example.alias.ui.base.BaseFragment
-import com.example.alias.ui.classic.adapter.WordsAdapter
+import com.example.alias.ui.score_break.adapter.TeamScoreBreakAdapter
 import com.example.alias.util.GameMode
 
 class ResultFragment : BaseFragment<ResultFragmentBinding>(ResultFragmentBinding::inflate) {
@@ -15,9 +15,7 @@ class ResultFragment : BaseFragment<ResultFragmentBinding>(ResultFragmentBinding
     private lateinit var gameMode: GameMode
     private lateinit var scoreArray: IntArray
     private val teamMap = mutableMapOf<String, Int>()
-    private val adapter: WordsAdapter by lazy {
-        WordsAdapter({}, {})
-    }
+    private lateinit var adapter: TeamScoreBreakAdapter
 
     override fun init() {
         initGameMode()
@@ -28,14 +26,6 @@ class ResultFragment : BaseFragment<ResultFragmentBinding>(ResultFragmentBinding
     }
 
     private fun initButtons() = with(binding) {
-
-        btnRematch.setText(getString(R.string.rematch))
-        btnRematch.setDrawable(R.drawable.ic_arrow_up)
-
-        btnNewGame.setText(getString(R.string.new_game))
-        btnNewGame.setDrawable(R.drawable.ic_arrow_up)
-
-
         btnRematch.setOnClickListener {
             val action = when (gameMode.isClassic) {
                 true -> ResultFragmentDirections.actionResultFragmentToClassicFragment(gameMode)
@@ -51,13 +41,14 @@ class ResultFragment : BaseFragment<ResultFragmentBinding>(ResultFragmentBinding
 
     private fun initRecycler() {
         with(binding) {
+            adapter = TeamScoreBreakAdapter()
             recyclerView.adapter = adapter
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
         }
     }
 
     private fun populateRecycler() =
-        adapter.setData(teamMap.keys.toMutableList())
+        adapter.setData(teamMap)
 
     private fun initTeamMap() {
         for (i in gameMode.teams!!.indices)

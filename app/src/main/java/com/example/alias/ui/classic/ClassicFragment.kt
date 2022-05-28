@@ -34,6 +34,7 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
     private var isGameFinished = false
     private var gotToWinningPoints = false
     private var isBonusRound = false
+    private var isStartNextTeamRequired = false
 
     private val safeArgs: ClassicFragmentArgs by navArgs()
     private val classicViewModel: ClassicViewModel by viewModel()
@@ -91,7 +92,10 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
         binding.btnShowScore.setText("Score")
         binding.btnShowScore.setDrawable(R.drawable.ic_arrow_up)
         binding.btnShowScore.setOnClickListener {
-            navigateToScoreBreak(false)
+            if (isStartNextTeamRequired)
+                classicViewModel.toggleIsNextTurn()
+            else
+                navigateToScoreBreak(isStartNextTeamRequired)
         }
     }
 
@@ -103,10 +107,31 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
             }
 
             override fun onFinish() {
+                isStartNextTeamRequired = true
+                startNextTeamRequired()
                 handleGameResumption()
             }
         }
         countDownTimer.start()
+    }
+
+    private fun startNextTeamRequired() {
+        if (isStartNextTeamRequired) {
+            with(binding) {
+                btnShowScore.setText("Continue")
+                btnShowScore.setDrawable(R.drawable.ic_arrow_right)
+                btnShowScore.setBtnColor(R.drawable.green_circle_btn_shape)
+                wordsAdapter.setIsClickable(false)
+            }
+        } else {
+            with(binding) {
+                btnShowScore.setText("Score")
+                btnShowScore.setDrawable(R.drawable.ic_arrow_up)
+                btnShowScore.setBtnColor(R.drawable.circle_button_shape)
+                classicFragmentRecycler.isClickable = true
+                wordsAdapter.setIsClickable(true)
+            }
+        }
     }
 
     private fun handleGameResumption() {
@@ -124,7 +149,7 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
     }
 
     private fun handleGameContinuation() = when {
-        !isGameFinished -> navigateToScoreBreak()
+        !isGameFinished -> navigateToScoreBreak(isStartNextTeamRequired)
         !isBonusRound -> {
             isBonusRound = true
             val leftForBonus =
@@ -134,7 +159,7 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
                 navigateToResultFragment()
             else {
                 classicViewModel.setTeams(leftForBonus, isBonusRound)
-                navigateToScoreBreak()
+                navigateToScoreBreak(isStartNextTeamRequired)
             }
         }
         else -> {
@@ -144,7 +169,7 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
                 navigateToResultFragment()
             else {
                 classicViewModel.setTeams(leftForBonus, isBonusRound)
-                navigateToScoreBreak()
+                navigateToScoreBreak(isStartNextTeamRequired)
             }
         }
     }
@@ -160,6 +185,8 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
 
     private fun startNextTeamRound() {
         classicViewModel.startNextTeamRound()
+        isStartNextTeamRequired = false
+        startNextTeamRequired()
         prevCompletionPoints = 0
         makeRequest()
         binding.tvCurrentTeam.text = classicViewModel.currentTeam
@@ -167,7 +194,7 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
         countDownTimer.start()
     }
 
-    private fun navigateToScoreBreak(isStartNextTeamRequired: Boolean = true) {
+    private fun navigateToScoreBreak(isStartNextTeamRequired: Boolean) {
         findNavController().safeNavigate(
             ClassicFragmentDirections.actionClassicFragmentToScoreBreakFragment(
                 true,
@@ -188,8 +215,12 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
             if (it >= 2) {
                 lifecycleScope.launch {
                     delay(classicViewModel.dismissDuration + 40)
-                    if (binding.tvCountDown.text == "0" && it == 2 || it == 3)
+                    if (binding.tvCountDown.text == "0" && it == 2 || it == 3) {
+                        isStartNextTeamRequired = true
+                        startNextTeamRequired()
+                        countDownTimer.cancel()
                         handleGameResumption()
+                    }
                     classicViewModel.handleBackPress(0)
                 }
             }
