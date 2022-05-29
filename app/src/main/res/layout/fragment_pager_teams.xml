@@ -22,16 +22,16 @@
         android:id="@+id/btnAddTeam"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/circle_button_shape"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnArcade" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <View
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:background="@drawable/ic_plus"
         android:elevation="100dp"
         app:layout_constraintBottom_toBottomOf="@id/btnAddTeam"
@@ -47,15 +47,15 @@
         app:layout_constraintGuide_percent="0.1" />
 
     <View
+        android:id="@+id/drawable"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/drawable"
-        app:layout_constraintDimensionRatio="1.2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineTop"
+        android:background="@drawable/ic_teams_scene"
         app:layout_constraintBottom_toTopOf="@id/guideline3"
-        android:background="@drawable/ic_teams_scene" />
+        app:layout_constraintDimensionRatio="1.2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineTop" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalGuidelineBottom"
@@ -87,6 +87,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnClassic" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
