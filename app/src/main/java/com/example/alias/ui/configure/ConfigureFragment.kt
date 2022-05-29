@@ -24,11 +24,23 @@ class ConfigureFragment :
 
     private lateinit var adapter: ConfigurationViewPagerAdapter
 
+    private var hasFilledAllFields = false
+    private var currentIsClassic: Boolean? = null
 
     override fun init() {
         initViewPager()
         initObservers()
     }
+
+    private fun getAction() =
+        if (viewModel.gameMode.value!!.isClassic!!)
+            ConfigureFragmentDirections.actionConfigureFragmentToClassicFragment(
+                viewModel.gameMode.value!!
+            )
+        else
+            ConfigureFragmentDirections.actionConfigureFragmentToArcadeFragment(
+                viewModel.gameMode.value!!
+            )
 
     private fun initViewPager() {
         val fragmentList = arrayOf<Fragment>(
@@ -42,49 +54,62 @@ class ConfigureFragment :
             viewLifecycleOwner.lifecycle,
         )
         binding.viewPager.adapter = adapter
-        binding.viewPager
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                viewModel.setViewPagerCurrentItem(position)
+            }
+        })
     }
 
     private fun initObservers() {
         viewModel.gameMode.observe(viewLifecycleOwner) {
             it.isClassic?.let { _ ->
-                if (it.teams == null)
+                if (it.isClassic != currentIsClassic && binding.viewPager.currentItem == 0) {
+                    currentIsClassic = it.isClassic
                     binding.viewPager.animatePagerTransition(400)
-            }
-
-            if (
-                it.isClassic != null && it.teams != null &&
-                viewModel.isTeamsInputValid.value!! &&
-                it.timePerRound != null && it.pointsToWin != null
-            ) {
-                val action =
-                    if (viewModel.gameMode.value!!.isClassic!!)
-                        ConfigureFragmentDirections.actionConfigureFragmentToClassicFragment(
-                            viewModel.gameMode.value!!
-                        )
-                    else
-                        ConfigureFragmentDirections.actionConfigureFragmentToArcadeFragment(
-                            viewModel.gameMode.value!!
-                        )
-                if (!binding.btnConfigureDone.isVisible)
-                    initBtnConfigureDone()
-
-                binding.btnConfigureDone.setOnClickListener {
-                    binding.btnConfigureDone.animate().alpha(0f)
-                    findNavController().navigate(action)
                 }
-            } else binding.btnConfigureDone.isVisible = false
+            }
+            hasFilledAllFields = it.isClassic != null && it.teams != null &&
+                    viewModel.isTeamsInputValid.value!! &&
+                    it.timePerRound != null && it.pointsToWin != null
+        }
+
+        viewModel.viewPagerCurrentItem.observe(viewLifecycleOwner) {
+            when (it) {
+                2 -> {
+                    if (hasFilledAllFields) {
+                        binding.btnConfigureDone.setText(getString(R.string.start))
+                        if (!binding.btnConfigureDone.isVisible)
+                            initBtnConfigureDone()
+                        binding.btnConfigureDone.setOnClickListener {
+                            binding.btnConfigureDone.animate().alpha(0f)
+                            findNavController().navigate(getAction())
+                        }
+                    } else hideBtnConfigureDone()
+                }
+                1 -> {
+                    binding.btnConfigureDone.setText(getString(R.string.next))
+                    if (!binding.btnConfigureDone.isVisible)
+                        initBtnConfigureDone()
+                    binding.btnConfigureDone.setOnClickListener {
+                        binding.viewPager.animatePagerTransition(400)
+                    }
+                }
+                else -> hideBtnConfigureDone()
+            }
         }
     }
 
     private fun initBtnConfigureDone() = with(binding) {
         btnConfigureDone.alpha = 0f
         btnConfigureDone.isVisible = true
-        btnConfigureDone.setText(getString(R.string.start))
         btnConfigureDone.setDrawable(R.drawable.ic_arrow_right)
         btnConfigureDone.animate().alpha(1f)
+    }
 
-
+    private fun hideBtnConfigureDone() = with(binding) {
+        btnConfigureDone.animate().alpha(0f)
+        btnConfigureDone.isVisible = false
     }
 
     // ViewPager Transition With Custom Duration

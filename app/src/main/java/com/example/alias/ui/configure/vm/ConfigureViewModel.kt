@@ -11,6 +11,13 @@ class ConfigureViewModel : ViewModel() {
     val gameMode: LiveData<GameMode>
         get() = _gameMode
 
+    private var _viewPagerCurrentItem = MutableLiveData(0)
+
+    val viewPagerCurrentItem: LiveData<Int>
+        get() = _viewPagerCurrentItem
+
+    val setViewPagerCurrentItem: (Int) -> Unit = { _viewPagerCurrentItem.postValue(it) }
+
     private val _gameModeComponents =
         MutableLiveData(Array(4) { false })
 

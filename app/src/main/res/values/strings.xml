@@ -42,4 +42,5 @@
     <string name="rules_thirteenth">Stuck?</string>
     <string name="rules_fourteenth">If Stuck, Round can be Skipped. Points are Saved</string>
     <string name="choose_game_mode">Choose Game Mode</string>
+    <string name="next">Next</string>
 </resources>
