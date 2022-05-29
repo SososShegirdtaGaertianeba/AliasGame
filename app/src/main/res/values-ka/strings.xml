@@ -7,7 +7,7 @@
 
     <string name="app_name">Alias</string>
     <string name="rules">წესები</string>
-    <string name="configuration">თამაში</string>
+    <string name="start_game">თამაშის დაწყება</string>
     <string name="max6Teams">მაქსიმუმ 6 გუნდი</string>
     <string name="min2Teams">მინიმუმ 2 გუნდი</string>
     <string name="uniqueConstraint">გუნდები ერთიდაიგივე სახელებით</string>

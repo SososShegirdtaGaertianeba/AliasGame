@@ -7,7 +7,7 @@
 
     <string name="app_name">Alias</string>
     <string name="rules">правила</string>
-    <string name="configuration">играть</string>
+    <string name="start_game">Начать Игру</string>
     <string name="max6Teams">Максимум 6 команд</string>
     <string name="min2Teams">Минимум 2 команды</string>
     <string name="uniqueConstraint">Команды с одинаковыми именами</string>
