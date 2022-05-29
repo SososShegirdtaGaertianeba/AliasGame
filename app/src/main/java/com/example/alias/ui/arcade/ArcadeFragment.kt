@@ -65,12 +65,10 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
         binding.btnShowScore.setText("Score")
         binding.btnShowScore.setDrawable(R.drawable.ic_arrow_up)
         binding.btnShowScore.setOnClickListener {
-            binding.btnShowScore.setOnClickListener {
-                if (isStartNextTeamRequired)
-                    arcadeViewModel.toggleIsNextTurn()
-                else
-                    navigateToScoreBreak(isStartNextTeamRequired)
-            }
+            if (isStartNextTeamRequired)
+                arcadeViewModel.toggleIsNextTurn()
+            else
+                navigateToScoreBreak(isStartNextTeamRequired)
         }
     }
 
