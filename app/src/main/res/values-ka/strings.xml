@@ -38,7 +38,7 @@
     <string name="choose_game_mode">აირჩიე თამაშის რეჟიმი</string>
     <string name="next">გაგრძელება</string>
     <string name="ensure_message">გსურთ რაუნდის ნაადრევად დასრულება?</string>
-    <string name="ensure_btn_text">თამაშის დასრულება</string>
+    <string name="ensure_btn_text">დასრულება</string>
     <string name="result_title">შედეგები</string>
     <string name="score">ანგარიში</string>
     <string name="continue_txt">გაგრძელება</string>
