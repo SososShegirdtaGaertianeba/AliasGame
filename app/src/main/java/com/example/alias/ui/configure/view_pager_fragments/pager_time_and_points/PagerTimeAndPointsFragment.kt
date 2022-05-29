@@ -1,7 +1,5 @@
 package com.example.alias.ui.configure.view_pager_fragments.pager_time_and_points
 
-import android.util.Log
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import com.example.alias.R
 import com.example.alias.databinding.FragmentPagerTimeAndPointsBinding
@@ -25,11 +23,9 @@ class PagerTimeAndPointsFragment :
 
     private fun initObservers() {
         viewModel.gameMode.observe(viewLifecycleOwner) {
-//            Log.d("TIME_POINTS", "${it.timePerRound}   ${it.pointsToWin}")
-
             if (it.timePerRound != null && it.pointsToWin != null && !isToastHandled) {
                 if (it.isClassic == null) {
-                    makeToastMessage(IS_CLASSIC_IS_NULL_MESSAGE)
+                    makeToastMessage(getString(R.string.choose_game_mode))
                     isToastHandled = true
                 }
             }
@@ -71,8 +67,7 @@ class PagerTimeAndPointsFragment :
                 val decreased = time - 5
                 tvTime.text = decreased.toString()
                 viewModel.setTimePerRound(decreased)
-            } else
-                makeToastMessage(TIME_NON_POSITIVE_MESSAGE)
+            }
         }
 
         btnIncreasePoints.setOnClickListener {
@@ -88,18 +83,12 @@ class PagerTimeAndPointsFragment :
                 val decreased = points - 5
                 tvPoints.text = decreased.toString()
                 viewModel.setPointsToWin(decreased)
-            } else
-                makeToastMessage(POINTS_NON_POSITIVE_MESSAGE)
+            }
         }
     }
 
     companion object {
         private const val DEFAULT_TIME_PER_ROUND = 60
         private const val DEFAULT_POINTS_TO_WIN = 30
-
-        // TMP
-        private const val IS_CLASSIC_IS_NULL_MESSAGE = "Choose Game Mode"
-        private const val TIME_NON_POSITIVE_MESSAGE = "Time per Round Should be Greater than Zero"
-        private const val POINTS_NON_POSITIVE_MESSAGE = "Points to Win Should be Greater than Zero"
     }
 }

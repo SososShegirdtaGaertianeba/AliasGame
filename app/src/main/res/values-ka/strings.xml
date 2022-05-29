@@ -1,19 +1,13 @@
 <resources>
-    <!-- Global -->
-    <string name="app_name">Alias</string>
-
-    <!-- Home Fragment -->
-    <string name="rules">წესები</string>
-    <string name="configuration">თამაში</string>
     <string-array name="language_array">
         <item>ინგლისური</item>
         <item>რუსული</item>
         <item>ქართული</item>
     </string-array>
 
-
-    <!-- Other(to be organized later...) -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Alias</string>
+    <string name="rules">წესები</string>
+    <string name="configuration">თამაში</string>
     <string name="max6Teams">მაქსიმუმ 6 გუნდი</string>
     <string name="min2Teams">მინიმუმ 2 გუნდი</string>
     <string name="uniqueConstraint">გუნდები ერთიდაიგივე სახელებით</string>
@@ -43,4 +37,9 @@
     <string name="rules_fourteenth">შეგიძლია რაუნდის ნაადრევად დასრულება, ქულები გენახება</string>
     <string name="choose_game_mode">აირჩიე თამაშის რეჟიმი</string>
     <string name="next">გაგრძელება</string>
+    <string name="ensure_message">გსურთ რაუნდის ნაადრევად დასრულება?</string>
+    <string name="ensure_btn_text">თამაშის დასრულება</string>
+    <string name="result_title">შედეგები</string>
+    <string name="score">ანგარიში</string>
+    <string name="continue_txt">გაგრძელება</string>
 </resources>

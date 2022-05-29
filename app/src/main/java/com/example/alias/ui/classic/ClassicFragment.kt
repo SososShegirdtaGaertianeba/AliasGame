@@ -89,7 +89,7 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
     }
 
     private fun initArrowBtn() {
-        binding.btnShowScore.setText("Score")
+        binding.btnShowScore.setText(getString(R.string.score))
         binding.btnShowScore.setDrawable(R.drawable.ic_arrow_up)
         binding.btnShowScore.setOnClickListener {
             if (isStartNextTeamRequired)
@@ -118,14 +118,14 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
     private fun startNextTeamRequired() {
         if (isStartNextTeamRequired) {
             with(binding) {
-                btnShowScore.setText("Continue")
+                btnShowScore.setText(getString(R.string.continue_txt))
                 btnShowScore.setDrawable(R.drawable.ic_arrow_right)
                 btnShowScore.setBtnColor(R.drawable.green_circle_btn_shape)
                 wordsAdapter.setIsClickable(false)
             }
         } else {
             with(binding) {
-                btnShowScore.setText("Score")
+                btnShowScore.setText(getString(R.string.score))
                 btnShowScore.setDrawable(R.drawable.ic_arrow_up)
                 btnShowScore.setBtnColor(R.drawable.circle_button_shape)
                 classicFragmentRecycler.isClickable = true

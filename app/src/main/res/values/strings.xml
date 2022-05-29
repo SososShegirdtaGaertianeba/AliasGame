@@ -1,19 +1,13 @@
 <resources>
-    <!-- Global -->
-    <string name="app_name">Alias</string>
-
-    <!-- Home Fragment -->
-    <string name="rules">rules</string>
-    <string name="configuration">play</string>
     <string-array name="language_array">
         <item>English</item>
         <item>Russian</item>
         <item>Georgian</item>
     </string-array>
 
-
-    <!-- Other(to be organized later...) -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Alias</string>
+    <string name="rules">rules</string>
+    <string name="configuration">play</string>
     <string name="max6Teams">Maximum 6 Teams</string>
     <string name="min2Teams">Minimum 2 Teams</string>
     <string name="uniqueConstraint">No Teams With Same Names</string>
@@ -43,4 +37,9 @@
     <string name="rules_fourteenth">If Stuck, Round can be Skipped. Points are Saved</string>
     <string name="choose_game_mode">Choose Game Mode</string>
     <string name="next">Next</string>
+    <string name="ensure_message">Do you want to forfeit round?</string>
+    <string name="ensure_btn_text">Forfeit Game</string>
+    <string name="result_title">Result</string>
+    <string name="score">Score</string>
+    <string name="continue_txt">Continue</string>
 </resources>

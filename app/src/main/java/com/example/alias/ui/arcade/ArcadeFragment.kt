@@ -62,7 +62,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
     }
 
     private fun initArrowBtn() {
-        binding.btnShowScore.setText("Score")
+        binding.btnShowScore.setText(getString(R.string.score))
         binding.btnShowScore.setDrawable(R.drawable.ic_arrow_up)
         binding.btnShowScore.setOnClickListener {
             if (isStartNextTeamRequired)
@@ -107,7 +107,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
     private fun startNextTeamRequired() {
         if (isStartNextTeamRequired) {
             with(binding) {
-                btnShowScore.setText("Continue")
+                btnShowScore.setText(getString(R.string.continue_txt))
                 btnShowScore.setDrawable(R.drawable.ic_arrow_right)
                 btnShowScore.setBtnColor(R.drawable.green_circle_btn_shape)
                 plusBtn.isClickable = false
@@ -116,7 +116,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
 
         } else {
             with(binding) {
-                btnShowScore.setText("Score")
+                btnShowScore.setText(getString(R.string.score))
                 btnShowScore.setDrawable(R.drawable.ic_arrow_up)
                 btnShowScore.setBtnColor(R.drawable.circle_button_shape)
                 plusBtn.isClickable = true
