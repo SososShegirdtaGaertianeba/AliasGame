@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.example.alias.MainActivity
@@ -18,10 +19,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private var isSpinnerInitialized = false
 
     override fun init() {
-        binding.chooseLang.setSelection(getSharedPreference().getInt(PREFERENCE_NAME, PREFERENCE_DEFAULT_VALUE))
+        initSpinner()
         navigateToConfigurationFragment()
         navigateToRulesFragment()
         chooseLanguage()
+    }
+
+    private fun initSpinner() = with(binding) {
+        val adapter = ArrayAdapter.createFromResource(requireContext(), R.array.language_array, R.layout.custom_spinner)
+        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item)
+        chooseLang.adapter = adapter
+        chooseLang.setSelection(getSharedPreference().getInt(PREFERENCE_NAME, PREFERENCE_DEFAULT_VALUE))
     }
 
     private fun navigateToRulesFragment() {

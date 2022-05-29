@@ -7,42 +7,80 @@
     android:background="@color/nord_dark"
     tools:context=".ui.home.HomeFragment">
 
+    <View
+        android:id="@+id/drawableLogo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/timer_shape"
+        app:layout_constraintBottom_toBottomOf="@id/tvLogo"
+        app:layout_constraintEnd_toEndOf="@id/tvLogo"
+        app:layout_constraintStart_toStartOf="@id/tvLogo"
+        app:layout_constraintTop_toTopOf="@id/tvLogo" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".3" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bold"
+        android:gravity="center"
+        android:padding="32dp"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/rules_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_rules"
+        android:padding="12dp"
+        android:drawablePadding="8dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/second"
+        android:background="@drawable/game_mode_btn_shape_inversed"
+        android:layout_marginBottom="12dp"
         android:text="@string/rules"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/conf_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/conf_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/play_btn_shape"
+        android:fontFamily="@font/bold"
+        android:letterSpacing=".2"
+        android:padding="12dp"
         android:text="@string/configuration"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/choose_lang"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvLogo"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rules_btn" />
+        app:layout_constraintStart_toStartOf="@+id/tvLogo"
+        app:layout_constraintTop_toBottomOf="@+id/drawableLogo" />
 
     <Spinner
         android:id="@+id/choose_lang"
-        android:layout_width="409dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:entries="@array/language_array"
+        android:layout_marginTop="12dp"
+        android:textAlignment="textEnd"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/conf_btn" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
