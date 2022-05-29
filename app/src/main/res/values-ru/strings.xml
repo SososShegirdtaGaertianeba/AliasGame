@@ -41,4 +41,5 @@
     <string name="rules_twelveth">Игра Продолжается до Проявления Победителя</string>
     <string name="rules_thirteenth">Застрял?</string>
     <string name="rules_fourteenth">Раунд Можно Закончить Преждевременно. Очки Сохраняются</string>
+    <string name="choose_game_mode">Выбери Режим Игры</string>
 </resources>

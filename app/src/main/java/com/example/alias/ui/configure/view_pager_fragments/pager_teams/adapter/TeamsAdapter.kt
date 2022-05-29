@@ -55,6 +55,7 @@ class TeamsAdapter(
 
     fun deleteTeam(position: Int) {
         teams.removeAt(position)
+        onTextChangedListener(teams)
         notifyItemRemoved(position)
     }
 

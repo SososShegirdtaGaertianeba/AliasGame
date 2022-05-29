@@ -109,6 +109,18 @@
         app:layout_constraintTop_toTopOf="@id/minusBtn" />
 
 
+    <View
+        android:id="@+id/drawable"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_arcade_scene"
+        app:layout_constraintBottom_toTopOf="@id/btnShowScore"
+        app:layout_constraintDimensionRatio="1.2"
+        android:layout_margin="16dp"
+        app:layout_constraintEnd_toEndOf="@id/plusBtn"
+        app:layout_constraintStart_toStartOf="@id/minusBtn"
+        app:layout_constraintTop_toBottomOf="@id/minusBtn" />
+
     <com.example.alias.ui.view.ArrowBtn
         android:id="@+id/btnShowScore"
         android:layout_width="wrap_content"

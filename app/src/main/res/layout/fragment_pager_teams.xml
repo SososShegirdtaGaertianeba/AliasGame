@@ -46,28 +46,44 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.1" />
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/drawable"
+        app:layout_constraintDimensionRatio="1.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineTop"
+        app:layout_constraintBottom_toTopOf="@id/guideline3"
+        android:background="@drawable/ic_teams_scene" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalGuidelineBottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6" />
+        app:layout_constraintGuide_percent="0.67" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <com.example.alias.ui.view.CustomSnakeBtn
         android:id="@+id/btnClassic"
         android:layout_width="0dp"
         android:layout_height="56dp"
-        android:background="@color/dark_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineBottom" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.example.alias.ui.view.CustomSnakeBtn
         android:id="@+id/btnArcade"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginTop="8dp"
-        android:background="@color/dark_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnClassic" />

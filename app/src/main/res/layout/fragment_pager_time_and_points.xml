@@ -7,6 +7,18 @@
     android:background="@color/nord_dark"
     tools:context=".ui.configure.view_pager_fragments.pager_time_and_points.PagerTimeAndPointsFragment">
 
+    <View
+        android:id="@+id/drawable"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_time_and_points_scene"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline2"
+        app:layout_constraintDimensionRatio=".8888888888"
+        app:layout_constraintEnd_toStartOf="@id/guideline4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <TextView
         android:id="@+id/tvTimeTitle"
         android:layout_width="0dp"
@@ -183,14 +195,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.17" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineBottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6" />
+        app:layout_constraintGuide_percent="0.67" />
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -221,6 +240,13 @@
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnClassic" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".4"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
