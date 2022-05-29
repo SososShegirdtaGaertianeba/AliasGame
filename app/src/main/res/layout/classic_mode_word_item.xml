@@ -9,7 +9,7 @@
         android:id="@+id/classic_word_tv"
         android:fontFamily="@font/first"
         tools:text="hello"
-        android:textSize="28sp"
+        android:textSize="24sp"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="8dp"

@@ -18,7 +18,7 @@
         android:fontFamily="@font/bold"
         android:gravity="center"
         android:textColor="@color/nord_dark"
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
