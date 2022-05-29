@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-  <navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
@@ -9,13 +9,17 @@
         android:id="@+id/homeFragment"
         android:name="com.example.alias.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_rulesDialogFragment"
             app:destination="@id/rulesDialogFragment" />
         <action
             android:id="@+id/action_homeFragment_to_configureFragment"
-            app:destination="@id/configureFragment" />
+            app:destination="@id/configureFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_in_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_in_left" />
     </fragment>
     <dialog
         android:id="@+id/rulesDialogFragment"
@@ -26,22 +30,27 @@
         android:id="@+id/configureFragment"
         android:name="com.example.alias.ui.configure.ConfigureFragment"
         android:label="configure_fragment"
-        tools:layout="@layout/configure_fragment" >
+        tools:layout="@layout/configure_fragment">
         <action
             android:id="@+id/action_configureFragment_to_classicFragment"
-            app:destination="@id/classicFragment" />
+            app:destination="@id/classicFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_in_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_in_left" />
         <action
             android:id="@+id/action_configureFragment_to_arcadeFragment"
-            app:destination="@id/arcadeFragment" />
-        <action
-            android:id="@+id/action_configureFragment_to_rulesDialogFragment"
-            app:destination="@id/rulesDialogFragment" />
+            app:destination="@id/arcadeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_in_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/classicFragment"
         android:name="com.example.alias.ui.classic.ClassicFragment"
         android:label="classic_fragment"
-        tools:layout="@layout/classic_fragment" >
+        tools:layout="@layout/classic_fragment">
         <action
             android:id="@+id/action_classicFragment_to_scoreBreakFragment"
             app:destination="@id/scoreBreakFragment" />
@@ -51,6 +60,8 @@
         <action
             android:id="@+id/action_classicFragment_to_resultFragment"
             app:destination="@id/resultFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_right"
             app:popUpTo="@id/configureFragment" />
         <action
             android:id="@+id/action_classicFragment_to_ensureInExitDialogFragment"
@@ -60,7 +71,7 @@
         android:id="@+id/arcadeFragment"
         android:name="com.example.alias.ui.arcade.ArcadeFragment"
         android:label="arcade_fragment"
-        tools:layout="@layout/arcade_fragment" >
+        tools:layout="@layout/arcade_fragment">
         <action
             android:id="@+id/action_arcadeFragment_to_scoreBreakFragment"
             app:destination="@id/scoreBreakFragment" />
@@ -70,6 +81,8 @@
         <action
             android:id="@+id/action_arcadeFragment_to_resultFragment"
             app:destination="@id/resultFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_right"
             app:popUpTo="@id/configureFragment"
             app:popUpToInclusive="false" />
         <action
@@ -80,7 +93,7 @@
         android:id="@+id/scoreBreakFragment"
         android:name="com.example.alias.ui.score_break.ScoreBreakFragment"
         android:label="fragment_score_break"
-        tools:layout="@layout/fragment_score_break" >
+        tools:layout="@layout/fragment_score_break">
         <argument
             android:name="isClassic"
             app:argType="boolean" />
@@ -91,7 +104,7 @@
     <fragment
         android:id="@+id/resultFragment"
         android:name="com.example.alias.ui.result.ResultFragment"
-        android:label="ResultFragment" >
+        android:label="ResultFragment">
         <argument
             android:name="gameMode"
             app:argType="com.example.alias.util.GameMode" />
@@ -100,24 +113,32 @@
             app:argType="integer[]" />
         <action
             android:id="@+id/action_resultFragment_to_configureFragment"
-            app:destination="@id/configureFragment" />
+            app:destination="@id/configureFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_in_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_in_left" />
         <action
             android:id="@+id/action_resultFragment_to_arcadeFragment"
-            app:destination="@id/arcadeFragment" />
+            app:destination="@id/arcadeFragment"
+            app:enterAnim="@anim/slide_in_left" />
         <action
             android:id="@+id/action_resultFragment_to_classicFragment"
-            app:destination="@id/classicFragment" />
+            app:destination="@id/classicFragment"
+            app:enterAnim="@anim/slide_in_left" />
     </fragment>
-     <dialog
+    <dialog
         android:id="@+id/ensureInExitDialogFragment"
         android:name="com.example.alias.ui.ensure_in_exit.EnsureInExitDialogFragment"
-        android:label="EnsureInExitDialogFragment" >
+        android:label="EnsureInExitDialogFragment">
         <argument
             android:name="isClassic"
             app:argType="boolean" />
-         <action
-             android:id="@+id/action_ensureInExitDialogFragment_to_configureFragment"
-             app:destination="@id/configureFragment"
-             app:popUpTo="@id/configureFragment" />
-     </dialog>
+        <action
+            android:id="@+id/action_ensureInExitDialogFragment_to_configureFragment"
+            app:destination="@id/configureFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popUpTo="@id/configureFragment" />
+    </dialog>
 </navigation>
