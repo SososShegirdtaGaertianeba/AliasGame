@@ -99,13 +99,8 @@ class PagerTeamsFragment :
             }
 
             gm.isClassic?.let {
-                if (it) {
-                    binding.btnClassic.setBackgroundResource(R.color.subtle_green)
-                    binding.btnArcade.setBackgroundResource(R.color.dark_blue)
-                } else {
-                    binding.btnClassic.setBackgroundResource(R.color.dark_blue)
-                    binding.btnArcade.setBackgroundResource(R.color.subtle_green)
-                }
+                binding.btnClassic.setColor(it)
+                binding.btnArcade.setColor(!it)
             }
         }
     }

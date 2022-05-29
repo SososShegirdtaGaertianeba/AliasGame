@@ -167,6 +167,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
     private fun startNextTeamRound() {
         arcadeViewModel.startNextTeamRound()
         isStartNextTeamRequired = false
+        startNextTeamRequired()
         makeRequest()
         binding.currentTeamTV.text = arcadeViewModel.currentTeam
         countDownTimer.cancel()
