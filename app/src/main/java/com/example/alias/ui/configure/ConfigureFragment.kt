@@ -25,6 +25,7 @@ class ConfigureFragment :
     private lateinit var adapter: ConfigurationViewPagerAdapter
 
     private var hasFilledAllFields = false
+    private var currentIsClassic: Boolean? = null
 
     override fun init() {
         initViewPager()
@@ -63,8 +64,10 @@ class ConfigureFragment :
     private fun initObservers() {
         viewModel.gameMode.observe(viewLifecycleOwner) {
             it.isClassic?.let { _ ->
-                if (it.teams == null)
+                if (it.isClassic != currentIsClassic && binding.viewPager.currentItem == 0) {
+                    currentIsClassic = it.isClassic
                     binding.viewPager.animatePagerTransition(400)
+                }
             }
             hasFilledAllFields = it.isClassic != null && it.teams != null &&
                     viewModel.isTeamsInputValid.value!! &&

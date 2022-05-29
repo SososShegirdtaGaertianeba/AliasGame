@@ -62,6 +62,7 @@
             app:destination="@id/resultFragment"
             app:enterAnim="@anim/slide_in_right"
             app:popEnterAnim="@anim/slide_in_right"
+            app:popUpToInclusive="true"
             app:popUpTo="@id/configureFragment" />
         <action
             android:id="@+id/action_classicFragment_to_ensureInExitDialogFragment"
@@ -84,7 +85,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:popEnterAnim="@anim/slide_in_right"
             app:popUpTo="@id/configureFragment"
-            app:popUpToInclusive="false" />
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_arcadeFragment_to_ensureInExitDialogFragment"
             app:destination="@id/ensureInExitDialogFragment" />
