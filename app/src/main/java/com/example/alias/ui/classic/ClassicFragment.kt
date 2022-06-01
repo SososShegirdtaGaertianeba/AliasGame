@@ -1,6 +1,7 @@
 package com.example.alias.ui.classic
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.os.CountDownTimer
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.LiveData
@@ -29,6 +30,9 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
     private lateinit var countDownTimer: CountDownTimer
     private lateinit var recyclerView: RecyclerView
     private lateinit var gameMode: GameMode
+    private lateinit var mediaPlayerThreeSeconds: MediaPlayer
+    private lateinit var mediaPlayerTenSeconds: MediaPlayer
+
 
     // Game Logic Handler Variables
     private var isGameFinished = false
@@ -55,6 +59,7 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
 
     override fun init() {
         loadKoinModules(viewModels)
+        initMediaPlayer()
         initArrowBtn()
         initGameMode()
         initRecycler()
@@ -63,6 +68,11 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
         initCountDown(timePerRound)
         startNextTeamRound()
         onBackPressed()
+    }
+
+    private fun initMediaPlayer() {
+        mediaPlayerThreeSeconds = MediaPlayer.create(requireContext(), R.raw.countdown)
+        mediaPlayerTenSeconds = MediaPlayer.create(requireContext(), R.raw.ten_seconds_left)
     }
 
     override fun onStart() {
@@ -86,6 +96,8 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
         super.onDestroyView()
         countDownTimer.cancel()
         unloadKoinModules(viewModels)
+        mediaPlayerThreeSeconds.release()
+        mediaPlayerTenSeconds.release()
     }
 
     private fun initArrowBtn() {
@@ -104,6 +116,10 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
             override fun onTick(timeLeft: Long) {
                 val toDisplay = timeLeft / 1000
                 binding.tvCountDown.text = toDisplay.toString()
+                when (toDisplay) {
+                    3L -> mediaPlayerThreeSeconds.start()
+                    10L -> mediaPlayerTenSeconds.start()
+                }
             }
 
             override fun onFinish() {

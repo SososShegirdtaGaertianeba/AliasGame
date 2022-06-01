@@ -1,6 +1,7 @@
 package com.example.alias.ui.arcade
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.os.CountDownTimer
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.LiveData
@@ -27,6 +28,8 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
     private lateinit var getWord: suspend () -> String
     private lateinit var countDownTimer: CountDownTimer
     private lateinit var gameMode: GameMode
+    private lateinit var mediaPlayerThreeSeconds: MediaPlayer
+    private lateinit var mediaPlayerTenSeconds: MediaPlayer
 
     // Game Logic Handler Variables
     private var isGameFinished = false
@@ -42,6 +45,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
 
     override fun init() {
         loadKoinModules(viewModels)
+        initMediaPlayer()
         initArrowBtn()
         initListener()
         initGameMode()
@@ -51,6 +55,11 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
         initCountDownTimer(timePerRound)
         startNextTeamRound()
         onBackPressed()
+    }
+
+    private fun initMediaPlayer() {
+        mediaPlayerThreeSeconds = MediaPlayer.create(requireContext(), R.raw.countdown)
+        mediaPlayerTenSeconds = MediaPlayer.create(requireContext(), R.raw.ten_seconds_left)
     }
 
     private fun onBackPressed() {
@@ -206,9 +215,15 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
     }
 
     private fun initCountDownTimer(timePerRound: Int) {
-        countDownTimer = object : CountDownTimer(timePerRound * 1000L, 1000L) {
-            override fun onTick(millisUntilFinish: Long) {
-                binding.timeLeftTV.text = (millisUntilFinish / 1000).toString()
+        countDownTimer = object : CountDownTimer(timePerRound * 1000L, 1000) {
+            override fun onTick(timeLeft: Long) {
+                val toDisplay = timeLeft / 1000
+                binding.timeLeftTV.text = (toDisplay).toString()
+                when (toDisplay) {
+                    3L -> mediaPlayerThreeSeconds.start()
+                    10L -> mediaPlayerTenSeconds.start()
+                }
+
             }
 
             override fun onFinish() {
@@ -216,7 +231,8 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
                 startNextTeamRequired()
                 handleGameResumption()
             }
-        }.start()
+        }
+        countDownTimer.start()
     }
 
     private fun handleGameResumption() {
@@ -255,6 +271,8 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
         super.onDestroyView()
         countDownTimer.cancel()
         unloadKoinModules(viewModels)
+        mediaPlayerThreeSeconds.release()
+        mediaPlayerTenSeconds.release()
     }
 
     private fun <T> LiveData<T>.observe(f: (T) -> Unit) = this.observe(viewLifecycleOwner) { f(it) }
