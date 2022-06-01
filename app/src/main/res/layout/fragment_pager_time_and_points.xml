@@ -18,7 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <TextView
         android:id="@+id/tvTimeTitle"
         android:layout_width="0dp"
@@ -28,12 +27,41 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvTime"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/horizontalGuidelineTop" />
+
+    <me.tankery.lib.circularseekbar.CircularSeekBar
+        android:id="@+id/timeSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cs_circle_progress_color="@color/dark_blue"
+        app:cs_circle_stroke_width="10dp"
+        app:cs_pointer_color="@color/dark_blue"
+        app:cs_pointer_halo_color="@color/dark_blue"
+        app:cs_pointer_halo_color_ontouch="@color/dark_blue"
+        app:cs_pointer_stroke_width="20dp"
+        app:cs_progress="60"
+        app:layout_constraintBottom_toTopOf="@id/horizontalGuidelineForSeekBar"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTimeTitle" />
 
     <TextView
-        android:id="@+id/tvPointsTitle"
+        android:id="@+id/timeTV"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:textColor="@color/white_2"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/timeSeekBar"
+        app:layout_constraintEnd_toEndOf="@id/timeSeekBar"
+        app:layout_constraintStart_toStartOf="@id/timeSeekBar"
+        app:layout_constraintTop_toTopOf="@id/timeSeekBar" />
+
+    <TextView
+        android:id="@+id/tvPointTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/bold"
@@ -41,161 +69,53 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvPoints"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvTime"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/time_points_tv_shape"
-        android:fontFamily="@font/bold"
-        android:gravity="center"
-        android:inputType="number"
-        android:maxWidth="150dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/subtle_white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvPoints"
-        app:layout_constraintEnd_toStartOf="@+id/btnIncreaseTime"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnDecreaseTime"
-        app:layout_constraintTop_toTopOf="@+id/horizontalGuidelineTop" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnIncreaseTime"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/circle_button_shape"
-        android:textColor="@color/white"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnIncreasePoints"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tvTime"
-        app:layout_constraintTop_toTopOf="@+id/horizontalGuidelineTop" />
-
-    <View
-        android:id="@+id/drawableBtnIncreaseTime"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:background="@drawable/ic_plus"
-        android:elevation="100dp"
-        app:layout_constraintBottom_toBottomOf="@id/btnIncreaseTime"
-        app:layout_constraintEnd_toEndOf="@id/btnIncreaseTime"
-        app:layout_constraintStart_toStartOf="@id/btnIncreaseTime"
-        app:layout_constraintTop_toTopOf="@id/btnIncreaseTime" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnDecreaseTime"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/circle_button_shape"
-        android:textColor="@color/white"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnDecreasePoints"
-        app:layout_constraintEnd_toStartOf="@+id/tvTime"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/horizontalGuidelineTop" />
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineForSeekBar" />
 
-    <View
-        android:id="@+id/drawableBtnDecreaseTime"
-        android:layout_width="25dp"
-        android:layout_height="3dp"
-        android:background="@drawable/ic_minus"
-        android:elevation="100dp"
-        app:layout_constraintBottom_toBottomOf="@id/btnDecreaseTime"
-        app:layout_constraintEnd_toEndOf="@id/btnDecreaseTime"
-        app:layout_constraintStart_toStartOf="@id/btnDecreaseTime"
-        app:layout_constraintTop_toTopOf="@id/btnDecreaseTime" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvPoints"
+    <me.tankery.lib.circularseekbar.CircularSeekBar
+        android:id="@+id/pointSeekBar"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/time_points_tv_shape"
-        android:fontFamily="@font/bold"
-        android:gravity="center"
-        android:inputType="number"
-        android:maxWidth="150dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/subtle_white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnClassic"
-        app:layout_constraintEnd_toStartOf="@+id/btnIncreasePoints"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnDecreasePoints"
-        app:layout_constraintTop_toBottomOf="@+id/tvTime" />
+        android:layout_height="0dp"
+        app:cs_circle_progress_color="@color/dark_blue"
+        app:cs_circle_stroke_width="10dp"
+        app:cs_pointer_color="@color/dark_blue"
+        app:cs_pointer_halo_color="@color/dark_blue"
+        app:cs_pointer_halo_color_ontouch="@color/dark_blue"
+        app:cs_pointer_stroke_width="20dp"
+        app:cs_progress="60"
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnIncreasePoints"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/circle_button_shape"
-        android:textColor="@color/white"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
+        app:layout_constraintBottom_toTopOf="@id/guidelineBottom"
+        app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tvPoints"
-        app:layout_constraintTop_toBottomOf="@+id/btnIncreaseTime" />
-
-    <View
-        android:id="@+id/drawableBtnIncreasePoints"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:background="@drawable/ic_plus"
-        android:elevation="100dp"
-        app:layout_constraintBottom_toBottomOf="@id/btnIncreasePoints"
-        app:layout_constraintEnd_toEndOf="@id/btnIncreasePoints"
-        app:layout_constraintStart_toStartOf="@id/btnIncreasePoints"
-        app:layout_constraintTop_toTopOf="@id/btnIncreasePoints" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnDecreasePoints"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/circle_button_shape"
-        android:textColor="@color/white"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnClassic"
-        app:layout_constraintEnd_toStartOf="@+id/tvPoints"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDecreaseTime" />
+        app:layout_constraintTop_toBottomOf="@id/tvPointTitle" />
 
-    <View
-        android:id="@+id/drawableBtnDecreasePoints"
-        android:layout_width="25dp"
-        android:layout_height="3dp"
-        android:background="@drawable/ic_minus"
-        android:elevation="100dp"
-        app:layout_constraintBottom_toBottomOf="@id/btnDecreasePoints"
-        app:layout_constraintEnd_toEndOf="@id/btnDecreasePoints"
-        app:layout_constraintStart_toStartOf="@id/btnDecreasePoints"
-        app:layout_constraintTop_toTopOf="@id/btnDecreasePoints" />
+    <TextView
+        android:id="@+id/pointTV"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:textColor="@color/white_2"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/pointSeekBar"
+        app:layout_constraintEnd_toEndOf="@id/pointSeekBar"
+        app:layout_constraintStart_toStartOf="@id/pointSeekBar"
+        app:layout_constraintTop_toTopOf="@id/pointSeekBar" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalGuidelineTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.17" />
+        app:layout_constraintGuide_percent="0.18" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontalGuidelineForSeekBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.43" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -209,8 +129,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.67" />
-
+        app:layout_constraintGuide_percent="0.68" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnClassic"
@@ -246,7 +165,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent=".4"/>
+        app:layout_constraintGuide_percent=".4" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
