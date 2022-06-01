@@ -70,6 +70,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         )
                     )
                     startActivity(Intent(context, MainActivity::class.java))
+                    requireActivity().overridePendingTransition(0,0)
                     requireActivity().finish()
                 } else isSpinnerInitialized = true
             }
