@@ -1,5 +1,10 @@
 package com.example.alias.ui.configure.view_pager_fragments.pager_time_and_points
 
+import android.content.Context
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import androidx.fragment.app.viewModels
 import com.example.alias.R
 import com.example.alias.databinding.FragmentPagerTimeAndPointsBinding
@@ -10,6 +15,9 @@ import me.tankery.lib.circularseekbar.CircularSeekBar
 class PagerTimeAndPointsFragment :
     BaseFragment<FragmentPagerTimeAndPointsBinding>(FragmentPagerTimeAndPointsBinding::inflate) {
 
+    private lateinit var vibratorManager: VibratorManager
+    private lateinit var vibrator: Vibrator
+
     private val viewModel: ConfigureViewModel by viewModels(
         ownerProducer = { requireParentFragment() }
     )
@@ -17,10 +25,19 @@ class PagerTimeAndPointsFragment :
     private var isToastHandled = false
 
     override fun init() {
+        initVibrator()
         initTimeSeekBar()
         initPointSeekbar()
         initOnClickListeners()
         initObservers()
+    }
+
+    private fun initVibrator() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            vibratorManager =
+                context?.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+        else
+            vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     }
 
     private fun initPointSeekbar() {
@@ -51,6 +68,7 @@ class PagerTimeAndPointsFragment :
                             showProgressOnTV(5)
                         }
                         viewModel.setPointsToWin(pointTV.text.toString().toInt())
+                        vibrateOnStopTouch(20L)
                     }
                 }
 
@@ -88,7 +106,9 @@ class PagerTimeAndPointsFragment :
                             seekBar.progress = 5F
                             showProgressOnTV(5)
                         }
+
                         viewModel.setTimePerRound(timeTV.text.toString().toInt())
+                        vibrateOnStopTouch(20L)
                     }
                 }
 
@@ -97,6 +117,17 @@ class PagerTimeAndPointsFragment :
                 }
             }
         )
+    }
+
+    fun vibrateOnStopTouch(duration: Long) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            vibratorManager.defaultVibrator.vibrate(
+                VibrationEffect.createOneShot(
+                    duration, VibrationEffect.DEFAULT_AMPLITUDE
+                )
+            )
+        else
+            vibrator.vibrate(duration)
     }
 
     private fun initObservers() {
