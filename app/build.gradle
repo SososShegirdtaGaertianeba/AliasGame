@@ -43,6 +43,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
+    //circularSeekBar
+    implementation 'me.tankery.lib:circularSeekBar:1.4.0'
+
     //room
     def room_version = "2.4.2"
 
