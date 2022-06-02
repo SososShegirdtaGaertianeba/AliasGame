@@ -7,7 +7,7 @@
 
     <View
         android:id="@+id/leftPart"
-        android:layout_width="20dp"
+        android:layout_width="28dp"
         android:layout_height="match_parent"
         android:background="@drawable/half_circle_right"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -17,7 +17,7 @@
 
     <View
         android:id="@+id/rightPart"
-        android:layout_width="20dp"
+        android:layout_width="28dp"
         android:layout_height="match_parent"
         android:background="@drawable/half_circle_left"
         app:layout_constraintBottom_toBottomOf="parent"

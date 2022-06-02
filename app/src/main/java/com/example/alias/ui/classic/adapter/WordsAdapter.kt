@@ -30,7 +30,7 @@ class WordsAdapter(
         }
 
         fun onBind(position: Int) {
-            binding.classicWordTv.setTextColor(Color.parseColor("#2E3440"))
+            binding.classicWordTv.setTextColor(Color.parseColor(NORD_DARK))
             val model = items[position]
             setResource(position)
             binding.classicWordTv.text = model
@@ -38,10 +38,10 @@ class WordsAdapter(
                 if (isClickable) {
                     if (markedItems[position]) {
                         onUnMark()
-                        binding.classicWordTv.setTextColor(Color.parseColor("#2E3440"))
+                        binding.classicWordTv.setTextColor(Color.parseColor(NORD_DARK))
                     } else {
                         onMark()
-                        binding.classicWordTv.setTextColor(Color.parseColor("#E1ECF0"))
+                        binding.classicWordTv.setTextColor(Color.parseColor(NORD_LIGHT))
                     }
 
                     markedItems[position] = !markedItems[position]
@@ -79,5 +79,10 @@ class WordsAdapter(
 
     fun setIsClickable(b: Boolean) {
         isClickable = b
+    }
+
+    companion object {
+        private const val NORD_DARK = "#2E3440"
+        private const val NORD_LIGHT = "#E1ECF0"
     }
 }

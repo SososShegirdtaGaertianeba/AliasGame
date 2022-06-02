@@ -7,42 +7,111 @@
     android:background="@color/nord_dark"
     tools:context=".ui.home.HomeFragment">
 
+    <View
+        android:id="@+id/drawableLogo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/timer_shape"
+        app:layout_constraintBottom_toBottomOf="@id/tvLogo"
+        app:layout_constraintEnd_toEndOf="@id/tvLogo"
+        app:layout_constraintStart_toStartOf="@id/tvLogo"
+        app:layout_constraintTop_toTopOf="@id/tvLogo" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bold"
+        android:gravity="center"
+        android:padding="32dp"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/rules_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rules"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="12dp"
+        android:background="@drawable/white_circle_button_shape"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/second"
+        android:padding="12dp"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/conf_btn"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/conf_btn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintTop_toTopOf="@+id/guideline5" />
+
+    <View
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_rules"
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="@id/rules_btn"
+        app:layout_constraintEnd_toEndOf="@id/rules_btn"
+        app:layout_constraintStart_toStartOf="@id/rules_btn"
+        app:layout_constraintTop_toTopOf="@id/rules_btn" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/conf_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/configuration"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/start_game_btn_shape"
+        android:fontFamily="@font/bold"
+        android:padding="12dp"
+        android:text="@string/start_game"
+        android:textAllCaps="false"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/choose_lang"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rules_btn" />
+        app:layout_constraintStart_toEndOf="@+id/rules_btn"
+        app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
     <Spinner
         android:id="@+id/choose_lang"
-        android:layout_width="409dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
+        android:layout_marginTop="16dp"
         android:entries="@array/language_array"
+        android:textAlignment="textEnd"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/conf_btn" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="#666"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/bold"
+        android:text="Sosos Shegirdta Gaertianeba"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,7 +23,6 @@ class RulesDialogFragment : BottomSheetDialogFragment() {
     ): View {
 
         _binding = FragmentRulesDialogBinding.inflate(inflater, container, false)
-//        binding.rulesTv.movementMethod = ScrollingMovementMethod()
         return binding.root
 
     }

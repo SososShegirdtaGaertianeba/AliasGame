@@ -1,19 +1,13 @@
 <resources>
-    <!-- Global -->
-    <string name="app_name">Alias</string>
-
-    <!-- Home Fragment -->
-    <string name="rules">правила</string>
-    <string name="configuration">играть</string>
     <string-array name="language_array">
         <item>английский</item>
         <item>русский</item>
         <item>грузинский</item>
     </string-array>
 
-
-    <!-- Other(to be organized later...) -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Alias</string>
+    <string name="rules">правила</string>
+    <string name="start_game">Начать Игру</string>
     <string name="max6Teams">Максимум 6 команд</string>
     <string name="min2Teams">Минимум 2 команды</string>
     <string name="uniqueConstraint">Команды с одинаковыми именами</string>
@@ -43,4 +37,9 @@
     <string name="rules_fourteenth">Раунд Можно Закончить Преждевременно. Очки Сохраняются</string>
     <string name="choose_game_mode">Выбери Режим Игры</string>
     <string name="next">Продолжить</string>
+    <string name="ensure_message">Хотите закончить раунд преждевременно?</string>
+    <string name="ensure_btn_text">Закончить Игру</string>
+    <string name="result_title">Результаты</string>
+    <string name="score">Счёт</string>
+    <string name="continue_txt">Продолжить</string>
 </resources>

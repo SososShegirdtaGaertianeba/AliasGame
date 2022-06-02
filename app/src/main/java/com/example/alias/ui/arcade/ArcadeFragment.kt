@@ -1,6 +1,7 @@
 package com.example.alias.ui.arcade
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.os.CountDownTimer
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.LiveData
@@ -27,6 +28,8 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
     private lateinit var getWord: suspend () -> String
     private lateinit var countDownTimer: CountDownTimer
     private lateinit var gameMode: GameMode
+    private lateinit var mediaPlayerThreeSeconds: MediaPlayer
+    private lateinit var mediaPlayerTenSeconds: MediaPlayer
 
     // Game Logic Handler Variables
     private var isGameFinished = false
@@ -42,6 +45,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
 
     override fun init() {
         loadKoinModules(viewModels)
+        initMediaPlayer()
         initArrowBtn()
         initListener()
         initGameMode()
@@ -53,6 +57,11 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
         onBackPressed()
     }
 
+    private fun initMediaPlayer() {
+        mediaPlayerThreeSeconds = MediaPlayer.create(requireContext(), R.raw.countdown)
+        mediaPlayerTenSeconds = MediaPlayer.create(requireContext(), R.raw.ten_seconds_left)
+    }
+
     private fun onBackPressed() {
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -62,7 +71,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
     }
 
     private fun initArrowBtn() {
-        binding.btnShowScore.setText("Score")
+        binding.btnShowScore.setText(getString(R.string.score))
         binding.btnShowScore.setDrawable(R.drawable.ic_arrow_up)
         binding.btnShowScore.setOnClickListener {
             if (isStartNextTeamRequired)
@@ -107,7 +116,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
     private fun startNextTeamRequired() {
         if (isStartNextTeamRequired) {
             with(binding) {
-                btnShowScore.setText("Continue")
+                btnShowScore.setText(getString(R.string.continue_txt))
                 btnShowScore.setDrawable(R.drawable.ic_arrow_right)
                 btnShowScore.setBtnColor(R.drawable.green_circle_btn_shape)
                 plusBtn.isClickable = false
@@ -116,7 +125,7 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
 
         } else {
             with(binding) {
-                btnShowScore.setText("Score")
+                btnShowScore.setText(getString(R.string.score))
                 btnShowScore.setDrawable(R.drawable.ic_arrow_up)
                 btnShowScore.setBtnColor(R.drawable.circle_button_shape)
                 plusBtn.isClickable = true
@@ -206,9 +215,15 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
     }
 
     private fun initCountDownTimer(timePerRound: Int) {
-        countDownTimer = object : CountDownTimer(timePerRound * 1000L, 1000L) {
-            override fun onTick(millisUntilFinish: Long) {
-                binding.timeLeftTV.text = (millisUntilFinish / 1000).toString()
+        countDownTimer = object : CountDownTimer(timePerRound * 1000L, 1000) {
+            override fun onTick(timeLeft: Long) {
+                val toDisplay = timeLeft / 1000
+                binding.timeLeftTV.text = (toDisplay).toString()
+                when (toDisplay) {
+                    3L -> mediaPlayerThreeSeconds.start()
+                    10L -> mediaPlayerTenSeconds.start()
+                }
+
             }
 
             override fun onFinish() {
@@ -216,7 +231,8 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
                 startNextTeamRequired()
                 handleGameResumption()
             }
-        }.start()
+        }
+        countDownTimer.start()
     }
 
     private fun handleGameResumption() {
@@ -255,6 +271,8 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
         super.onDestroyView()
         countDownTimer.cancel()
         unloadKoinModules(viewModels)
+        mediaPlayerThreeSeconds.release()
+        mediaPlayerTenSeconds.release()
     }
 
     private fun <T> LiveData<T>.observe(f: (T) -> Unit) = this.observe(viewLifecycleOwner) { f(it) }

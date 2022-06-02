@@ -1,6 +1,7 @@
 package com.example.alias.ui.classic
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.os.CountDownTimer
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.LiveData
@@ -29,6 +30,9 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
     private lateinit var countDownTimer: CountDownTimer
     private lateinit var recyclerView: RecyclerView
     private lateinit var gameMode: GameMode
+    private lateinit var mediaPlayerThreeSeconds: MediaPlayer
+    private lateinit var mediaPlayerTenSeconds: MediaPlayer
+
 
     // Game Logic Handler Variables
     private var isGameFinished = false
@@ -55,6 +59,7 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
 
     override fun init() {
         loadKoinModules(viewModels)
+        initMediaPlayer()
         initArrowBtn()
         initGameMode()
         initRecycler()
@@ -63,6 +68,11 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
         initCountDown(timePerRound)
         startNextTeamRound()
         onBackPressed()
+    }
+
+    private fun initMediaPlayer() {
+        mediaPlayerThreeSeconds = MediaPlayer.create(requireContext(), R.raw.countdown)
+        mediaPlayerTenSeconds = MediaPlayer.create(requireContext(), R.raw.ten_seconds_left)
     }
 
     override fun onStart() {
@@ -86,10 +96,12 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
         super.onDestroyView()
         countDownTimer.cancel()
         unloadKoinModules(viewModels)
+        mediaPlayerThreeSeconds.release()
+        mediaPlayerTenSeconds.release()
     }
 
     private fun initArrowBtn() {
-        binding.btnShowScore.setText("Score")
+        binding.btnShowScore.setText(getString(R.string.score))
         binding.btnShowScore.setDrawable(R.drawable.ic_arrow_up)
         binding.btnShowScore.setOnClickListener {
             if (isStartNextTeamRequired)
@@ -104,6 +116,10 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
             override fun onTick(timeLeft: Long) {
                 val toDisplay = timeLeft / 1000
                 binding.tvCountDown.text = toDisplay.toString()
+                when (toDisplay) {
+                    3L -> mediaPlayerThreeSeconds.start()
+                    10L -> mediaPlayerTenSeconds.start()
+                }
             }
 
             override fun onFinish() {
@@ -118,14 +134,14 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
     private fun startNextTeamRequired() {
         if (isStartNextTeamRequired) {
             with(binding) {
-                btnShowScore.setText("Continue")
+                btnShowScore.setText(getString(R.string.continue_txt))
                 btnShowScore.setDrawable(R.drawable.ic_arrow_right)
                 btnShowScore.setBtnColor(R.drawable.green_circle_btn_shape)
                 wordsAdapter.setIsClickable(false)
             }
         } else {
             with(binding) {
-                btnShowScore.setText("Score")
+                btnShowScore.setText(getString(R.string.score))
                 btnShowScore.setDrawable(R.drawable.ic_arrow_up)
                 btnShowScore.setBtnColor(R.drawable.circle_button_shape)
                 classicFragmentRecycler.isClickable = true

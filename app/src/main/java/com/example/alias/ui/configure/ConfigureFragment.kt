@@ -88,7 +88,7 @@ class ConfigureFragment :
                     } else hideBtnConfigureDone()
                 }
                 1 -> {
-                    binding.btnConfigureDone.setText(getString(R.string.next))
+                    binding.btnConfigureDone.setText(EMPTY_STRING)
                     if (!binding.btnConfigureDone.isVisible)
                         initBtnConfigureDone()
                     binding.btnConfigureDone.setOnClickListener {
@@ -136,5 +136,9 @@ class ConfigureFragment :
         animator.duration = transitionDuration
         if (beginFakeDrag())
             animator.start()
+    }
+
+    companion object {
+        private const val EMPTY_STRING = ""
     }
 }
