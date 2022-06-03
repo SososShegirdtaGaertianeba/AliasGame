@@ -2,7 +2,7 @@ package com.example.alias.ui.classic
 
 import android.content.Context
 import android.media.MediaPlayer
-import android.os.CountDownTimer
+import android.os.*
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
@@ -11,6 +11,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alias.R
+import com.example.alias.app.App
+import com.example.alias.app.App.Companion.vibrator
+import com.example.alias.app.App.Companion.vibratorManager
 import com.example.alias.databinding.ClassicFragmentBinding
 import com.example.alias.di.viewModels
 import com.example.alias.extensions.safeNavigate
@@ -117,8 +120,14 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
                 val toDisplay = timeLeft / 1000
                 binding.tvCountDown.text = toDisplay.toString()
                 when (toDisplay) {
-                    3L -> mediaPlayerThreeSeconds.start()
-                    10L -> mediaPlayerTenSeconds.start()
+                    3L -> {
+                        mediaPlayerThreeSeconds.start()
+                        instantVibrate(200L)
+                    }
+                    10L -> {
+                        mediaPlayerTenSeconds.start()
+                        instantVibrate(50L)
+                    }
                 }
             }
 
@@ -129,6 +138,17 @@ class ClassicFragment : BaseFragment<ClassicFragmentBinding>(ClassicFragmentBind
             }
         }
         countDownTimer.start()
+    }
+
+    private fun instantVibrate(duration: Long) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            vibratorManager.defaultVibrator.vibrate(
+                VibrationEffect.createOneShot(
+                    duration, VibrationEffect.DEFAULT_AMPLITUDE
+                )
+            )
+        else
+            vibrator.vibrate(duration)
     }
 
     private fun startNextTeamRequired() {

@@ -2,7 +2,9 @@ package com.example.alias.ui.arcade
 
 import android.content.Context
 import android.media.MediaPlayer
+import android.os.Build
 import android.os.CountDownTimer
+import android.os.VibrationEffect
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
@@ -10,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.alias.MainActivity.Companion.SHARED_PREFERENCE_NAME
 import com.example.alias.R
+import com.example.alias.app.App.Companion.vibrator
+import com.example.alias.app.App.Companion.vibratorManager
 import com.example.alias.databinding.ArcadeFragmentBinding
 import com.example.alias.di.viewModels
 import com.example.alias.extensions.safeNavigate
@@ -220,8 +224,14 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
                 val toDisplay = timeLeft / 1000
                 binding.timeLeftTV.text = (toDisplay).toString()
                 when (toDisplay) {
-                    3L -> mediaPlayerThreeSeconds.start()
-                    10L -> mediaPlayerTenSeconds.start()
+                    3L -> {
+                        mediaPlayerThreeSeconds.start()
+                        instantVibrate(200L)
+                    }
+                    10L -> {
+                        mediaPlayerTenSeconds.start()
+                        instantVibrate(50L)
+                    }
                 }
 
             }
@@ -233,6 +243,17 @@ class ArcadeFragment : BaseFragment<ArcadeFragmentBinding>(ArcadeFragmentBinding
             }
         }
         countDownTimer.start()
+    }
+
+    private fun instantVibrate(duration: Long) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            vibratorManager.defaultVibrator.vibrate(
+                VibrationEffect.createOneShot(
+                    duration, VibrationEffect.DEFAULT_AMPLITUDE
+                )
+            )
+        else
+            vibrator.vibrate(duration)
     }
 
     private fun handleGameResumption() {

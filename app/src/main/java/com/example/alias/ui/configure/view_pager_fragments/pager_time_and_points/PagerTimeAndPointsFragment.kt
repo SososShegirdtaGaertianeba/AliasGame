@@ -7,6 +7,8 @@ import android.os.Vibrator
 import android.os.VibratorManager
 import androidx.fragment.app.viewModels
 import com.example.alias.R
+import com.example.alias.app.App.Companion.vibrator
+import com.example.alias.app.App.Companion.vibratorManager
 import com.example.alias.databinding.FragmentPagerTimeAndPointsBinding
 import com.example.alias.ui.configure.view_pager_fragments.base.BaseFragment
 import com.example.alias.ui.configure.vm.ConfigureViewModel
@@ -15,9 +17,6 @@ import me.tankery.lib.circularseekbar.CircularSeekBar
 class PagerTimeAndPointsFragment :
     BaseFragment<FragmentPagerTimeAndPointsBinding>(FragmentPagerTimeAndPointsBinding::inflate) {
 
-    private lateinit var vibratorManager: VibratorManager
-    private lateinit var vibrator: Vibrator
-
     private val viewModel: ConfigureViewModel by viewModels(
         ownerProducer = { requireParentFragment() }
     )
@@ -25,19 +24,10 @@ class PagerTimeAndPointsFragment :
     private var isToastHandled = false
 
     override fun init() {
-        initVibrator()
         initTimeSeekBar()
         initPointSeekbar()
         initOnClickListeners()
         initObservers()
-    }
-
-    private fun initVibrator() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-            vibratorManager =
-                context?.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-        else
-            vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     }
 
     private fun initPointSeekbar() {
@@ -119,7 +109,7 @@ class PagerTimeAndPointsFragment :
         )
     }
 
-    fun vibrateOnStopTouch(duration: Long) {
+    private fun vibrateOnStopTouch(duration: Long) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
             vibratorManager.defaultVibrator.vibrate(
                 VibrationEffect.createOneShot(
