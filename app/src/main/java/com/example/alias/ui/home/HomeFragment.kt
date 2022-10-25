@@ -2,46 +2,52 @@ package com.example.alias.ui.home
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.example.alias.MainActivity
 import com.example.alias.MainActivity.Companion.SHARED_PREFERENCE_NAME
 import com.example.alias.R
 import com.example.alias.databinding.FragmentHomeBinding
 import com.example.alias.ui.base.BaseFragment
-import com.example.alias.util.LocaleUtils
+import com.example.alias.util.getIdFromLanguage
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
     private var isSpinnerInitialized = false
 
     override fun init() {
         initSpinner()
-        navigateToConfigurationFragment()
-        navigateToRulesFragment()
-        chooseLanguage()
+        initListeners()
     }
 
-    private fun initSpinner() = with(binding) {
-        val adapter = ArrayAdapter.createFromResource(requireContext(), R.array.language_array, R.layout.custom_spinner)
-        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item)
-        chooseLang.adapter = adapter
-        chooseLang.setSelection(getSharedPreference().getInt(PREFERENCE_NAME, PREFERENCE_DEFAULT_VALUE))
-    }
-
-    private fun navigateToRulesFragment() {
+    private fun initListeners() = with(binding) {
         binding.rulesBtn.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_rulesDialogFragment)
         }
-    }
 
-    private fun navigateToConfigurationFragment() {
         binding.confBtn.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_configureFragment)
         }
+
+        initSpinnerListener()
+    }
+
+    private fun initSpinner() = with(binding) {
+        val adapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.language_array,
+            R.layout.custom_spinner
+        )
+
+        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item)
+        chooseLang.adapter = adapter
+        chooseLang.setSelection(
+            getSharedPreference().getInt(
+                PREFERENCE_NAME,
+                PREFERENCE_DEFAULT_VALUE
+            )
+        )
     }
 
     fun toLocaleString(language: String) = when (language) {
@@ -51,7 +57,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         else -> EN
     }
 
-    private fun chooseLanguage() {
+    private fun initSpinnerListener() {
         binding.chooseLang.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 adapterView: AdapterView<*>,
@@ -61,7 +67,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             ) {
                 if (isSpinnerInitialized) {
                     setSharedPreference(
-                        LocaleUtils.getIdFromLanguage(
+                        getIdFromLanguage(
                             toLocaleString(
                                 adapterView.getItemAtPosition(
                                     position
@@ -70,7 +76,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         )
                     )
                     startActivity(Intent(context, MainActivity::class.java))
-                    requireActivity().overridePendingTransition(0,0)
+                    requireActivity().overridePendingTransition(0, 0)
                     requireActivity().finish()
                 } else isSpinnerInitialized = true
             }
@@ -88,9 +94,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             Context.MODE_PRIVATE
         )
 
-    fun setSharedPreference(language: Int) =
-        getSharedPreference()
-            .edit().putInt(PREFERENCE_NAME, language).apply()
+    fun setSharedPreference(language: Int) = getSharedPreference()
+        .edit()
+        .putInt(PREFERENCE_NAME, language)
+        .apply()
 
     companion object {
         const val PREFERENCE_NAME = "language"

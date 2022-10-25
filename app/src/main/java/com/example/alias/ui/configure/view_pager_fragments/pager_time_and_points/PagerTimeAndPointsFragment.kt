@@ -1,10 +1,7 @@
 package com.example.alias.ui.configure.view_pager_fragments.pager_time_and_points
 
-import android.content.Context
 import android.os.Build
 import android.os.VibrationEffect
-import android.os.Vibrator
-import android.os.VibratorManager
 import androidx.fragment.app.viewModels
 import com.example.alias.R
 import com.example.alias.app.App.Companion.vibrator
@@ -26,7 +23,7 @@ class PagerTimeAndPointsFragment :
     override fun init() {
         initTimeSeekBar()
         initPointSeekbar()
-        initOnClickListeners()
+        initListeners()
         initObservers()
     }
 
@@ -116,32 +113,31 @@ class PagerTimeAndPointsFragment :
                     duration, VibrationEffect.DEFAULT_AMPLITUDE
                 )
             )
-        else
-            vibrator.vibrate(duration)
+        else vibrator.vibrate(duration)
     }
 
-    private fun initObservers() {
-        viewModel.gameMode.observe(viewLifecycleOwner) {
-            if (it.timePerRound != null && it.pointsToWin != null && !isToastHandled) {
-                if (it.isClassic == null) {
-                    makeToastMessage(getString(R.string.choose_game_mode))
-                    isToastHandled = true
-                }
+    private fun initObservers() = with(viewModel) {
+        gameMode.observe(viewLifecycleOwner) {
+            if (it.timePerRound != null && it.pointsToWin != null && !isToastHandled && it.isClassic == null) {
+                makeToastMessage(getString(R.string.choose_game_mode))
+                isToastHandled = true
             }
 
-            it.isClassic?.let { isClassic ->
-                if (isClassic) {
-                    binding.btnClassic.setBackgroundResource(R.drawable.game_mode_chosen_btn_shape_inversed)
-                    binding.btnArcade.setBackgroundResource(R.drawable.game_mode_btn_shape_inversed)
-                } else {
-                    binding.btnClassic.setBackgroundResource(R.drawable.game_mode_btn_shape_inversed)
-                    binding.btnArcade.setBackgroundResource(R.drawable.game_mode_chosen_btn_shape_inversed)
-                }
-            }
+            it.isClassic?.let { isClassic -> setButtonBackgrounds(isClassic) }
         }
     }
 
-    private fun initOnClickListeners() = with(binding) {
+    private fun setButtonBackgrounds(isClassic: Boolean) = with(binding) {
+        if (isClassic) {
+            btnClassic.setBackgroundResource(R.drawable.game_mode_chosen_btn_shape_inversed)
+            btnArcade.setBackgroundResource(R.drawable.game_mode_btn_shape_inversed)
+        } else {
+            btnClassic.setBackgroundResource(R.drawable.game_mode_btn_shape_inversed)
+            btnArcade.setBackgroundResource(R.drawable.game_mode_chosen_btn_shape_inversed)
+        }
+    }
+
+    private fun initListeners() = with(binding) {
         btnClassic.setOnClickListener { viewModel.setIsClassic(true) }
         btnArcade.setOnClickListener { viewModel.setIsClassic(false) }
     }

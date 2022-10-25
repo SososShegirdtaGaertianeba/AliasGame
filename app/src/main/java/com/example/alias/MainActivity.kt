@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.alias.ui.home.HomeFragment.Companion.PREFERENCE_DEFAULT_VALUE
 import com.example.alias.ui.home.HomeFragment.Companion.PREFERENCE_NAME
-import com.example.alias.util.LocaleUtils
+import com.example.alias.util.getLanguageFromId
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         super.attachBaseContext(
             ContextWrapper(
                 newBase.setAppLocale(
-                    LocaleUtils.getLanguageFromId(
+                    getLanguageFromId(
                         newBase.getSharedPreferences(
                             SHARED_PREFERENCE_NAME,
                             Context.MODE_PRIVATE

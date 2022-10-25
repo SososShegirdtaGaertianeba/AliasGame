@@ -23,32 +23,32 @@ class PagerTeamsFragment :
         ownerProducer = { requireParentFragment() }
     )
 
-    override fun init() =
-        with(binding) {
+    override fun init() {
+        initRecycler()
+        initListeners()
+        initObservers()
+    }
 
-            // Init Recycler
-            val layoutManager = LinearLayoutManager(requireContext())
-            layoutManager.stackFromEnd = true
-            recyclerView.adapter = adapter
-            recyclerView.layoutManager = layoutManager
-
-            // Set Delete On Swipe
-            initSwipeListener()
-
-            initObservers()
-
-            // Set Add On Click
-            btnAddTeam.setOnClickListener {
-                if (adapter.teams.size < MAX_TEAMS)
-                    adapter.addTeam()
-                else
-                    makeToastMessage(getString(R.string.max6Teams))
-            }
-
-
-            btnClassic.setOnClickListener { viewModel.setIsClassic(true) }
-            btnArcade.setOnClickListener { viewModel.setIsClassic(false) }
+    private fun initRecycler() = with(binding.recyclerView) {
+        adapter = this@PagerTeamsFragment.adapter
+        layoutManager = LinearLayoutManager(requireContext()).apply {
+            stackFromEnd = true
         }
+    }
+
+    private fun initListeners() = with(binding) {
+        initSwipeListener()
+
+        btnAddTeam.setOnClickListener {
+            if (adapter.teams.size < MAX_TEAMS)
+                adapter.addTeam()
+            else
+                makeToastMessage(getString(R.string.max6Teams))
+        }
+
+        btnClassic.setOnClickListener { viewModel.setIsClassic(true) }
+        btnArcade.setOnClickListener { viewModel.setIsClassic(false) }
+    }
 
     private fun initSwipeListener() {
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -81,21 +81,20 @@ class PagerTeamsFragment :
         }).attachToRecyclerView(binding.recyclerView)
     }
 
-    private fun initObservers() {
-        viewModel.isTeamsInputValid.observe(viewLifecycleOwner) {
+    private fun initObservers() = with(viewModel) {
+        isTeamsInputValid.observe(viewLifecycleOwner) {
             if (!it && !constraintMessageShown) {
                 makeToastMessage(getString(R.string.uniqueConstraint))
                 constraintMessageShown = true
             }
         }
 
-        viewModel.gameMode.observe(viewLifecycleOwner) { gm ->
+        gameMode.observe(viewLifecycleOwner) { gm ->
             gm.teams?.let {
                 if (it.size > 3)
                     binding.drawable.animate().alpha(0f)
                 else
                     binding.drawable.animate().alpha(1f)
-
             }
 
             gm.isClassic?.let {

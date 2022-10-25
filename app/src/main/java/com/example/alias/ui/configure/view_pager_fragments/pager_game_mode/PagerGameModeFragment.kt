@@ -19,22 +19,25 @@ class PagerGameModeFragment :
     }
 
     private fun initListeners() = with(binding) {
-        binding.classic.setOnClickListener { viewModel.setIsClassic(true) }
-        binding.arcade.setOnClickListener { viewModel.setIsClassic(false) }
+        classic.setOnClickListener { viewModel.setIsClassic(true) }
+        arcade.setOnClickListener { viewModel.setIsClassic(false) }
     }
 
     private fun initObservers() {
         viewModel.gameMode.observe(viewLifecycleOwner) { gm ->
             gm.isClassic?.let {
-                if (it) {
-                    binding.classic.setBackgroundResource(R.drawable.game_mode_chosen_btn_shape)
-                    binding.arcade.setBackgroundResource(R.drawable.game_mode_btn_shape)
-                } else {
-                    binding.arcade.setBackgroundResource(R.drawable.game_mode_chosen_btn_shape)
-                    binding.classic.setBackgroundResource(R.drawable.game_mode_btn_shape)
-                }
+                setButtonBackgrounds(it)
             }
         }
     }
 
+    private fun setButtonBackgrounds(isClassic: Boolean) = with(binding) {
+        if (isClassic) {
+            classic.setBackgroundResource(R.drawable.game_mode_chosen_btn_shape)
+            arcade.setBackgroundResource(R.drawable.game_mode_btn_shape)
+        } else {
+            arcade.setBackgroundResource(R.drawable.game_mode_chosen_btn_shape)
+            classic.setBackgroundResource(R.drawable.game_mode_btn_shape)
+        }
+    }
 }
